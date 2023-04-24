@@ -73,9 +73,9 @@ class _DashboardState extends State<Dashboard> {
               child: Row(
                 children: [
                   Image.asset("assets/images/location.png"),
-                  SizedBox(width: 10,),
+                  SizedBox(width: 8,),
                   Text("McDowell Mountain Loop, Phoenix, AZ",style: k13_400_roboto,),
-                  SizedBox(width: 10,),
+                  SizedBox(width: 8,),
                   InkWell(
                     onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>DashboardMap()));},
                     child: Container(
