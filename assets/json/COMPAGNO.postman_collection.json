@@ -1,0 +1,778 @@
+{
+	"info": {
+		"_postman_id": "1cd4cc3f-da54-45c1-86c3-e08c640151bc",
+		"name": "COMPAGNO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15730030",
+		"_collection_link": "https://the-chimkaandi-devs.postman.co/workspace/My-Workspace~833ddf05-ae17-4c6e-8fb4-054bf867758e/collection/15730030-1cd4cc3f-da54-45c1-86c3-e08c640151bc?action=share&creator=15730030&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Kiran ",
+									"description": "*Required String",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "kiran.kumar@hachiweb.com",
+									"description": "*Required String",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Kiran#121",
+									"description": "*Required String |Min 6| Password should be combination of one uppercase, one lower case, one special char, one digit and min 8 char long",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST_URL}}/api/register",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "kiran.kumar@hachiweb.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "Kiran#121",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST_URL}}/api/login",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_URL}}/api/me",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_URL}}/api/logout",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bikes",
+			"item": [
+				{
+					"name": "Add Bikes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "brand",
+									"value": "LANDAO",
+									"description": "Required ",
+									"type": "text"
+								},
+								{
+									"key": "model_name",
+									"value": "CONQUER ANY TERRAIN",
+									"description": "Required",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_psi",
+									"value": "81",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_sag",
+									"value": "30",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_hsc",
+									"value": "45",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_lsc",
+									"value": "30",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_hsr",
+									"value": "41",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_lsr",
+									"value": "25",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_psi",
+									"value": "165",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_sag",
+									"value": "45%",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_hsc",
+									"value": "30",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_lsc",
+									"value": "30",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_hsr",
+									"value": "30",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_lsr",
+									"value": "45",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "front_tire_psi",
+									"value": "28",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "rear_tire_psi",
+									"value": "31",
+									"description": "Optional",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "Required",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST_URL}}/api/bikes",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"bikes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Bike",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "brand",
+									"value": "Hero",
+									"type": "text"
+								},
+								{
+									"key": "model_name",
+									"value": "A1",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_psi",
+									"value": "81",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_sag",
+									"value": "30",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_hsc",
+									"value": "45",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_lsc",
+									"value": "30",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_hsr",
+									"value": "41",
+									"type": "text"
+								},
+								{
+									"key": "front_shock_lsr",
+									"value": "25",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_psi",
+									"value": "16",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_sag",
+									"value": "40",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_hsc",
+									"value": "36",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_lsc",
+									"value": "35",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_hsr",
+									"value": "30",
+									"type": "text"
+								},
+								{
+									"key": "rear_shock_lsr",
+									"value": "45",
+									"type": "text"
+								},
+								{
+									"key": "front_tire_psi",
+									"value": "28",
+									"type": "text"
+								},
+								{
+									"key": "rear_tire_psi",
+									"value": "31",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Kiran Badola/Downloads/hcu/Rectangle 2706.png"
+								},
+								{
+									"key": "_method",
+									"value": "PUT",
+									"description": "Required, otherwise body will not posted on backend side.",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST_URL}}/api/bikes/9",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"bikes",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Bike",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_URL}}/api/bikes/9",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"bikes",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Bike",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_URL}}/api/bikes/8",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"bikes",
+								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Main Screen",
+			"item": [
+				{
+					"name": "Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_URL}}/api/users/dashboard",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"dashboard"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Training",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_URL}}/api/training",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"training"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Awards Gallery/ My Awards",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{HOST_URL}}/api/users/awards-gallery",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"awards-gallery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Awards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST_URL}}/api/users/awards",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"awards"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ride",
+			"item": [
+				{
+					"name": "Start A Ride",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "name",
+									"value": "McDowell Mountain Loop, Phoenix, AZ",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST_URL}}/api/start-ride",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"start-ride"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recording Ride Data",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "speed",
+									"value": "15",
+									"type": "text"
+								},
+								{
+									"key": "time",
+									"value": "00:00:05",
+									"type": "text"
+								},
+								{
+									"key": "ride_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "lat",
+									"value": "12.00",
+									"type": "text"
+								},
+								{
+									"key": "lng",
+									"value": "12.00",
+									"type": "text"
+								},
+								{
+									"key": "turn_incline",
+									"value": "16",
+									"description": "Turn angle",
+									"type": "text"
+								},
+								{
+									"key": "elevation",
+									"value": "1418",
+									"description": "Heaight from sea like in Ft",
+									"type": "text"
+								},
+								{
+									"key": "distance",
+									"value": "20",
+									"description": "Meter",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST_URL}}/api/recording-ride",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"recording-ride"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complete Ride",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "ride_id",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{HOST_URL}}/api/end-ride",
+							"host": [
+								"{{HOST_URL}}"
+							],
+							"path": [
+								"api",
+								"end-ride"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authenticated User Data",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{HOST_URL}}/api/user",
+					"host": [
+						"{{HOST_URL}}"
+					],
+					"path": [
+						"api",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Splash",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{HOST_URL}}/api/splash",
+					"host": [
+						"{{HOST_URL}}"
+					],
+					"path": [
+						"api",
+						"splash"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "7|d08tZo3tgXwvUh7cwjNlw7hXHVaikL3oZvml3Tf6",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST_URL",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}
