@@ -6,7 +6,7 @@ import '../dashboard/dashboard.dart';
 import '../loadingscreen/loading.dart';
 import '../mapride/mapride.dart';
 import '../settings/setting.dart';
-import '../taining/taining.dart';
+import '../taining/training.dart';
 
 
 

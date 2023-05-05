@@ -1,20 +1,12 @@
-part of 'bloc.dart';
 
 
+abstract class LoginState{}
 
+class LoginInitialState extends LoginState{}
 
-abstract class AuthState {}
-
-class AuthInitial extends AuthState {}
-
-class AuthLoading extends AuthState {}
-
-class AuthLoaded extends AuthState {
-  final String username;
-
-  AuthLoaded(
-    this.username,
-  );
+class LoginLoadingState extends LoginState{}
+class LoginSuccessState extends LoginState{}
+class FailedToLoginState extends LoginState{
+  final String massage;
+  FailedToLoginState({required this.massage});
 }
-
-class AuthError extends AuthState {}

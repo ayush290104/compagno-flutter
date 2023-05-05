@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:compagno4/authentication/auth_cubit/auth_state.dart';
+import 'package:compagno4/screens/register/register_bloc/auth_state.dart';
 import 'package:http/http.dart';
 
 class RegisterCubit extends Cubit<RegisterState>{

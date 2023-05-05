@@ -99,14 +99,14 @@ SizedBox(width: 10,),
                              Container(
                                height: 8.h,
                                width: 200.w,
-                               decoration: BoxDecoration(
+                               decoration: const BoxDecoration(
                                    color: Color(0xff47574C),
                                    borderRadius: BorderRadius.all(Radius.circular(12))),
                              ),
                              Container(
                                height: 8.h,
                                width: 175.w,
-                               decoration: BoxDecoration(
+                               decoration: const BoxDecoration(
                                    color: Color(0xff69806F),
                                    borderRadius: BorderRadius.all(Radius.circular(12))),
                              ),
@@ -115,7 +115,7 @@ SizedBox(width: 10,),
                                  Container(
                                    height: 8.h,
                                    width: 119.w,
-                                   decoration: BoxDecoration(
+                                   decoration: const BoxDecoration(
                                        color: Color(0xffEAE9E5),
                                        borderRadius: BorderRadius.all(Radius.circular(12))),
                                  ),
@@ -151,7 +151,7 @@ SizedBox(width: 10,),
                               Container(
                                 height: 8.h,
                                 width: 200.w,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: Color(0xff47574C),
                                     borderRadius: BorderRadius.all(Radius.circular(12))),
                               ),
@@ -161,7 +161,7 @@ SizedBox(width: 10,),
                                   Container(
                                     height: 8.h,
                                     width: 42.w,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: Color(0xffEAE9E5),
                                         borderRadius: BorderRadius.all(Radius.circular(12))),
                                   ),
@@ -197,7 +197,7 @@ SizedBox(width: 10,),
                               Container(
                                 height: 8.h,
                                 width: 200.w,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: Color(0xff47574C),
                                     borderRadius: BorderRadius.all(Radius.circular(12))),
                               ),
@@ -207,7 +207,7 @@ SizedBox(width: 10,),
                                   Container(
                                     height: 8.h,
                                     width: 175.w,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: Color(0xff69806F),
                                         borderRadius: BorderRadius.all(Radius.circular(12))),
                                   ),
