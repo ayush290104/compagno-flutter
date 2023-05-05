@@ -1,28 +1,37 @@
-part of 'register_auth_bloc.dart';
-
-
-
-
-abstract class RegisterAuthState {}
-
-class RegisterAuthInitial extends RegisterAuthState {}
-
-class RegisterAuthLoading extends RegisterAuthState {}
-
-class RegisterAuthLoaded extends RegisterAuthState {
-  final String username;
-  final String userNumber;
-  final String userPassword;
-  final String userConfrimPassword;
-
-
-
-  RegisterAuthLoaded(
-    this.username,
-      this.userNumber,
-      this.userPassword,
-      this.userConfrimPassword,
-  );
-}
-
-class RegisterAuthError extends RegisterAuthState {}
+// part of 'register_bloc.dart';
+//
+//
+//
+//
+// abstract class RegisterState {}
+//
+// class RegisterInitial extends RegisterState {}
+//
+// class RegisterLoading extends RegisterState {
+//   final String msg;
+//   RegisterLoading( this.msg, );
+// }
+//
+// class RegisterLoaded extends RegisterState {
+//   final String userName;
+//   final String userEmail;
+//   final String userPassword;
+//   final String userConfrimPassword;
+//
+//
+//
+//   RegisterLoaded(
+//     this.userName,
+//       this.userEmail,
+//       this.userPassword,
+//       this.userConfrimPassword,
+//   );
+// }
+//
+// class RegisterError extends RegisterState {
+//   final errorMsg;
+//   RegisterError({this.errorMsg});
+//
+//
+//   List<Object> get props => [];
+// }

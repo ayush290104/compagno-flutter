@@ -55,7 +55,7 @@ class _LessonCompletedState extends State<LessonCompleted> {
                     Container(
                       height: 8.h,
                       width: 266.w,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                           color: Color(0xff39453C),
                           borderRadius: BorderRadius.all(Radius.circular(12))),
                     ),
@@ -64,7 +64,7 @@ class _LessonCompletedState extends State<LessonCompleted> {
                         Container(
                           height: 8.h,
                           width: 91.w,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Color(0xff69806F),
                               borderRadius: BorderRadius.all(Radius.circular(12))),
                         ),

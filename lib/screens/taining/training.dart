@@ -1,4 +1,4 @@
-import 'package:compagno4/screens/taining/taininglesson.dart';
+import 'package:compagno4/screens/taining/traininglesson.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -313,7 +313,7 @@ class _TrainingState extends State<Training> {
                             Container(
                               height: 8.h,
                               width: 218.w,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   color: Color(0xff47574C),
                                   borderRadius: BorderRadius.all(Radius.circular(12))),
                             ),
@@ -322,7 +322,7 @@ class _TrainingState extends State<Training> {
                                 Container(
                                   height: 8.h,
                                   width: 160.w,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Color(0xff69806F),
                                       borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(12),

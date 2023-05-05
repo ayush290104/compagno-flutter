@@ -95,7 +95,7 @@ class _AwardsState extends State<Awards> {
                             Container(
                               height: 8.h,
                               width: 199.w,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   color: Color(0xff47574C),
                                   borderRadius: BorderRadius.all(Radius.circular(12))),
                             ),
@@ -104,7 +104,7 @@ class _AwardsState extends State<Awards> {
                                 Container(
                                   height: 8.h,
                                   width: 153.w,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Color(0xff69806F),
                                       borderRadius: BorderRadius.all(Radius.circular(12))),
                                 ),
@@ -140,7 +140,7 @@ class _AwardsState extends State<Awards> {
                               Container(
                                 height: 8.h,
                                 width: 199.w,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     color: Color(0xff47574C),
                                     borderRadius: BorderRadius.all(Radius.circular(12))),
                               ),
@@ -149,7 +149,7 @@ class _AwardsState extends State<Awards> {
                                   Container(
                                     height: 8.h,
                                     width: 153.w,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                         color: Color(0xff69806F),
                                         borderRadius: BorderRadius.all(Radius.circular(12))),
                                   ),
@@ -281,7 +281,7 @@ class _AwardsState extends State<Awards> {
                             Container(
                               height: 8.h,
                               width: 199.w,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   color: Color(0xffB69F4C),
                                   borderRadius: BorderRadius.all(Radius.circular(12))),
                             ),
@@ -290,7 +290,7 @@ class _AwardsState extends State<Awards> {
                                 Container(
                                   height: 8.h,
                                   width: 10.w,
-                                  decoration: BoxDecoration(
+                                  decoration: const BoxDecoration(
                                       color: Color(0xffFFFFFF),
                                       borderRadius: BorderRadius.all(Radius.circular(12))),
                                 ),

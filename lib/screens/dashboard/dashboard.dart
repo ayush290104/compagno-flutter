@@ -4,12 +4,12 @@ import 'package:draw_graph/draw_graph.dart';
 import 'package:draw_graph/models/feature.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stacked_bar_chart/stacked_bar_chart.dart';
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
 import 'package:pretty_gauge/pretty_gauge.dart';
 
 import '../goal/goal_set.dart';
+import 'package:http/http.dart' as http;
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -27,6 +27,19 @@ class _DashboardState extends State<Dashboard> {
     ),
 
   ];
+  void getRequest() async{
+    var url = Uri.parse("https://compagno.app/api/users/dashboard");
+    var response = await http.get(url);
+    print(response.body.toString());
+
+
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getRequest();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -286,7 +299,7 @@ class _DashboardState extends State<Dashboard> {
             Padding(
               padding: const EdgeInsets.only(left: 32),
               child: Row(children: [
-                Text("pREVIOUS rIDES",style: k20_400_bebas,)
+                Text("PREVIOUS rIDES",style: k20_400_bebas,)
               ],),
             ),
             SizedBox(height: 16,),

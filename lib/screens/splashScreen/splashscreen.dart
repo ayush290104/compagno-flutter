@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:compagno4/screens/login/login.dart';
+import 'package:compagno4/screens/register/register.dart';
 import 'package:compagno4/screens/tabsrceen/tabscreen.dart';
+import 'package:compagno4/utils/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,8 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   route() {
-    Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => TabScreen()));
+    Navigator.pushNamed(context, login);
   }
 
   @override

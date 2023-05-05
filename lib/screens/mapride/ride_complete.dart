@@ -1,5 +1,5 @@
 import 'package:compagno4/screens/tabsrceen/tabscreen.dart';
-import 'package:compagno4/screens/taining/taininglesson.dart';
+import 'package:compagno4/screens/taining/traininglesson.dart';
 import 'package:flutter/material.dart';
 
 import '../../constant/color.dart';
@@ -26,10 +26,10 @@ class _RideCompleteState extends State<RideComplete> {
             child: Row(
               children: [
                 Text("COMPAGNO",style: k25_400_noize,),
-                Spacer(),
+                const Spacer(),
                 Text("POWERED BY",style: k10_400_bebas,),
                 Image.asset('assets/images/METALLO.png'),
-                SizedBox(width: 20,)
+                const SizedBox(width: 20,)
               ],
             ),
           ),
@@ -38,7 +38,7 @@ class _RideCompleteState extends State<RideComplete> {
             padding: const EdgeInsets.only(top: 64),
             child: Text("R i d e  c o m p l e t e",style: k32_400_bebas,),
           ),
-          SizedBox(height: 190,),
+          const SizedBox(height: 190,),
           InkWell(
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context)=>TabScreen()));
@@ -50,9 +50,9 @@ class _RideCompleteState extends State<RideComplete> {
                   child: Image.asset("assets/images/done.png"))
             ],),
           ),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20,),
           Text("GREAT WORK!",style: k13_700_roboto,),
-          SizedBox(height: 40,),
+          const SizedBox(height: 40,),
           Text("Your ride data will be available on the ",style: k13_400_roboto,),
           Text.rich(
             TextSpan(
