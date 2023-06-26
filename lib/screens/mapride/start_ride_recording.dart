@@ -48,7 +48,7 @@ class _StartRidingState extends State<StartRiding> {
                 Padding(
                   padding: const EdgeInsets.only(top: 17,left: 11),
                   child: Row(children: [
-Text("TRAIL CHATTER",style: k11_700_roboto,),
+                    Text("TRAIL CHATTER",style: k11_700_roboto,),
                     SizedBox(width: 20,),
                     Container(
                       width: 200.0,
@@ -129,7 +129,8 @@ Text("TRAIL CHATTER",style: k11_700_roboto,),
           Container(
               height: 64,
               color: Colors.transparent,
-              child: Center(child: Text("TAP TO STOP",style: k13_700_roboto,)))
+              child: Center(child: Text("TAP TO STOP",style: k13_700_roboto,))),
+
         ],
       ),
     );
