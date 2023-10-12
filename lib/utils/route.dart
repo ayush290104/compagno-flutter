@@ -1,6 +1,7 @@
 const String login = '/login';
 const String register = '/register';
 const String tapScreen = '/tapscreen';
+const String tabScreen = '/tabscreen';
 const String dashBoard = '/dashboard';
 const String dashBordMap = '/dashmap';
 const String trailChatter = '/trailchatter';

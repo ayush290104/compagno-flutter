@@ -1,20 +1,13 @@
 import 'package:compagno4/screens/login/login.dart';
 import 'package:compagno4/screens/tabsrceen/user_mode_state.datr.dart';
 import 'package:compagno4/screens/tabsrceen/user_model_cubit.dart';
-import 'package:compagno4/core/user_model.dart';
 import 'package:compagno4/screens/settings/setting_tuning.dart';
-import 'package:compagno4/utils/route.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
-
-import '../../core/user_model.dart';
-import '../../core/user_model.dart';
-import '../splashScreen/splashscreen.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -29,8 +22,8 @@ class _SettingsState extends State<Settings> {
     return BlocProvider(
       create: (context) => UserModelCubit()..getUserData(),
       child: BlocConsumer<UserModelCubit, UserModelState>(
-        listener: (context, state){} ,
-        builder: (context, state){
+        listener: (context, state) {},
+        builder: (context, state) {
           final cubit = BlocProvider.of<UserModelCubit>(context);
           return Scaffold(
           backgroundColor: AppColors.k47574C,
@@ -286,7 +279,6 @@ class _SettingsState extends State<Settings> {
 
           );
         },
-
       ),
     );
   }

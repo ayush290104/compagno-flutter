@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:compagno4/core/class.dart';
+import 'package:compagno4/screens/dashboard/home_page_response_model.dart';
 import 'package:http/http.dart' as http;
 
 class DatabaseRepo {
@@ -99,36 +100,22 @@ class DatabaseRepo {
     return [];
   }
 
-  Future<DashboardClass?> getDashboardData() async {
+  Future<HomePageResponse?> getDashboardData(String tokenid) async {
     var url = Uri.parse("https://compagno.app/api/users/dashboard");
     try {
       var response = await http.get(url, headers: {
-        'Authorization': "Bearer $token",
+        'Authorization': "Bearer ${tokenid}",
       });
+      print(response.statusCode.toString());
       if (response.statusCode != 200) {
         return null;
-      } else {
-        Map data = jsonDecode(response.body)["data"];
-        return DashboardClass(
-            user: User(
-                id: data["user"]["id"],
-                name: data["user"]["name"],
-                email: data["user"]["email"]),
-            lastRide: data["last_ride"],
-            previousRide: [for (var i in data["previous_ride"]) i],
-            yourRoute: [for (var i in data["your_route"]) i],
-            trailChatter: TrailChatter(
-                data: [for (var i in data["trail_chatter"]["data"]) i],
-                distance: [for (var i in data["trail_chatter"]["distance"]) i]),
-            speed: Speed(
-                speed: [for (double i in data["speed"]["speed"]) i],
-                time: [for (var i in data["speed"]["time"]) i]),
-            turnIncline: TurnIncline(
-                avg: data["turn_incline"]["avg"],
-                max: data["turn_incline"]["max"]),
-            totalTime: data["total_time"]);
+      } else{
+        final data = jsonDecode(response.body);
+        final parsedResponse = HomePageResponse.fromJson(data);
+        return parsedResponse;
       }
     } catch (e) {
+      print("erppr");
       print(e.toString());
       return null;
     }

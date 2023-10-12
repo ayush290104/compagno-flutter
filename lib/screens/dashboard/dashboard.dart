@@ -1,11 +1,14 @@
 import 'dart:math';
 
 import 'package:compagno4/main.dart';
+import 'package:compagno4/save_user/constants/constants.dart';
+import 'package:compagno4/save_user/network/local_save.dart';
 import 'package:compagno4/screens/dashboard/bloc/dashboard_cubit.dart';
 import 'package:compagno4/screens/dashboard/bloc/dashboard_state.dart';
 import 'package:compagno4/screens/dashboard/dashboard_map.dart';
 import 'package:compagno4/screens/dashboard/speed.dart';
 import 'package:compagno4/screens/dashboard/trail_chatter.dart';
+import 'package:compagno4/utils/route.dart';
 import 'package:draw_graph/draw_graph.dart';
 import 'package:draw_graph/models/feature.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,14 +40,13 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider.value(value: dashboardCubit..fetch())],
+      providers: [BlocProvider.value(value: dashboardCubit..fetch(SaveId.getSaveData(key: token)))],
       child: Scaffold(
         backgroundColor: AppColors.k47574C,
         body: SingleChildScrollView(
@@ -58,7 +60,7 @@ class _DashboardState extends State<Dashboard> {
                       "COMPAGNO",
                       style: k25_400_noize,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
                       "POWERED BY",
                       style: k10_400_bebas,
@@ -67,7 +69,7 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 35,
               ),
               BlocBuilder<DashboardCubit, DashboardState>(
@@ -81,8 +83,9 @@ class _DashboardState extends State<Dashboard> {
                         width: MediaQuery.of(context).size.width,
                         child: Text(
                           (state is DashboardSuccessState)
-                              ? "WELCOME, ${dashboardCubit.dashboardClass!.user.name.toUpperCase()}"
-                              : "WAIT...",
+                              ? "WELCOME, ${dashboardCubit.dashboardClass!.data!.user!.name!.toUpperCase()}"
+                              : "WAIT..."
+                          ,
                           style: k28_400_noize,
                           textAlign: TextAlign.center,
                         ),
@@ -91,23 +94,23 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 );
               }),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(
                 "Let’s amplify your ride experience.",
                 style: k13_400_roboto,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 14,
               ),
               Container(
                 height: 100,
                 width: 100,
-                decoration: BoxDecoration(shape: BoxShape.circle),
+                decoration: const BoxDecoration(shape: BoxShape.circle),
                 child: Image.asset("assets/images/user.png"),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 39,
               ),
               Padding(
@@ -126,14 +129,14 @@ class _DashboardState extends State<Dashboard> {
                 child: Row(
                   children: [
                     Image.asset("assets/images/location.png"),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     Text(
                       "McDowell Mountain Loop, Phoenix, AZ",
                       style: k13_400_roboto,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     InkWell(
@@ -141,7 +144,7 @@ class _DashboardState extends State<Dashboard> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => DashboardMap()));
+                                builder: (context) => const DashboardMap()));
                       },
                       child: Container(
                         width: 57,
@@ -151,14 +154,14 @@ class _DashboardState extends State<Dashboard> {
                             color: AppColors.k000000),
                         child: Row(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Text(
                               "MAP",
                               style: k10_700_roboto,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             Image.asset("assets/images/Polygon 1.png")
@@ -169,7 +172,7 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 33,
               ),
               Row(
@@ -180,7 +183,7 @@ class _DashboardState extends State<Dashboard> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => TrailChatter()));
+                              builder: (context) => const TrailChatter()));
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width / 2 - 8 * 3,
@@ -201,7 +204,7 @@ class _DashboardState extends State<Dashboard> {
                                     style: k16_400_bebas,
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 20,
                                 ),
                                 Image.asset("assets/images/iconsforword.png")
@@ -211,8 +214,8 @@ class _DashboardState extends State<Dashboard> {
                           BlocBuilder<DashboardCubit, DashboardState>(
                               builder: (context, state) {
                             return (state is DashboardSuccessState)
-                                ? (dashboardCubit.dashboardClass!.trailChatter
-                                            .data.length >
+                                ? (dashboardCubit.dashboardClass!.data!
+                                            .trailChatter!.data!.length >
                                         1)
                                     ? LineGraph(
                                         features: [
@@ -220,7 +223,7 @@ class _DashboardState extends State<Dashboard> {
                                             title: "TRAIL CHATTER",
                                             color: AppColors.kB69F4C,
                                             data: dashboardCubit.dashboardClass!
-                                                .trailChatter.data,
+                                                .data!.trailChatter!.data!,
                                           )
                                         ],
                                         size: Size(
@@ -229,15 +232,24 @@ class _DashboardState extends State<Dashboard> {
                                                 8 * 3,
                                             100),
                                         labelX: [
-                                          for (var i in dashboardCubit
-                                              .dashboardClass!
-                                              .trailChatter
-                                              .data)
-                                            ' '
+                                          "0.1","0.2"
+                                          // for (var i in dashboardCubit
+                                          //     .dashboardClass!
+                                          //     .data!
+                                          //     .trailChatter!
+                                          //     .data!)
+                                          //   i.toString()
                                         ],
-                                        labelY: dashboardCubit
-                                            .dashboardClass!.trailChatter
-                                            .getLabelYmin(),
+                                        labelY: [
+                                          // for (var i in dashboardCubit
+                                          //     .dashboardClass!
+                                          //     .data!
+                                          //     .trailChatter!
+                                          //     .data!)
+                                          //   i.toString()
+                                                                                    "0.1","0.2"
+
+                                        ],
                                         //showDescription: true,
                                         graphColor: Colors.white,
                                         graphOpacity: 0.2,
@@ -271,7 +283,7 @@ class _DashboardState extends State<Dashboard> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SpeedGraph()));
+                              builder: (context) => const SpeedGraph()));
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width / 2 - 8 * 3,
@@ -292,7 +304,7 @@ class _DashboardState extends State<Dashboard> {
                                     style: k16_400_bebas,
                                   ),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10),
                                   child: Image.asset(
@@ -312,33 +324,33 @@ class _DashboardState extends State<Dashboard> {
                                       style: TextStyle(color: Colors.white)));
 
                             if (dashboardCubit
-                                    .dashboardClass!.speed.speed.length >
-                                1)
+                                    .dashboardClass!.data!.speed!.speed!.length >
+                                1) {
                               return LineGraph(
                                 features: [
                                   Feature(
                                       title: "speed",
                                       color: AppColors.kB69F4C,
                                       data: dashboardCubit
-                                          .dashboardClass!.speed.speed)
+                                          .dashboardClass!.data!.speed!.speed! as List<double>)
                                 ],
                                 size: Size(
-                                    MediaQuery.of(context).size.width / 2 -
-                                        8 * 3,
+                                    MediaQuery.of(context).size.width / 4,
                                     100),
                                 labelX: [
                                   for (var i in dashboardCubit
-                                      .dashboardClass!.speed.speed)
+                                      .dashboardClass!.data!.speed!.speed!)
                                     ''
                                 ],
-                                labelY: dashboardCubit.dashboardClass!.speed
-                                    .getLabelYMin(),
+                                labelY: ["0.1"],
+                                    // .getLabelYMin(),
                                 //showDescription: true,
                                 graphColor: Colors.white,
                                 graphOpacity: 0.2,
                                 verticalFeatureDirection: true,
                                 // descriptionHeight: 100,
                               );
+                            }
                             return SizedBox(
                                 width: MediaQuery.of(context).size.width / 2 -
                                     8 * 5,
@@ -353,70 +365,70 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  BlocBuilder<DashboardCubit, DashboardState>(
-                      builder: (context, state) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width / 2 - 8 * 3,
-                      height: 158,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.k000000),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 23),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 18),
-                                  child: Text(
-                                    "TURN INCLIne",
-                                    style: k16_400_bebas,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 20,
-                                ),
-                                Image.asset("assets/images/iconsforword.png")
-                              ],
-                            ),
-                          ),
-                          if (state is DashboardSuccessState)
-                            PrettyGauge(
-                              gaugeSize: 100,
-                              segments: [
-                                GaugeSegment('Low', 20, Colors.red),
-                                GaugeSegment('Medium', 40, Colors.orange),
-                                GaugeSegment('High', 40, Colors.green),
-                              ],
-                              currentValue: (dashboardCubit
-                                      .dashboardClass!.turnIncline.avg ??
-                                  0),
-                              needleColor: Colors.white,
-                              displayWidget: const Text('',
-                                  style: TextStyle(fontSize: 12)),
-                              startMarkerStyle:
-                                  TextStyle(fontSize: 10, color: Colors.grey),
-                              endMarkerStyle:
-                                  TextStyle(fontSize: 10, color: Colors.grey),
-                            ),
-                          if (!(state is DashboardSuccessState))
-                            SizedBox(
-                                width: MediaQuery.of(context).size.width / 2 -
-                                    8 * 5,
-                                height: 100,
-                                child: Text("WAIT...",
-                                    style: TextStyle(color: Colors.white))),
-                        ],
-                      ),
-                    );
-                  }),
+                  // BlocBuilder<DashboardCubit, DashboardState>(
+                  //     builder: (context, state) {
+                  //   return Container(
+                  //     width: MediaQuery.of(context).size.width / 2 - 8 * 3,
+                  //     height: 158,
+                  //     decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(10),
+                  //         color: AppColors.k000000),
+                  //     child: Column(
+                  //       children: [
+                  //         Padding(
+                  //           padding: const EdgeInsets.only(top: 23),
+                  //           child: Row(
+                  //             children: [
+                  //               Padding(
+                  //                 padding: const EdgeInsets.only(left: 18),
+                  //                 child: Text(
+                  //                   "TURN INCLIne",
+                  //                   style: k16_400_bebas,
+                  //                 ),
+                  //               ),
+                  //               SizedBox(
+                  //                 width: 20,
+                  //               ),
+                  //               Image.asset("assets/images/iconsforword.png")
+                  //             ],
+                  //           ),
+                  //         ),
+                  //         if (state is DashboardSuccessState)
+                  //           PrettyGauge(
+                  //             gaugeSize: 100,
+                  //             segments: [
+                  //               GaugeSegment('Low', 20, Colors.red),
+                  //               GaugeSegment('Medium', 40, Colors.orange),
+                  //               GaugeSegment('High', 40, Colors.green),
+                  //             ],
+                  //             currentValue: (dashboardCubit
+                  //                     .dashboardClass!.turnIncline.avg ??
+                  //                 0),
+                  //             needleColor: Colors.white,
+                  //             displayWidget: const Text('',
+                  //                 style: TextStyle(fontSize: 12)),
+                  //             startMarkerStyle:
+                  //                 TextStyle(fontSize: 10, color: Colors.grey),
+                  //             endMarkerStyle:
+                  //                 TextStyle(fontSize: 10, color: Colors.grey),
+                  //           ),
+                  //         if (!(state is DashboardSuccessState))
+                  //           SizedBox(
+                  //               width: MediaQuery.of(context).size.width / 2 -
+                  //                   8 * 5,
+                  //               height: 100,
+                  //               child: Text("WAIT...",
+                  //                   style: TextStyle(color: Colors.white))),
+                  //       ],
+                  //     ),
+                  //   );
+                  // }),
                   Container(
                     width: MediaQuery.of(context).size.width / 2 - 8 * 3,
                     height: 158,
@@ -436,7 +448,7 @@ class _DashboardState extends State<Dashboard> {
                                   style: k16_400_bebas,
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Image.asset(
@@ -445,24 +457,24 @@ class _DashboardState extends State<Dashboard> {
                             ],
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 30,
                         ),
-                        BlocBuilder<DashboardCubit, DashboardState>(
-                            builder: (context, state) {
-                          return Text(
-                            (state is DashboardSuccessState)
-                                ? dashboardCubit.dashboardClass!.totalTime
-                                : "WAIT...",
-                            style: k30_400_bebas,
-                          );
-                        }),
+                        // BlocBuilder<DashboardCubit, DashboardState>(
+                        //     builder: (context, state) {
+                        //   return Text(
+                        //     (state is DashboardSuccessState)
+                        //         ? dashboardCubit.dashboardClass!.totalTime
+                        //         : "WAIT...",
+                        //     style: k30_400_bebas,
+                        //   );
+                        // }),
                       ],
                     ),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Row(
@@ -476,13 +488,13 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => GoalSet()));
+                      MaterialPageRoute(builder: (context) => const GoalSet()));
                 },
                 child: Container(
                   height: 54,
@@ -511,13 +523,15 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 52,
               ),
               InkWell(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => DashboardMap()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DashboardMap()));
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(left: 34),
@@ -531,11 +545,11 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 13,
               ),
               Image.asset("assets/images/mapimage.png"),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Padding(
@@ -549,59 +563,59 @@ class _DashboardState extends State<Dashboard> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
-              BlocBuilder<DashboardCubit, DashboardState>(
-                  builder: (context, state) {
-                if ((state is! DashboardSuccessState)) {
-                  return const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child:
-                        Text("WAIT...", style: TextStyle(color: Colors.white)),
-                  );
-                }
-                if (dashboardCubit.dashboardClass!.previousRide.isEmpty) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: const Text("nothing yet !  first lets go to a ride ",
-                        style: TextStyle(color: Colors.white)),
-                  );
-                }
-                return Column(
-                  children: [
-                    for (dynamic ride
-                        in dashboardCubit.dashboardClass!.previousRide)
-                      Container(
-                        height: 37,
-                        width: MediaQuery.of(context).size.width - 16.0,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.k39453C),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Image.asset("assets/images/location.png"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              ride.tpString(),
-                              style: k13_400_roboto,
-                            ),
-                            Spacer(),
-                            Image.asset("assets/images/iconplus.png"),
-                            SizedBox(
-                              width: 10,
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                );
-              }),
+              // BlocBuilder<DashboardCubit, DashboardState>(
+              //     builder: (context, state) {
+              //   if ((state is! DashboardSuccessState)) {
+              //     return const Padding(
+              //       padding: EdgeInsets.all(8.0),
+              //       child:
+              //           Text("WAIT...", style: TextStyle(color: Colors.white)),
+              //     );
+              //   }
+              //   if (dashboardCubit.dashboardClass!.previousRide.isEmpty) {
+              //     return Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: const Text("nothing yet !  first lets go to a ride ",
+              //           style: TextStyle(color: Colors.white)),
+              //     );
+              //   }
+              //   return Column(
+              //     children: [
+              //       for (dynamic ride
+              //           in dashboardCubit.dashboardClass!.previousRide)
+              //         Container(
+              //           height: 37,
+              //           width: MediaQuery.of(context).size.width - 16.0,
+              //           decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(10),
+              //               color: AppColors.k39453C),
+              //           child: Row(
+              //             children: [
+              //               SizedBox(
+              //                 width: 10,
+              //               ),
+              //               Image.asset("assets/images/location.png"),
+              //               SizedBox(
+              //                 width: 10,
+              //               ),
+              //               Text(
+              //                 ride.tpString(),
+              //                 style: k13_400_roboto,
+              //               ),
+              //               Spacer(),
+              //               Image.asset("assets/images/iconplus.png"),
+              //               SizedBox(
+              //                 width: 10,
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //     ],
+              //   );
+              // }),
               Container(
                 height: 30,
                 width: MediaQuery.of(context).size.width - 16.0,
@@ -610,21 +624,21 @@ class _DashboardState extends State<Dashboard> {
                     color: Colors.black),
                 child: Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Text(
                       "MORE",
                       style: k13_700_roboto,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Image.asset("assets/images/Polygon 1.png")
                   ],
                 ),
               ),
-              SizedBox(height: 54),
+              const SizedBox(height: 54),
             ],
           ),
         ),

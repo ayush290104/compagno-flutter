@@ -124,68 +124,68 @@ class _SpeedGraphState extends State<SpeedGraph> {
                         ],
                       ),
                     ),
-                    BlocBuilder<DashboardCubit, DashboardState>(
-                        builder: (context, state) {
-                      if (state is DashboardSuccessState) {
-                        return (dashboardCubit
-                                    .dashboardClass!.speed.speed.length >
-                                1)
-                            ? LineGraph(
-                                features: [
-                                  Feature(
-                                      title: "SPEED",
-                                      color: AppColors.k69806F,
-                                      data: dashboardCubit
-                                          .dashboardClass!.speed.speed)
-                                ],
-                                size: Size(
-                                    MediaQuery.of(context).size.width - 16 * 2,
-                                    307),
-                                labelX: [
-                                  for (double i in dashboardCubit
-                                      .dashboardClass!.speed.speed)
-                                    i.toString()
-                                ],
-                                labelY: [
-                                  for (double i in dashboardCubit
-                                      .dashboardClass!.speed.time)
-                                    i.toString()
-                                ],
-                                //showDescription: true,
-                                graphColor: Colors.white,
-                                graphOpacity: 0.2,
-                                verticalFeatureDirection: true,
-                                // descriptionHeight: 100,
-                              )
-                            : Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                      width: MediaQuery.of(context).size.width -
-                                          16 * 2,
-                                      height: 307,
-                                      child: const Text(
-                                        "sorry, we need more data to display it!",
-                                        style: TextStyle(color: Colors.white),
-                                      )),
-                                ),
-                              );
-                      } else {
-                        return Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                                width:
-                                    MediaQuery.of(context).size.width - 16 * 2,
-                                height: 307,
-                                child: const Text(
-                                  "WAITING",
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                          ),
-                        );
-                      }
-                    }),
+                    // BlocBuilder<DashboardCubit, DashboardState>(
+                    //     builder: (context, state) {
+                    //   if (state is DashboardSuccessState) {
+                    //     return (dashboardCubit
+                    //                 .dashboardClass!.speed.speed.length >
+                    //             1)
+                    //         ? LineGraph(
+                    //             features: [
+                    //               Feature(
+                    //                   title: "SPEED",
+                    //                   color: AppColors.k69806F,
+                    //                   data: dashboardCubit
+                    //                       .dashboardClass!.speed.speed)
+                    //             ],
+                    //             size: Size(
+                    //                 MediaQuery.of(context).size.width - 16 * 2,
+                    //                 307),
+                    //             labelX: [
+                    //               for (double i in dashboardCubit
+                    //                   .dashboardClass!.speed.speed)
+                    //                 i.toString()
+                    //             ],
+                    //             labelY: [
+                    //               for (double i in dashboardCubit
+                    //                   .dashboardClass!.speed.time)
+                    //                 i.toString()
+                    //             ],
+                    //             //showDescription: true,
+                    //             graphColor: Colors.white,
+                    //             graphOpacity: 0.2,
+                    //             verticalFeatureDirection: true,
+                    //             // descriptionHeight: 100,
+                    //           )
+                    //         : Center(
+                    //             child: Padding(
+                    //               padding: const EdgeInsets.all(8.0),
+                    //               child: SizedBox(
+                    //                   width: MediaQuery.of(context).size.width -
+                    //                       16 * 2,
+                    //                   height: 307,
+                    //                   child: const Text(
+                    //                     "sorry, we need more data to display it!",
+                    //                     style: TextStyle(color: Colors.white),
+                    //                   )),
+                    //             ),
+                    //           );
+                    //   } else {
+                    //     return Center(
+                    //       child: Padding(
+                    //         padding: const EdgeInsets.all(8.0),
+                    //         child: SizedBox(
+                    //             width:
+                    //                 MediaQuery.of(context).size.width - 16 * 2,
+                    //             height: 307,
+                    //             child: const Text(
+                    //               "WAITING",
+                    //               style: TextStyle(color: Colors.white),
+                    //             )),
+                    //       ),
+                    //     );
+                    //   }
+                    // }),
                   ],
                 ),
               ),

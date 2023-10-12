@@ -241,67 +241,67 @@ class _GoalSetState extends State<GoalSet> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(12))),
                                     ),
-                                    Row(
-                                      children: [
-                                        Container(
-                                          height: 8.h,
-                                          width: (dashboardCubit
-                                                      .dashboardClass!.speed
-                                                      .getMax() ==
-                                                  0
-                                              ? 0.0
-                                              : (dashboardCubit
-                                                      .dashboardClass!.speed
-                                                      .getAvg()) *
-                                                  (MediaQuery.of(context)
-                                                          .size
-                                                          .width -
-                                                      16 * 2 -
-                                                      80 -
-                                                      23 * 2 -
-                                                      16.0) /
-                                                  (dashboardCubit
-                                                      .dashboardClass!.speed
-                                                      .getMax())),
-                                          decoration: const BoxDecoration(
-                                              color: Color(0xffEAE9E5),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12))),
-                                        ),
-                                      ],
-                                    )
+                                    // Row(
+                                    //   children: [
+                                    //     Container(
+                                    //       height: 8.h,
+                                    //       width: (dashboardCubit
+                                    //                   .dashboardClass!.speed
+                                    //                   .getMax() ==
+                                    //               0
+                                    //           ? 0.0
+                                    //           : (dashboardCubit
+                                    //                   .dashboardClass!.speed
+                                    //                   .getAvg()) *
+                                    //               (MediaQuery.of(context)
+                                    //                       .size
+                                    //                       .width -
+                                    //                   16 * 2 -
+                                    //                   80 -
+                                    //                   23 * 2 -
+                                    //                   16.0) /
+                                    //               (dashboardCubit
+                                    //                   .dashboardClass!.speed
+                                    //                   .getMax())),
+                                    //       decoration: const BoxDecoration(
+                                    //           color: Color(0xffEAE9E5),
+                                    //           borderRadius: BorderRadius.all(
+                                    //               Radius.circular(12))),
+                                    //     ),
+                                    //   ],
+                                    // )
                                   ],
                                 ),
                                 SizedBox(
                                   height: 8,
                                 ),
-                                SizedBox(
-                                  width: (MediaQuery.of(context).size.width -
-                                      16 * 2 -
-                                      80 -
-                                      23 * 2 -
-                                      16.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "${dashboardCubit.dashboardClass!.speed.getMin()} mph\nSlowest",
-                                        style: k13_400_roboto,
-                                      ),
-                                      Text(
-                                        "${dashboardCubit.dashboardClass!.speed.getAvg()} mph\nAverage",
-                                        style: k13_400_roboto,
-                                      ),
-                                      Text(
-                                        "${dashboardCubit.dashboardClass!.speed.getMax()} mph\nFastest",
-                                        style: k13_400_roboto,
-                                      )
-                                    ],
-                                  ),
-                                )
+                                // SizedBox(
+                                //   width: (MediaQuery.of(context).size.width -
+                                //       16 * 2 -
+                                //       80 -
+                                //       23 * 2 -
+                                //       16.0),
+                                //   child: Row(
+                                //     mainAxisAlignment:
+                                //         MainAxisAlignment.spaceBetween,
+                                //     crossAxisAlignment:
+                                //         CrossAxisAlignment.center,
+                                //     children: [
+                                //       Text(
+                                //         "${dashboardCubit.dashboardClass!.speed.getMin()} mph\nSlowest",
+                                //         style: k13_400_roboto,
+                                //       ),
+                                //       Text(
+                                //         "${dashboardCubit.dashboardClass!.speed.getAvg()} mph\nAverage",
+                                //         style: k13_400_roboto,
+                                //       ),
+                                //       Text(
+                                //         "${dashboardCubit.dashboardClass!.speed.getMax()} mph\nFastest",
+                                //         style: k13_400_roboto,
+                                //       )
+                                //     ],
+                                //   ),
+                                // )
                               ],
                             )
                           ],
@@ -357,34 +357,34 @@ class _GoalSetState extends State<GoalSet> {
                                     ),
                                     Row(
                                       children: [
-                                        Container(
-                                          height: 8.h,
-                                          width: ((dashboardCubit
-                                                      .dashboardClass!
-                                                      .turnIncline
-                                                      .max ==
-                                                  0.0)
-                                              ? 0.0
-                                              : ((dashboardCubit.dashboardClass!
-                                                          .turnIncline.avg ??
-                                                      0) *
-                                                  (MediaQuery.of(context)
-                                                          .size
-                                                          .width -
-                                                      16 * 2 -
-                                                      80 -
-                                                      23 * 2 -
-                                                      16.0) /
-                                                  ((dashboardCubit
-                                                          .dashboardClass!
-                                                          .turnIncline
-                                                          .max ??
-                                                      1)))),
-                                          decoration: const BoxDecoration(
-                                              color: Color(0xff69806F),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12))),
-                                        ),
+                                        // Container(
+                                        //   height: 8.h,
+                                        //   width: ((dashboardCubit
+                                        //               .dashboardClass!
+                                        //               .turnIncline
+                                        //               .max ==
+                                        //           0.0)
+                                        //       ? 0.0
+                                        //       : ((dashboardCubit.dashboardClass!
+                                        //                   .turnIncline.avg ??
+                                        //               0) *
+                                        //           (MediaQuery.of(context)
+                                        //                   .size
+                                        //                   .width -
+                                        //               16 * 2 -
+                                        //               80 -
+                                        //               23 * 2 -
+                                        //               16.0) /
+                                        //           ((dashboardCubit
+                                        //                   .dashboardClass!
+                                        //                   .turnIncline
+                                        //                   .max ??
+                                        //               1)))),
+                                        //   decoration: const BoxDecoration(
+                                        //       color: Color(0xff69806F),
+                                        //       borderRadius: BorderRadius.all(
+                                        //           Radius.circular(12))),
+                                        // ),
                                       ],
                                     )
                                   ],
@@ -392,30 +392,30 @@ class _GoalSetState extends State<GoalSet> {
                                 SizedBox(
                                   height: 8,
                                 ),
-                                SizedBox(
-                                  width: (MediaQuery.of(context).size.width -
-                                      16 * 2 -
-                                      80 -
-                                      23 * 2 -
-                                      16.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SizedBox(
-                                        width: 20,
-                                      ),
-                                      Text(
-                                        "${dashboardCubit.dashboardClass!.turnIncline.avg ?? 0}°\nAverage",
-                                        style: k13_400_roboto,
-                                      ),
-                                      Text(
-                                        "${dashboardCubit.dashboardClass!.turnIncline.max ?? 0}°\nSteepest",
-                                        style: k13_400_roboto,
-                                      )
-                                    ],
-                                  ),
-                                )
+                                // SizedBox(
+                                //   width: (MediaQuery.of(context).size.width -
+                                //       16 * 2 -
+                                //       80 -
+                                //       23 * 2 -
+                                //       16.0),
+                                //   child: Row(
+                                //     mainAxisAlignment:
+                                //         MainAxisAlignment.spaceBetween,
+                                //     children: [
+                                //       SizedBox(
+                                //         width: 20,
+                                //       ),
+                                //       Text(
+                                //         "${dashboardCubit.dashboardClass!.turnIncline.avg ?? 0}°\nAverage",
+                                //         style: k13_400_roboto,
+                                //       ),
+                                //       Text(
+                                //         "${dashboardCubit.dashboardClass!.turnIncline.max ?? 0}°\nSteepest",
+                                //         style: k13_400_roboto,
+                                //       )
+                                //     ],
+                                //   ),
+                                // )
                               ],
                             )
                           ],
@@ -433,15 +433,15 @@ class _GoalSetState extends State<GoalSet> {
                           SizedBox(
                             width: 20,
                           ),
-                          BlocBuilder<DashboardCubit, DashboardState>(
-                              builder: (context, state) {
-                            return Text(
-                              (state is DashboardSuccessState)
-                                  ? dashboardCubit.dashboardClass!.totalTime
-                                  : "WAIT...",
-                              style: k16_800_roboto,
-                            );
-                          }),
+                          // BlocBuilder<DashboardCubit, DashboardState>(
+                          //     builder: (context, state) {
+                          //   return Text(
+                          //     (state is DashboardSuccessState)
+                          //         ? dashboardCubit.dashboardClass!.totalTime
+                          //         : "WAIT...",
+                          //     style: k16_800_roboto,
+                          //   );
+                          // }),
                         ],
                       ),
                       SizedBox(

@@ -1,34 +1,37 @@
-
-import 'package:compagno4/constant/color.dart';
 import 'package:compagno4/constant/fonts.dart';
-import 'package:compagno4/core/api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../screens/register/register_bloc/register_bloc.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String text;
 
   final VoidCallback onTap;
-  const ButtonWidget({Key? key,
+  const ButtonWidget({
+    Key? key,
     required this.text,
-    required this.onTap, }) : super(key: key);
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Container(
-
-    height: 50,width: 170,
-    decoration: const BoxDecoration(
-     color: Colors.white,
-       borderRadius: BorderRadius.all(Radius.circular(120.0)),),
-    child: ElevatedButton(
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
-        backgroundColor: MaterialStateProperty.all(Colors.grey),
-      ),
-        onPressed: onTap, child: Text(text, style: k32_400_bebas,)),
-  );
+        height: 50,
+        width: 170,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(120.0)),
+        ),
+        child: ElevatedButton(
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30))),
+              backgroundColor: MaterialStateProperty.all(Colors.grey),
+            ),
+            onPressed: onTap,
+            child: Text(
+              text,
+              style: k32_400_bebas,
+            )),
+      );
 }
 
 
