@@ -111,82 +111,101 @@ class _TrailChatterState extends State<TrailChatter> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.k000000),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16, left: 21),
-                      child: Row(
-                        children: [
-                          Text(
-                            "Chatter size",
-                            style: k16_400_bebas,
-                          ),
-                        ],
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16, left: 21),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Chatter size",
+                              style: k16_400_bebas,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    // BlocBuilder<DashboardCubit, DashboardState>(
-                    //     builder: (context, state) {
-                    //   if (state is DashboardSuccessState) {
-                    //     return (dashboardCubit
-                    //                 .dashboardClass!.trailChatter.data.length >
-                    //             1)
-                    //         ? LineGraph(
-                    //             features: [
-                    //               Feature(
-                    //                   title: "TRAIL CHATTER",
-                    //                   color: AppColors.k69806F,
-                    //                   data: dashboardCubit
-                    //                       .dashboardClass!.trailChatter.data)
-                    //             ],
-                    //             size: Size(
-                    //                 MediaQuery.of(context).size.width - 16 * 2,
-                    //                 307),
-                    //             labelX: [
-                    //               for (double i in dashboardCubit
-                    //                   .dashboardClass!.trailChatter.data)
-                    //                 i.toString()
-                    //             ],
-                    //             labelY: [
-                    //               for (double i in dashboardCubit
-                    //                   .dashboardClass!.trailChatter.distance)
-                    //                 i.toString()
-                    //             ],
-                    //             //showDescription: true,
-                    //             graphColor: Colors.white,
-                    //             graphOpacity: 0.2,
-                    //             verticalFeatureDirection: true,
-                    //             // descriptionHeight: 100,
-                    //           )
-                    //         : Center(
-                    //             child: Padding(
-                    //               padding: const EdgeInsets.all(8.0),
-                    //               child: SizedBox(
-                    //                   width: MediaQuery.of(context).size.width -
-                    //                       16 * 2,
-                    //                   height: 307,
-                    //                   child: const Text(
-                    //                     "sorry, we need more data to display it!",
-                    //                     style: TextStyle(color: Colors.white),
-                    //                   )),
-                    //             ),
-                    //           );
-                    //   } else {
-                    //     return Center(
-                    //       child: Padding(
-                    //         padding: const EdgeInsets.all(8.0),
-                    //         child: SizedBox(
-                    //             width:
-                    //                 MediaQuery.of(context).size.width - 16 * 2,
-                    //             height: 307,
-                    //             child: const Text(
-                    //               "WAITING",
-                    //               style: TextStyle(color: Colors.white),
-                    //             )),
-                    //       ),
-                    //     );
-                    //   }
-                    // }),
-                  ],
+                      BlocBuilder<DashboardCubit, DashboardState>(
+                          builder: (context, state) {
+                        if (state is DashboardSuccessState) {
+                          return (dashboardCubit.dashboardClass!.data!
+                              .trailChatter!.data!.length >
+                                  1)
+                              ? LineGraph(
+                                  features: [
+                                    Feature(
+                                        title: "TRAIL CHATTER",
+                                        color: AppColors.k69806F,
+                                        data: fnToDouble2(dashboardCubit
+                                            .dashboardClass!
+                                            .data!
+                                            .trailChatter!
+                                            .data!))
+                                  ],
+                                  size: Size(
+                                      (MediaQuery.of(context).size.width - 16 * 2)*1,
+                                      307),
+                              labelY: [
+                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).isNotEmpty)
+                                  fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).first.toString(),
+                                ...List<String>.generate(
+                                  fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).length - 2,
+                                      (index) => "",
+                                ),
+                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).isNotEmpty)
+                                  fnToDouble2(dashboardCubit!.dashboardClass!.data!.trailChatter!.data!).last.toString(),
+                              ],
+
+
+                              labelX: [
+                              if (dashboardCubit.dashboardClass!.data!.trailChatter!.distance!.isNotEmpty)
+                                dashboardCubit.dashboardClass!.data!.trailChatter!.distance!.first,
+                              ...List<String>.generate(
+                                dashboardCubit.dashboardClass!.data!.trailChatter!.distance!.length - 2,
+                                    (index) => "",
+                              ),
+                              if (dashboardCubit.dashboardClass!.data!.trailChatter!.distance!.isNotEmpty)
+                                dashboardCubit.dashboardClass!.data!.trailChatter!.distance!.last,
+                            ],
+
+                            //showDescription: true,
+                                  graphColor: Colors.white,
+                                  graphOpacity: 0.2,
+                                  verticalFeatureDirection: true,
+                                  // descriptionHeight: 100,
+                                )
+                              : Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: SizedBox(
+                                        width: MediaQuery.of(context).size.width -
+                                            16 * 2,
+                                        height: 307,
+                                        child: const Text(
+                                          "sorry, we need more data to display it!",
+                                          style: TextStyle(color: Colors.white),
+                                        )),
+                                  ),
+                                );
+                        } else {
+                          return Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width - 16 * 2,
+                                  height: 307,
+                                  child: const Text(
+                                    "WAITING",
+                                    style: TextStyle(color: Colors.white),
+                                  )),
+                            ),
+                          );
+                        }
+                      }),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -255,5 +274,17 @@ class _TrailChatterState extends State<TrailChatter> {
         ),
       ),
     );
+  }
+  List<double> fnToDouble2(List<num> ab) {
+    List<double> hello = [];
+    for(var a in ab){
+
+
+        hello.add(a.toDouble());
+
+
+    }
+     debugPrint("hello is :$hello");
+    return hello;
   }
 }

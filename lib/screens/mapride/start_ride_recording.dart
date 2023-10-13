@@ -159,7 +159,7 @@ class _StartRidingState extends State<StartRiding> {
             InkWell(
               onTap: () {
                 context.read<PostValueProvider>().completeRide();
-
+Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => RideComplete()));
               },

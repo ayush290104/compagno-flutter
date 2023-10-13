@@ -8,7 +8,7 @@ class AppApi {
   // connectTimeout
   static const int connectionTimeout = 10000;
 
-  static const String googleMapAPIKey = '';
+  static const String googleMapAPIKey = 'AIzaSyCZ1pALNnCvdJmc27PND2X6hHCfM8C8REY';
   static const String login = "login";
   static const String register = "register";
   static const String logout = "logout";

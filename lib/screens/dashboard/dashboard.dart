@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:compagno4/core/network/app_api.dart';
 import 'package:compagno4/main.dart';
 import 'package:compagno4/save_user/constants/constants.dart';
 import 'package:compagno4/save_user/network/local_save.dart';
@@ -10,6 +13,9 @@ import 'package:draw_graph/draw_graph.dart';
 import 'package:draw_graph/models/feature.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
@@ -23,6 +29,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final List<LatLng> listLocations = [];
   final List<String> trailXAxis = [];
   final List<String> trailYAxis = [];
   final List<String> speedYAxis = [];
@@ -34,18 +41,122 @@ class _DashboardState extends State<Dashboard> {
     ),
   ];
 
+  Map<PolylineId, Polyline> polyLines = <PolylineId, Polyline>{};
+  GoogleMapController? _controller;
+
+  //final CameraPosition _kGooglePlex = ;
   @override
   void initState() {
     super.initState();
   }
 
-  void processTrailChatterData() {}
+  Set<Polyline> _createPolylines(List<LatLng> list) {
+    final Set<Polyline> polylines = {};
+
+    // Replace with your fixed coordinates
+    final List<LatLng> coordinates = list;
+
+    polylines.add(Polyline(
+      polylineId: const PolylineId('route'),
+      color: Colors.blue,
+      points: coordinates,
+      width: 4, // Adjust the width as needed
+    ));
+
+    return polylines;
+  }
+
+  Future<CameraPosition> getUserLocation() async {
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
+
+      LatLng userLocation = LatLng(position.latitude, position.longitude);
+
+      // Create a CameraPosition with the obtained coordinates
+      CameraPosition initialCameraPosition = CameraPosition(
+        target: userLocation,
+        zoom: 15, // You can adjust the initial zoom level
+      );
+
+      return initialCameraPosition;
+    } catch (e) {
+      // Handle any errors here
+      print("Error: $e");
+
+      return const CameraPosition(
+        target: LatLng(0, 0),
+        // Default to (0,0) if user location couldn't be determined
+        zoom: 15, // You can adjust the initial zoom level
+      );
+    }
+  }
+
+  Future<Polyline> _getRoutePolyline({
+    required LatLng start,
+    required LatLng finish,
+    required Color color,
+    required String id,
+    int width = 6,
+  }) async {
+    final polylinePoints = PolylinePoints();
+    final List<LatLng> polylineCoordinates = [];
+    final startPoint = PointLatLng(start.latitude, start.longitude);
+    final finishPoint = PointLatLng(finish.latitude, finish.longitude);
+
+    final result = await polylinePoints.getRouteBetweenCoordinates(
+      AppApi.googleMapAPIKey,
+      startPoint,
+      finishPoint,
+    );
+
+    if (result.points.isNotEmpty) {
+      for (var point in result.points) {
+        polylineCoordinates.add(
+          LatLng(point.latitude, point.longitude),
+        );
+      }
+    }
+
+    return Polyline(
+      polylineId: PolylineId(id),
+      consumeTapEvents: true,
+      points: polylineCoordinates,
+      color: color,
+      width: width,
+    );
+  }
+
+  getMultiplePolyLines() async {
+    List<Polyline> polylines = [];
+
+    for (int i = 1; i < listLocations.length; i++) {
+      final polyline = await _getRoutePolyline(
+        start: listLocations[i - 1],
+        finish: listLocations[i],
+        color: Colors.green,
+        id: 'firstPolyline $i',
+        width: 4,
+      );
+      polylines.add(polyline);
+    }
+
+    setState(() {
+      polyLines.clear();
+      for (int i = 0; i < polylines.length; i++) {
+        polyLines[PolylineId('firstPolyline $i')] = polylines[i];
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     trailXAxis.clear();
     trailYAxis.clear();
     speedYAxis.clear();
+    listLocations.clear();
+
     // Process trailChatter distance
     if (dashboardCubit.dashboardClass?.data?.trailChatter?.distance != null) {
       for (var i
@@ -250,7 +361,7 @@ class _DashboardState extends State<Dashboard> {
                                     style: k16_400_bebas,
                                   ),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 SizedBox(
                                     child: Image.asset(
                                         "assets/images/iconsforword.png"))
@@ -286,11 +397,7 @@ class _DashboardState extends State<Dashboard> {
                                         lastXValue
                                       ],
 
-                                      labelY: [
-                                        firstYValue,
-                                        middleYValue,
-                                        lastYValue
-                                      ],
+                                      labelY: ["1", "2", "3"],
                                       //showDescription: true,
                                       graphColor: Colors.white,
                                       graphOpacity: 0.2,
@@ -302,18 +409,21 @@ class _DashboardState extends State<Dashboard> {
                                               2 -
                                           8 * 5,
                                       height: 100,
-                                      child: const Text(
-                                          "sorry, we need more data to display it!",
-                                          style:
-                                              TextStyle(color: Colors.white)));
+                                      child: const Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                            "sorry, we need more data to display it!",
+                                            style:
+                                                TextStyle(color: Colors.white)),
+                                      ));
                             } else {
                               return SizedBox(
                                   width: MediaQuery.of(context).size.width / 2 -
                                       8 * 6,
                                   height: 100,
-                                  child: Align(
+                                  child: const Align(
                                     alignment: Alignment.center,
-                                    child: const Text("WAIT...",
+                                    child: Text("WAIT...",
                                         style: TextStyle(color: Colors.white)),
                                   ));
                             }
@@ -406,7 +516,7 @@ class _DashboardState extends State<Dashboard> {
                                       middleXValue,
                                       lastXValue
                                     ],
-                                    labelY: [sYValue, sMYValue, sLYValue],
+                                    labelY: ["10", "25", "45"],
                                     graphColor: Colors.white,
                                     graphOpacity: 0.2,
                                     verticalFeatureDirection: true,
@@ -550,7 +660,89 @@ class _DashboardState extends State<Dashboard> {
               const SizedBox(
                 height: 13,
               ),
-              Image.asset("assets/images/mapimage.png"),
+              BlocBuilder<DashboardCubit, DashboardState>(
+                  builder: (context, state) {
+                return Center(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: BlocBuilder<DashboardCubit, DashboardState>(
+                            builder: (context, state) {
+                              if (state is DashboardSuccessState) {
+                                if (dashboardCubit
+                                        .dashboardClass?.data?.yourRoute !=
+                                    null) {
+                                  listLocations.clear();
+                                  for (var i in dashboardCubit
+                                      .dashboardClass!.data!.yourRoute!) {
+                                    listLocations.add(LatLng(
+                                        i.lat!.toDouble(), i.lng!.toDouble()));
+                                    //debugPrint("listLocations at debug $listLocations");
+                                  }
+                                }
+
+                                return Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: (listLocations.isNotEmpty)
+                                        ? SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.4,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.8,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(20)),
+                                              child: GoogleMap(
+                                                polylines: _createPolylines(
+                                                    listLocations),
+                                                onMapCreated:
+                                                    (GoogleMapController
+                                                        controller) {
+                                                  _controller = controller;
+
+                                                  // Zoom to the initial target position
+                                                  controller.animateCamera(
+                                                    CameraUpdate.newLatLngZoom(
+                                                        listLocations[0],
+                                                        15.0), // Adjust the zoom level as needed
+                                                  );
+                                                },
+                                                myLocationEnabled: true,
+                                                mapType: MapType.normal,
+                                                initialCameraPosition:
+                                                    CameraPosition(
+                                                        target:
+                                                            listLocations[0]),
+                                              ),
+                                            ),
+                                          )
+                                        : const SizedBox(
+                                            child: Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                    "Sorry, we need more data to display it!",
+                                                    style: TextStyle(
+                                                        color: Colors.white))),
+                                          ));
+                              } else {
+                                return const Text("Waiting");
+                              }
+                            },
+                          )),
+                    ],
+                  ),
+                );
+              }),
+
+              // Image.asset("assets/images/mapimage.png"),
               const SizedBox(
                 height: 40,
               ),
@@ -600,18 +792,38 @@ class _DashboardState extends State<Dashboard> {
 
   List<double> fnToDouble(List<int> ab) {
     List<double> hello = [];
+    // hello.add(ab[0].toDouble());
+    // hello.add(ab[ab.length~/2].toDouble());
+    // hello.add(ab[ab.length-1].toDouble());
     for (var a in ab) {
-      hello.add(a.toDouble());
+      if (hello.length == 3) {
+        break;
+      }
+      if (a != 0) {
+        hello.add(a.toDouble() / 45);
+      }
     }
+    debugPrint("list is $hello");
+    return hello;
+  }
+
+  List<LatLng> fntoLatLng(List<num> ab) {
+    List<LatLng> hello = [];
+    for (var a in ab) {}
     return hello;
   }
 
   List<double> fnToDouble2(List<num> ab) {
     List<double> hello = [];
     for (var a in ab) {
-      hello.add(a.toDouble());
+      if (hello.length == 3) {
+        break;
+      }
+      if (a != 0) {
+        hello.add(a.toDouble() / 3);
+      }
     }
-    debugPrint("list is $hello");
+
     return hello;
   }
 }

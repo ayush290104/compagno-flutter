@@ -138,6 +138,7 @@ class _TabScreenState extends State<TabScreen> {
           ],),
       ),
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
         onPageChanged: (page) {
           setState(

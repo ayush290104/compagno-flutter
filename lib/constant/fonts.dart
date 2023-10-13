@@ -104,7 +104,7 @@ final TextStyle k11_400_roboto = GoogleFonts.roboto(
 );
 final TextStyle k13_400_roboto = GoogleFonts.roboto(
   textStyle: TextStyle(
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: FontWeight.w800,
     color: AppColors.kFFFFFF,
   ),
