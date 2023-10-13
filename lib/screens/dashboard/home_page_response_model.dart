@@ -40,7 +40,7 @@ class Data {
     final TrailChatter? trailChatter;
      final Speed? speed;
       final Map<String, num>? turnIncline;
-    // final String? totalTime;
+    final String? totalTime;
 
     Data({
         this.user,
@@ -50,7 +50,7 @@ class Data {
         this.trailChatter,
          this.speed,
          this.turnIncline,
-        // this.totalTime,
+        this.totalTime,
     });
 
     factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
@@ -65,7 +65,7 @@ class Data {
          trailChatter: json["trail_chatter"] == null ? null : TrailChatter.fromJson(json["trail_chatter"]),
          speed: json["speed"] == null ? null : Speed.fromJson(json["speed"]),
          turnIncline: Map.from(json["turn_incline"]!).map((k, v) => MapEntry<String, num>(k, v)),
-        // totalTime: json["total_time"],
+        totalTime: json["total_time"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -76,7 +76,7 @@ class Data {
          "trail_chatter": trailChatter?.toJson(),
         "speed": speed?.toJson(),
          "turn_incline": Map.from(turnIncline!).map((k, v) => MapEntry<String, dynamic>(k, v)),
-        // "total_time": totalTime,
+        "total_time": totalTime,
     };
 }
 

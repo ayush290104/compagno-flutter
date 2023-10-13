@@ -23,6 +23,9 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final List<String> trailXAxis = [];
+  final List<String> trailYAxis = [];
+  final List<String> speedYAxis = [];
   final List<Feature> features = [
     Feature(
       title: "Drink Water",
@@ -36,8 +39,55 @@ class _DashboardState extends State<Dashboard> {
     super.initState();
   }
 
+  void processTrailChatterData() {}
+
   @override
   Widget build(BuildContext context) {
+    trailXAxis.clear();
+    trailYAxis.clear();
+    speedYAxis.clear();
+    // Process trailChatter distance
+    if (dashboardCubit.dashboardClass?.data?.trailChatter?.distance != null) {
+      for (var i
+          in dashboardCubit.dashboardClass!.data!.trailChatter!.distance!) {
+        List<String> timeComponents = i.split(':');
+        String hrMin = '${timeComponents[0]}:${timeComponents[1]}';
+        trailXAxis.add(hrMin);
+      }
+    }
+
+    // Calculate X values
+    String firstXValue = trailXAxis.isNotEmpty ? trailXAxis.first : '';
+    String middleXValue =
+        trailXAxis.length > 2 ? trailXAxis[trailXAxis.length ~/ 2] : '';
+    String lastXValue = trailXAxis.isNotEmpty ? trailXAxis.last : '';
+
+    // Process trailChatter data
+    if (dashboardCubit.dashboardClass?.data?.trailChatter?.data != null) {
+      for (var i in dashboardCubit.dashboardClass!.data!.trailChatter!.data!) {
+        trailYAxis.add(i.toString());
+      }
+    }
+
+    // Calculate Y values
+    String firstYValue = trailYAxis.isNotEmpty ? trailYAxis.first : '';
+    String middleYValue =
+        trailYAxis.length > 2 ? trailYAxis[trailYAxis.length ~/ 2] : '';
+    String lastYValue = trailYAxis.isNotEmpty ? trailYAxis.last : '';
+
+    // Process trailChatter data
+    if (dashboardCubit.dashboardClass?.data?.speed?.speed != null) {
+      for (var i in dashboardCubit.dashboardClass!.data!.speed!.speed!) {
+        speedYAxis.add(i.toString());
+      }
+    }
+
+    // Calculate Y values
+    String sYValue = speedYAxis.isNotEmpty ? speedYAxis.first : '';
+    String sMYValue =
+        speedYAxis.length > 2 ? speedYAxis[speedYAxis.length ~/ 2] : '';
+    String sLYValue = speedYAxis.isNotEmpty ? speedYAxis.last : '';
+
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(
@@ -182,14 +232,14 @@ class _DashboardState extends State<Dashboard> {
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width / 2 - 8 * 3,
-                      height: 158,
+                      height: 170,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: AppColors.k000000),
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 23,right: 10),
+                            padding: const EdgeInsets.only(top: 23, right: 10),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -201,7 +251,9 @@ class _DashboardState extends State<Dashboard> {
                                   ),
                                 ),
                                 Spacer(),
-                                SizedBox(child: Image.asset("assets/images/iconsforword.png"))
+                                SizedBox(
+                                    child: Image.asset(
+                                        "assets/images/iconsforword.png"))
                               ],
                             ),
                           ),
@@ -211,8 +263,7 @@ class _DashboardState extends State<Dashboard> {
                               return (dashboardCubit.dashboardClass!.data!
                                           .trailChatter!.data!.length >
                                       1)
-                                  ?
-                              LineGraph(
+                                  ? LineGraph(
                                       features: [
                                         Feature(
                                           title: "TRAIL CHATTER",
@@ -229,26 +280,16 @@ class _DashboardState extends State<Dashboard> {
                                                   2 -
                                               8 * 3,
                                           100),
-                                      labelX: const [
-                                        "0.1", "0.2"
-                                        // for (var i in dashboardCubit
-                                        //     .dashboardClass!
-                                        //     .data!
-                                        //     .trailChatter!
-                                        //     .data!)
-                                        //   i.toString()
+                                      labelX: [
+                                        firstXValue,
+                                        middleXValue,
+                                        lastXValue
                                       ],
 
-                                      labelY: const [
-
-                                        // for (var i in dashboardCubit
-                                        //     .dashboardClass!
-                                        //     .data!
-                                        //     .trailChatter!
-                                        //     .data!)
-                                        // //   i.toString()
-                                        // "0.1",
-                                        // "0.2"
+                                      labelY: [
+                                        firstYValue,
+                                        middleYValue,
+                                        lastYValue
                                       ],
                                       //showDescription: true,
                                       graphColor: Colors.white,
@@ -268,29 +309,34 @@ class _DashboardState extends State<Dashboard> {
                             } else {
                               return SizedBox(
                                   width: MediaQuery.of(context).size.width / 2 -
-                                      8 * 5,
+                                      8 * 6,
                                   height: 100,
-                                  child: const Text("WAIT...",
-                                      style: TextStyle(color: Colors.white)));
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: const Text("WAIT...",
+                                        style: TextStyle(color: Colors.white)),
+                                  ));
                             }
                           }),
                         ],
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2 - 8 * 3,
+                    height: 170,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColors.k000000,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SpeedGraph()));
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 2 - 8 * 3,
-                      height: 158,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.k000000),
+                              builder: (context) => const SpeedGraph()),
+                        );
+                      },
                       child: Column(
                         children: [
                           Padding(
@@ -305,7 +351,7 @@ class _DashboardState extends State<Dashboard> {
                                     style: k16_400_bebas,
                                   ),
                                 ),
-                                Spacer(),
+                                const Spacer(),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10),
                                   child: Image.asset(
@@ -315,58 +361,73 @@ class _DashboardState extends State<Dashboard> {
                             ),
                           ),
                           BlocBuilder<DashboardCubit, DashboardState>(
-                              builder: (context, state) {
-                            if (state is! DashboardSuccessState) {
-                              return SizedBox(
+                            builder: (context, state) {
+                              if (state is! DashboardSuccessState) {
+                                return SizedBox(
                                   width: MediaQuery.of(context).size.width / 2 -
                                       8 * 5,
                                   height: 100,
-                                  child: Align(
+                                  child: const Align(
                                     alignment: Alignment.center,
-                                    child: const Text("WAIT...",
-                                        style: TextStyle(color: Colors.white)),
-                                  ));
-                            }
+                                    child: Text(
+                                      "WAIT...",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                );
+                              }
 
-                            if (dashboardCubit.dashboardClass!.data!.speed!
-                                    .speed!.length >
-                                1) {
-                              return LineGraph(
-                                features: [
-                                  Feature(
-                                      title: "speed",
-                                      color: AppColors.kB69F4C,
-                                      data: fnToDouble(dashboardCubit
-                                          .dashboardClass!.data!.speed!.speed!))
-                                ],
-                                size: Size(
-                                    MediaQuery.of(context).size.width / 4, 100),
-                                labelX: [
-                                  for (var i in dashboardCubit
-                                      .dashboardClass!.data!.speed!.speed!)
-                                    ''
-                                ],
-                                labelY: const ["0.1"],
-                                // .getLabelYMin(),
-                                //showDescription: true,
-                                graphColor: Colors.white,
-                                graphOpacity: 0.2,
-                                verticalFeatureDirection: true,
-                                // descriptionHeight: 100,
-                              );
-                            }
-                            return SizedBox(
+                              if (dashboardCubit.dashboardClass!.data!.speed!
+                                      .speed!.length >
+                                  1) {
+                                return SizedBox(
+                                  width: MediaQuery.of(context).size.width / 2 -
+                                      8 * 5,
+                                  height: 100,
+                                  child: LineGraph(
+                                    features: [
+                                      Feature(
+                                        title: "speed",
+                                        color: AppColors.kB69F4C,
+                                        data: fnToDouble(dashboardCubit
+                                            .dashboardClass!
+                                            .data!
+                                            .speed!
+                                            .speed!),
+                                      )
+                                    ],
+                                    size: Size(
+                                      MediaQuery.of(context).size.width / 2 -
+                                          8 * 5,
+                                      100,
+                                    ),
+                                    labelX: [
+                                      firstXValue,
+                                      middleXValue,
+                                      lastXValue
+                                    ],
+                                    labelY: [sYValue, sMYValue, sLYValue],
+                                    graphColor: Colors.white,
+                                    graphOpacity: 0.2,
+                                    verticalFeatureDirection: true,
+                                  ),
+                                );
+                              }
+                              return SizedBox(
                                 width: MediaQuery.of(context).size.width / 2 -
                                     8 * 5,
                                 height: 100,
                                 child: const Text(
-                                    "sorry, we need more data to display it!",
-                                    style: TextStyle(color: Colors.white)));
-                          }),
+                                  "sorry, we need more data to display it!",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                            },
+                          ),
                         ],
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
               const SizedBox(
@@ -377,7 +438,7 @@ class _DashboardState extends State<Dashboard> {
                 children: [
                   Container(
                     width: MediaQuery.of(context).size.width / 2 - 8 * 3,
-                    height: 158,
+                    height: 170,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: AppColors.k000000),
@@ -399,13 +460,17 @@ class _DashboardState extends State<Dashboard> {
                                 padding: const EdgeInsets.only(right: 10),
                                 child: Image.asset(
                                     "assets/images/iconsforword.png"),
-                              )
+                              ),
                             ],
                           ),
                         ),
                         const SizedBox(
                           height: 30,
                         ),
+                        Text(
+                            dashboardCubit.dashboardClass?.data!.totalTime! ??
+                                "0:00:00",
+                            style: k30_400_bebas),
                       ],
                     ),
                   ),
@@ -494,7 +559,7 @@ class _DashboardState extends State<Dashboard> {
                 child: Row(
                   children: [
                     Text(
-                      "PREVIOUS rIDES",
+                      "PREVIOUS RIDES",
                       style: k20_400_bebas,
                     )
                   ],
