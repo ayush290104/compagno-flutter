@@ -50,7 +50,7 @@ class DioClient {
   Future<Response> post(String url,
       {Map<String, dynamic>? body, Map<String, dynamic>? queryParams}) async {
     try {
-      debugPrint("token  ${SaveId.getSaveData(key: "token")}");
+
       final Response response = await _dio.post(AppApi.baseUrl + url,
           data: body,
           queryParameters: queryParams,

@@ -166,16 +166,19 @@ class SpeedSensor {
   }
 
   double getLng() {
+
     return lng ?? 0;
   }
   double? kdistance;
 double getDistance(){
 return kdistance ?? 0;
-} 
+}
   void _onPositionUpdate(Position newPosition) {
+
     if (_previousPosition != null) {
       lat = newPosition.latitude;
       lng = newPosition.longitude;
+      debugPrint("lng is ${lng}");
 
       double distance = Geolocator.distanceBetween(
         _previousPosition?.latitude ?? 0.0,
@@ -193,7 +196,9 @@ return kdistance ?? 0;
       count += 1;
       speedList.add(_speed);
     }
+
     _previousPosition = newPosition;
+
   }
 
   double disposeSensor() {
@@ -210,9 +215,18 @@ return kdistance ?? 0;
     double counter = 0.0;
     counter =
         speedList.fold(0, (previousValue, element) => previousValue + element);
-    final value = counter / count;
+    var value = 0.0;
+    if(count!=0){
+   value = counter / count;
+    }
+
+    debugPrint("speed list is $speedList");
+
+    debugPrint("value is $value and count is $count");
     count = 0;
+    speedList.clear();
     counter = 0;
+
     return value;
   }
 }

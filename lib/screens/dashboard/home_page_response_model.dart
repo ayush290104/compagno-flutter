@@ -35,22 +35,22 @@ class HomePageResponse {
 class Data {
     final User? user;
     final LastRide? lastRide;
-    final List<PreviousRide>? previousRide;
-    final List<YourRoute>? yourRoute;
+     final List<PreviousRide>? previousRide;
+       final List<YourRoute>? yourRoute;
     final TrailChatter? trailChatter;
-    final Speed? speed;
-    final Map<String, int>? turnIncline;
-    final String? totalTime;
+     final Speed? speed;
+      final Map<String, num>? turnIncline;
+    // final String? totalTime;
 
     Data({
         this.user,
         this.lastRide,
-        this.previousRide,
-        this.yourRoute,
+         this.previousRide,
+          this.yourRoute,
         this.trailChatter,
-        this.speed,
-        this.turnIncline,
-        this.totalTime,
+         this.speed,
+         this.turnIncline,
+        // this.totalTime,
     });
 
     factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
@@ -59,24 +59,24 @@ class Data {
 
     factory Data.fromJson(Map<String, dynamic> json) => Data(
         user: json["user"] == null ? null : User.fromJson(json["user"]),
-        lastRide: json["last_ride"] == null ? null : LastRide.fromJson(json["last_ride"]),
-        previousRide: json["previous_ride"] == null ? [] : List<PreviousRide>.from(json["previous_ride"]!.map((x) => PreviousRide.fromJson(x))),
-        yourRoute: json["your_route"] == null ? [] : List<YourRoute>.from(json["your_route"]!.map((x) => YourRoute.fromJson(x))),
-        trailChatter: json["trail_chatter"] == null ? null : TrailChatter.fromJson(json["trail_chatter"]),
-        speed: json["speed"] == null ? null : Speed.fromJson(json["speed"]),
-        turnIncline: Map.from(json["turn_incline"]!).map((k, v) => MapEntry<String, int>(k, v)),
-        totalTime: json["total_time"],
+         lastRide: json["last_ride"] == null ? null : LastRide.fromJson(json["last_ride"]),
+         previousRide: json["previous_ride"] == null ? [] : List<PreviousRide>.from(json["previous_ride"]!.map((x) => PreviousRide.fromJson(x))),
+          yourRoute: json["your_route"] == null ? [] : List<YourRoute>.from(json["your_route"]!.map((x) => YourRoute.fromJson(x))),
+         trailChatter: json["trail_chatter"] == null ? null : TrailChatter.fromJson(json["trail_chatter"]),
+         speed: json["speed"] == null ? null : Speed.fromJson(json["speed"]),
+         turnIncline: Map.from(json["turn_incline"]!).map((k, v) => MapEntry<String, num>(k, v)),
+        // totalTime: json["total_time"],
     );
 
     Map<String, dynamic> toJson() => {
         "user": user?.toJson(),
-        "last_ride": lastRide?.toJson(),
-        "previous_ride": previousRide == null ? [] : List<dynamic>.from(previousRide!.map((x) => x.toJson())),
-        "your_route": yourRoute == null ? [] : List<dynamic>.from(yourRoute!.map((x) => x.toJson())),
-        "trail_chatter": trailChatter?.toJson(),
+         "last_ride": lastRide?.toJson(),
+         "previous_ride": previousRide == null ? [] : List<dynamic>.from(previousRide!.map((x) => x.toJson())),
+          "your_route": yourRoute == null ? [] : List<dynamic>.from(yourRoute!.map((x) => x.toJson())),
+         "trail_chatter": trailChatter?.toJson(),
         "speed": speed?.toJson(),
-        "turn_incline": Map.from(turnIncline!).map((k, v) => MapEntry<String, dynamic>(k, v)),
-        "total_time": totalTime,
+         "turn_incline": Map.from(turnIncline!).map((k, v) => MapEntry<String, dynamic>(k, v)),
+        // "total_time": totalTime,
     };
 }
 
@@ -157,11 +157,11 @@ class Speed {
 }
 
 class TrailChatter {
-    final List<double>? data;
+     final List<double>? data;
     final List<String>? distance;
 
     TrailChatter({
-        this.data,
+         this.data,
         this.distance,
     });
 
@@ -171,12 +171,12 @@ class TrailChatter {
 
     factory TrailChatter.fromJson(Map<String, dynamic> json) => TrailChatter(
         data: json["data"] == null ? [] : List<double>.from(json["data"]!.map((x) => x?.toDouble())),
-        distance: json["distance"] == null ? [] : List<String>.from(json["distance"]!.map((x) => x)),
+        distance: json["time"] == null ? [] : List<String>.from(json["time"]!.map((x) => x)),
     );
 
     Map<String, dynamic> toJson() => {
         "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x)),
-        "distance": distance == null ? [] : List<dynamic>.from(distance!.map((x) => x)),
+        "time": distance == null ? [] : List<dynamic>.from(distance!.map((x) => x)),
     };
 }
 
@@ -209,8 +209,8 @@ class User {
 }
 
 class YourRoute {
-    final double? lat;
-    final double? lng;
+    final num? lat;
+    final num? lng;
 
     YourRoute({
         this.lat,

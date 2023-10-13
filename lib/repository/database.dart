@@ -111,6 +111,7 @@ class DatabaseRepo {
         return null;
       } else{
         final data = jsonDecode(response.body);
+
         final parsedResponse = HomePageResponse.fromJson(data);
         return parsedResponse;
       }

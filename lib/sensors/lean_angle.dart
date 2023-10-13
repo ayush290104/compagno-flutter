@@ -14,7 +14,7 @@ class LeanAngleSensor {
         accelerometerEvents.listen((AccelerometerEvent event) {
       angle.add(calculateLeanAngle(event.x, event.y, event.z));
       count += 1;
-      dev.log(calculateLeanAngle(event.x, event.y, event.z).toString());
+      // dev.log("lean angle ${calculateLeanAngle(event.x, event.y, event.z).toString()}");
     });
   }
 
@@ -34,7 +34,7 @@ class LeanAngleSensor {
 
     _accelerometerSubscription?.cancel();
     _accelerometerSubscription = null;
-    dev.log((counter / count).toString());
+    // dev.log("(counter/count) lean angle ${(counter / count).toString()}");
     return counter / count;
   }
 

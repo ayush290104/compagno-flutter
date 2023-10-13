@@ -1,21 +1,18 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 
+import 'package:compagno4/core/network/dio_client.dart';
 import 'package:compagno4/save_user/constants/constants.dart';
 import 'package:compagno4/save_user/network/local_save.dart';
 import 'package:compagno4/sensors/acceleration.dart';
 import 'package:compagno4/sensors/angle_declination.dart';
 import 'package:compagno4/sensors/angle_inclination.dart';
-import 'package:compagno4/core/network/api.dart';
-import 'package:compagno4/core/network/dio_client.dart';
 import 'package:compagno4/sensors/lean_angle.dart';
 import 'package:compagno4/sensors/speed.dart';
 import 'package:compagno4/sensors/time_duration.dart';
 import 'package:compagno4/sensors/trail_chatter.dart';
 import 'package:flutter/material.dart';
-
-import 'main.dart';
+import 'package:intl/intl.dart';
 
 class PostValueProvider extends ChangeNotifier {
   final speedSensor = SpeedSensor();
@@ -84,8 +81,9 @@ class PostValueProvider extends ChangeNotifier {
   }
 
   Timer? _timer;
+
   void startRide() {
-    hitStarRideApi();
+
     speedSensor.startSpeedSensor();
     leanAngleSensor.startListeningToAccelerometer();
     inclineSensor.startListeningToAccelerometer((value) {
@@ -98,6 +96,7 @@ class PostValueProvider extends ChangeNotifier {
     accelrationSensor.startListeningToMagnetometer((value) {
       accelerationList = value;
     });
+    hitStarRideApi();
   }
 
   Future<void> hitStarRideApi() async {
@@ -108,7 +107,7 @@ class PostValueProvider extends ChangeNotifier {
       );
       id = response.data["data"]["id"].toString();
       debugPrint("id is-${id} ");
-      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
         onValue();
       });
     } catch (e) {
@@ -117,9 +116,11 @@ class PostValueProvider extends ChangeNotifier {
   }
 
   Future<void> onValue() async {
+
     // debugPrint("data is ${data.length}");
     speed = speedSensor.handleValue();
-    final time = DateTime.now();
+    final time = DateFormat('HH:mm:ss').format(DateTime.now());
+    debugPrint("speed is $speed");
     accelration = accelrationSensor.handleValue();
     leanAngle = leanAngleSensor.handleValue();
     declineAngle = declineSensor.handleValue();
@@ -127,10 +128,11 @@ class PostValueProvider extends ChangeNotifier {
     trailChatter = trailSensor.handleValue();
     final lat = speedSensor.getLat();
     final lng = speedSensor.getLng();
-    final distance = speedSensor.getDistance();
+    final distance = speedSensor.getDistance().round();
     data.add({
-      "speed": (speed?.isNaN ?? true) ? "0" : speed?.round().toString() ?? 0,
-      "time": "${time.hour}:${time.minute}:${time.second}",
+    "speed": (speed != null && !speed!.isNaN) ? speed!.round().toString() : "0",
+      // "time": "${time.hour}:${time.minute}:${time.second}",
+      "time": time,
       "ride_id": id.toString(),
       "lat": lat.toString(),
       "lng": lng.toString(),
@@ -139,10 +141,14 @@ class PostValueProvider extends ChangeNotifier {
       "elevation": inclineAngle?.toStringAsFixed(1).replaceAll("-", ""),
       "trail_chatter": trailChatter?.toStringAsFixed(1).replaceAll("-", "")
     });
-    debugPrint("time is happening : ${time.hour}:${time.minute}:${time.second}");
+
     final x = {
-      "speed": (speed?.isNaN ?? true) ? "0" : speed?.round().toString() ?? 0,
-      "time": "${time.hour}:${time.minute}:${time.second}",
+      "speed": (speed != null && !speed!.isNaN) ? speed!.round().toString() : "0",
+      //
+
+      // "time": "${time.hour}:${time.minute}:${time.second}",
+      "time": time,
+
       "ride_id": id.toString(),
       "lat": lat.toString(),
       "lng": lng.toString(),
@@ -151,15 +157,19 @@ class PostValueProvider extends ChangeNotifier {
       "elevation": inclineAngle?.toStringAsFixed(1).replaceAll("-", ""),
       "trail_chatter": trailChatter?.toStringAsFixed(1).replaceAll("-", "")
     };
-    final response = await DioClient.instance.post("recording-ride",
-        body: x);
+    if(lat!=0.00){
+      debugPrint("hello ${x}");
+      final response = await DioClient.instance.post("recording-ride", body: x);
+    }
+
 
   }
 
   Future<void> cancel() async {
     _timer?.cancel();
     _timer = null;
-    final time = DateTime.now();
+    final time = DateFormat('HH:mm:ss').format(DateTime.now());
+    // final formattedTime = DateFormat('HH:mm:ss').format(time);
     final lat = speedSensor.getLat();
     final lng = speedSensor.getLng();
     final distance = speedSensor.getDistance();
@@ -171,8 +181,9 @@ class PostValueProvider extends ChangeNotifier {
     trailChatter = trailSensor.disposeSensor();
 
     data.add({
-      "speed": (speed?.isNaN ?? true) ? "0" : speed?.round().toString() ?? 0,
-      "time": "${time.hour}:${time.minute}:${time.second}",
+      "speed":  "0",
+      //(speed != null && !speed!.isNaN) ? speed!.round().toString() :
+      "time": time,
       "ride_id": id.toString(),
       "lat": lat.toString(),
       "lng": lng.toString(),
@@ -183,8 +194,9 @@ class PostValueProvider extends ChangeNotifier {
     });
 
     final x = {
-      "speed": (speed?.isNaN ?? true) ? "0" : speed?.round().toString() ?? 0,
-      "time": "${time.hour}:${time.minute}:${time.second}",
+      "speed":  "0",
+      //(speed != null && !speed!.isNaN) ? speed!.round().toString() :
+      "time": time,
       "ride_id": id.toString(),
       "lat": lat.toString(),
       "lng": lng.toString(),
@@ -193,10 +205,8 @@ class PostValueProvider extends ChangeNotifier {
       "elevation": inclineAngle?.toStringAsFixed(1).replaceAll("-", ""),
       "trail_chatter": trailChatter?.toStringAsFixed(1).replaceAll("-", "")
     };
-    final response = await DioClient.instance.post("recording-ride",
-            body: x);
-
-
+    debugPrint("hello $x");
+    final response = await DioClient.instance.post("recording-ride", body: x);
   }
 
   void completeRide() async {
@@ -242,9 +252,9 @@ class PostValueProvider extends ChangeNotifier {
       //     body: {"json_data": data});
       debugPrint("ride_id ${SaveId.getSaveData(key: token)}");
       final newresponse = await DioClient.instance.post("end-ride", body: {
-        "ride_id":id,
+        "ride_id": id,
       });
-     // debugPrint(response.data);
+      // debugPrint(response.data);
       debugPrint(newresponse.data);
     } catch (e) {
       print(e.toString());
