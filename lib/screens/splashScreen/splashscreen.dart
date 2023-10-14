@@ -31,6 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if(accessToken){
       debugPrint("SaveId.getSaveData(key: token): ${SaveId.getSaveData(key: token)}");
     }
+    Navigator.pop(context);
     Navigator.pushNamed(context, accessToken ? tabScreen : login);
   }
 

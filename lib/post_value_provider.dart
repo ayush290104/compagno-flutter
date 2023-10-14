@@ -181,7 +181,7 @@ class PostValueProvider extends ChangeNotifier {
     trailChatter = trailSensor.disposeSensor();
 
     data.add({
-      "speed":  "0",
+      "speed": (speed != null && !speed!.isNaN) ? speed!.round().toString() : "0",
       //(speed != null && !speed!.isNaN) ? speed!.round().toString() :
       "time": time,
       "ride_id": id.toString(),
@@ -194,7 +194,7 @@ class PostValueProvider extends ChangeNotifier {
     });
 
     final x = {
-      "speed":  "0",
+      "speed": (speed != null && !speed!.isNaN) ? speed!.round().toString() : "0",
       //(speed != null && !speed!.isNaN) ? speed!.round().toString() :
       "time": time,
       "ride_id": id.toString(),

@@ -43,23 +43,26 @@ import 'package:sensors_plus/sensors_plus.dart';
 //   }
 // }
 
+
+
+
 class AngleInclinationSensor {
   List<double> angleOfInclination = [];
   int count = 0;
-  StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
+  StreamSubscription<GyroscopeEvent>? _gyroscopeSubscription;
+
   void startListeningToAccelerometer(Function(double value) valueSetter) {
-    _accelerometerSubscription =
-        accelerometerEvents.listen((AccelerometerEvent event) {
-      // Access the accelerometer readings through event.x, event.y, event.z
+    _gyroscopeSubscription = gyroscopeEvents.listen((GyroscopeEvent event) {
+
       double x = event.x;
       double y = event.y;
       double z = event.z;
       final val = calculateAngleOfInclination(x, y, z);
-      // Perform necessary calculations based on the accelerometer readings
+      debugPrint("val is value $val");
+
       angleOfInclination.add(val);
       valueSetter.call(val);
       count += 1;
-      // Use the angleOfInclination value for further operations
     });
   }
 
@@ -74,8 +77,8 @@ class AngleInclinationSensor {
     counter = angleOfInclination.fold(
         0, (previousValue, element) => previousValue + element);
 
-    _accelerometerSubscription?.cancel();
-    _accelerometerSubscription = null;
+    _gyroscopeSubscription?.cancel();
+    _gyroscopeSubscription = null;
     return counter / count;
   }
 
@@ -86,6 +89,8 @@ class AngleInclinationSensor {
     final value = counter / count;
     count = 0;
     counter = 0;
+    angleOfInclination.clear();
     return value;
   }
 }
+

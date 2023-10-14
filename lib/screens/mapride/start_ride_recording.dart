@@ -130,23 +130,26 @@ class _StartRidingState extends State<StartRiding> {
                         ),
                         Selector<PostValueProvider, double>(
                           selector: (p0, p1) => p1.inclinationList,
-                          builder: (context, value, child) => PrettyGauge(
-                            gaugeSize: 100,
-                            segments: [
-                              GaugeSegment('Low', 20, Colors.red),
-                              GaugeSegment('Medium', 40, Colors.orange),
-                              GaugeSegment('High', 40, Colors.green),
-                            ],
-                            needleColor: Colors.white,
-                            currentValue: value,
-                            displayWidget: const Text('Fuel in tank',
-                                style: TextStyle(fontSize: 12)),
-                            startMarkerStyle:
-                                TextStyle(fontSize: 10, color: Colors.grey),
-                            endMarkerStyle:
-                                TextStyle(fontSize: 10, color: Colors.grey),
-                          ),
-                        ),
+                          builder: (context, value, child) {
+                            // Normalize the value to the range of -90 to +90
+                            double normalizedValue = (value + 90) * (180 / 180) - 90;
+
+                            return PrettyGauge(
+                              gaugeSize: 100,
+                              segments: [
+                                GaugeSegment('Low', 20, Colors.red),
+                                GaugeSegment('Medium', 40, Colors.orange),
+                                GaugeSegment('High', 40, Colors.green),
+                              ],
+                              needleColor: Colors.white,
+                              currentValue: normalizedValue,
+                              displayWidget: const Text('Fuel in tank', style: TextStyle(fontSize: 12)),
+                              startMarkerStyle: TextStyle(fontSize: 10, color: Colors.grey),
+                              endMarkerStyle: TextStyle(fontSize: 10, color: Colors.grey),
+                            );
+                          },
+                        )
+
                       ],
                     ),
                   )

@@ -701,6 +701,10 @@ class _DashboardState extends State<Dashboard> {
                                                   const BorderRadius.all(
                                                       Radius.circular(20)),
                                               child: GoogleMap(
+                                                markers: <Marker>{
+                                                  Marker(markerId: MarkerId('start destination'),position: listLocations[0]),
+                                                  Marker(markerId: MarkerId('end destination'),position: listLocations[listLocations.length-1]),
+                                                },
                                                 polylines: _createPolylines(
                                                     listLocations),
                                                 onMapCreated:

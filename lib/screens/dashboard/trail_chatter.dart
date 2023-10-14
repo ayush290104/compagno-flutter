@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:compagno4/main.dart';
 import 'package:compagno4/screens/dashboard/bloc/dashboard_cubit.dart';
 import 'package:compagno4/screens/dashboard/bloc/dashboard_state.dart';
@@ -144,30 +146,40 @@ class _TrailChatterState extends State<TrailChatter> {
                                             .data!))
                                   ],
                                   size: Size(
-                                      (MediaQuery.of(context).size.width - 16 * 2)*1,
+                                      (MediaQuery.of(context).size.width - 16 * 2)*2,
                                       307),
+                            labelX: [
+
+                              for (int i = 0; i <= fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!
+                                  .data!).length - 1; i++)
+                                // i <= 0 || i == fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!
+                                //     .data!).length - 1
+                                //     ? dashboardCubit.dashboardClass!.data!.speed!.time![i]
+                                //     : "",
+                                if(i==0||i==1||i==2||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!
+                                .data!).length - 1||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!
+                                    .data!).length - 2||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!
+                                    .data!).length - 3)
+                                dashboardCubit.dashboardClass!.data!.speed!.time![i]
+
+                            ],
                               labelY: [
+
                                 if (fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).isNotEmpty)
                                   fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).first.toString(),
-                                ...List<String>.generate(
-                                  fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).length - 2,
-                                      (index) => "",
-                                ),
+                                // ...List<String>.generate(
+                                //   fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).length - 2,
+                                //       (index) => "",
+                                // ),
                                 if (fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).isNotEmpty)
+                                  fnToDouble2(dashboardCubit!.dashboardClass!.data!.trailChatter!.data!)[(fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).length)~/2].toString(),
+                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).isNotEmpty)
+
                                   fnToDouble2(dashboardCubit!.dashboardClass!.data!.trailChatter!.data!).last.toString(),
                               ],
 
 
-                              labelX: [
-                              if (dashboardCubit.dashboardClass!.data!.trailChatter!.distance!.isNotEmpty)
-                                dashboardCubit.dashboardClass!.data!.trailChatter!.distance!.first,
-                              ...List<String>.generate(
-                                dashboardCubit.dashboardClass!.data!.trailChatter!.distance!.length - 2,
-                                    (index) => "",
-                              ),
-                              if (dashboardCubit.dashboardClass!.data!.trailChatter!.distance!.isNotEmpty)
-                                dashboardCubit.dashboardClass!.data!.trailChatter!.distance!.last,
-                            ],
+
 
                             //showDescription: true,
                                   graphColor: Colors.white,
@@ -278,11 +290,7 @@ class _TrailChatterState extends State<TrailChatter> {
   List<double> fnToDouble2(List<num> ab) {
     List<double> hello = [];
     for(var a in ab){
-
-
         hello.add(a.toDouble());
-
-
     }
      debugPrint("hello is :$hello");
     return hello;

@@ -147,31 +147,28 @@ class _SpeedGraphState extends State<SpeedGraph> {
                                             .speed!))
                                   ],
                                   size: Size(
-                                      (MediaQuery.of(context).size.width - 16 * 2)*3,
+                                      (MediaQuery.of(context).size.width - 16 * 2)*2,
                                       307),
 
 
 
-                            labelY: [
-                              for (int i = dashboardCubit.dashboardClass!.data!.speed!.speed!.length - 1; i >= 0; i--)
-                                i == 0 || i == dashboardCubit.dashboardClass!.data!.speed!.speed!.length - 1
-                                    ? dashboardCubit.dashboardClass!.data!.speed!.speed![i].toString()
-                                    : "",
-                            ]
-                            ,
+                            labelY: const [
+                              "10","20","45"
+                              // for (int i = fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1; i >= 0; i--)
+                              //   i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1
+                              //       ? fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!)[i].toString()
+                              //       : "",
+                            ],
+
                             labelX: [
-                              dashboardCubit.dashboardClass!.data!.speed!.time!.isNotEmpty
-                                  ? dashboardCubit.dashboardClass!.data!.speed!.time!.first
-                                  : "",
-                              ...List<String>.generate(
-                                dashboardCubit.dashboardClass!.data!.speed!.time!.length - 2,
-                                    (index) => "",
-                              ),
-                              dashboardCubit.dashboardClass!.data!.speed!.time!.isNotEmpty
-                                  ? dashboardCubit.dashboardClass!.data!.speed!.time!.last
-                                  : "",
-                            ]
-                            ,
+
+                              for (int i = 0; i<=fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1; i++)
+                                i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1
+                                    ? dashboardCubit.dashboardClass!.data!.speed!.time![i]
+                                    : "",
+
+                            ],
+
                                   //showDescription: true,
                                   graphColor: Colors.white,
                                   graphOpacity: 0.2,
@@ -227,6 +224,12 @@ class _SpeedGraphState extends State<SpeedGraph> {
     // hello.add(ab[ab.length-1].toDouble());
     for(var a in ab){
       hello.add(a.toDouble()/45);
+    }
+    for(int i = 1;i<hello.length-1;i++){
+          if(hello[i]==0&&hello[i-1]!=0&&hello[i+1]!=0){
+            hello.remove(hello[i]);
+          }
+
     }
 
     debugPrint("list is $hello");

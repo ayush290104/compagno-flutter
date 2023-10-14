@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:compagno4/core/class.dart';
 import 'package:compagno4/screens/dashboard/home_page_response_model.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class DatabaseRepo {
@@ -99,6 +100,22 @@ class DatabaseRepo {
     }
     return [];
   }
+  Future<String> getAddressFromLatLng(LatLng location) async {
+    final apiKey = 'YOUR_GOOGLE_MAPS_API_KEY'; // Replace with your Google Maps API key
+    final response = await http.get(Uri.parse(
+        'https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=$apiKey'));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['status'] == 'OK') {
+       return data['results'][0]['formatted_address'];
+      } else {
+       return 'Address not found';
+      }
+    } else {
+     return 'Error retrieving address';
+           }
+  }
 
   Future<HomePageResponse?> getDashboardData(String tokenid) async {
     var url = Uri.parse("https://compagno.app/api/users/dashboard");
@@ -106,6 +123,7 @@ class DatabaseRepo {
       var response = await http.get(url, headers: {
         'Authorization': "Bearer ${tokenid}",
       });
+
       print(response.statusCode.toString());
       if (response.statusCode != 200) {
         return null;
