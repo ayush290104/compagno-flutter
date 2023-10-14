@@ -75,6 +75,7 @@ import 'package:compagno4/screens/mapride/mapride.dart';
 import 'package:compagno4/screens/mapride/ride_complete.dart';
 import 'package:compagno4/screens/mapride/start_ride_recording.dart';
 import 'package:compagno4/screens/register/register.dart';
+import 'package:compagno4/screens/settings/modify_profile.dart';
 import 'package:compagno4/screens/settings/setting.dart';
 import 'package:compagno4/screens/settings/setting_tuning.dart';
 import 'package:compagno4/screens/splashScreen/splashscreen.dart';
@@ -109,6 +110,7 @@ class RoutesMap {
       settingTuning: (context) => const SettingTuning(),
       training: (context) => const Training(),
       styleguide: (context) => const StyleGuide(),
+      modifyProfile: (context) => const ModifyProfile(),
     };
     return map;
   }

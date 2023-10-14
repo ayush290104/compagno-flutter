@@ -23,3 +23,4 @@ const String lessonCompleted = '/lessoncompleted';
 const String training = '/training';
 const String trainingLesson = '/traininglesson';
 const String styleguide = '/styleguid';
+const String modifyProfile = '/modifyProfile';
