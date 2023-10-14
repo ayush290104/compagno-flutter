@@ -68,9 +68,7 @@ class _TrainingState extends State<Training> {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 27,
-                      ),
+                      SizedBox(height: 27,),
                       BlocBuilder<TrainCubit, TrainState>(
                           builder: (context, state) {
                         if (state is! TrainSuccessState) {

@@ -59,11 +59,14 @@
 //   }
 // }
 
+
+
 import 'package:compagno4/screens/awards/awardgallery.dart';
 import 'package:compagno4/screens/awards/awards.dart';
 import 'package:compagno4/screens/background/background.dart';
 import 'package:compagno4/screens/dashboard/dashboard.dart';
 import 'package:compagno4/screens/dashboard/dashboard_map.dart';
+import 'package:compagno4/screens/dashboard/previous_rides.dart';
 import 'package:compagno4/screens/dashboard/trail_chatter.dart';
 import 'package:compagno4/screens/goal/goal_set.dart';
 import 'package:compagno4/screens/goal/goal_set_chatter_complete.dart';
@@ -75,6 +78,7 @@ import 'package:compagno4/screens/mapride/mapride.dart';
 import 'package:compagno4/screens/mapride/ride_complete.dart';
 import 'package:compagno4/screens/mapride/start_ride_recording.dart';
 import 'package:compagno4/screens/register/register.dart';
+import 'package:compagno4/screens/settings/add_bikes.dart';
 import 'package:compagno4/screens/settings/modify_profile.dart';
 import 'package:compagno4/screens/settings/setting.dart';
 import 'package:compagno4/screens/settings/setting_tuning.dart';
@@ -111,6 +115,8 @@ class RoutesMap {
       training: (context) => const Training(),
       styleguide: (context) => const StyleGuide(),
       modifyProfile: (context) => const ModifyProfile(),
+      previousRides: (context)=> const PreviousRidesScreen(),
+      addBikes: (context) => const AddBikesScreen(),
     };
     return map;
   }

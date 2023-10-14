@@ -334,19 +334,19 @@ class _DashboardState extends State<Dashboard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const TrailChatter()));
-                    },
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 2 - 8 * 3,
-                      height: 170,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.k000000),
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2 - 8 * 3,
+                    height: 170,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: AppColors.k000000),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TrailChatter()));
+                      },
                       child: Column(
                         children: [
                           Padding(
@@ -412,7 +412,7 @@ class _DashboardState extends State<Dashboard> {
                                       child: const Align(
                                         alignment: Alignment.center,
                                         child: Text(
-                                            "sorry, we need more data to display it!",
+                                            "Sorry, we need more data to display it!",
                                             style:
                                                 TextStyle(color: Colors.white)),
                                       ));
@@ -516,7 +516,7 @@ class _DashboardState extends State<Dashboard> {
                                       middleXValue,
                                       lastXValue
                                     ],
-                                    labelY: ["10", "25", "45"],
+                                    labelY: const ["10", "25", "45"],
                                     graphColor: Colors.white,
                                     graphOpacity: 0.2,
                                     verticalFeatureDirection: true,
@@ -527,9 +527,12 @@ class _DashboardState extends State<Dashboard> {
                                 width: MediaQuery.of(context).size.width / 2 -
                                     8 * 5,
                                 height: 100,
-                                child: const Text(
-                                  "sorry, we need more data to display it!",
-                                  style: TextStyle(color: Colors.white),
+                                child: const Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Sorry, we need more data to display it!",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
                               );
                             },
@@ -702,8 +705,17 @@ class _DashboardState extends State<Dashboard> {
                                                       Radius.circular(20)),
                                               child: GoogleMap(
                                                 markers: <Marker>{
-                                                  Marker(markerId: MarkerId('start destination'),position: listLocations[0]),
-                                                  Marker(markerId: MarkerId('end destination'),position: listLocations[listLocations.length-1]),
+                                                  Marker(
+                                                      markerId: MarkerId(
+                                                          'start destination'),
+                                                      position:
+                                                          listLocations[0]),
+                                                  Marker(
+                                                      markerId: MarkerId(
+                                                          'end destination'),
+                                                      position: listLocations[
+                                                          listLocations.length -
+                                                              1]),
                                                 },
                                                 polylines: _createPolylines(
                                                     listLocations),
@@ -764,26 +776,29 @@ class _DashboardState extends State<Dashboard> {
               const SizedBox(
                 height: 16,
               ),
-              Container(
-                height: 30,
-                width: MediaQuery.of(context).size.width - 16.0,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.black),
-                child: Row(
-                  children: [
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "MORE",
-                      style: k13_700_roboto,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Image.asset("assets/images/Polygon 1.png")
-                  ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 30,
+                  width: MediaQuery.of(context).size.width - 16.0,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.black),
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "MORE",
+                        style: k13_700_roboto,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Image.asset("assets/images/Polygon 1.png")
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 54),

@@ -3,6 +3,7 @@ import 'package:compagno4/screens/settings/modify_profile.dart';
 import 'package:compagno4/screens/settings/setting_tuning.dart';
 import 'package:compagno4/screens/tabsrceen/user_mode_state.datr.dart';
 import 'package:compagno4/screens/tabsrceen/user_model_cubit.dart';
+import 'package:compagno4/utils/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -331,21 +332,26 @@ class _SettingsState extends State<Settings> {
                                           const SizedBox(
                                             height: 28,
                                           ),
-                                          Row(children: [
-                                            Stack(
-                                              children: [
-                                                Image.asset(
-                                                    "assets/images/dottedcircle.png"),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              width: 17,
-                                            ),
-                                            Text(
-                                              "Add new bike",
-                                              style: k13_400_roboto,
-                                            )
-                                          ]),
+                                          GestureDetector(
+                                            onTap: (){
+                                              Navigator.pushNamed(context, addBikes);
+                                            },
+                                            child: Row(children: [
+                                              Stack(
+                                                children: [
+                                                  Image.asset(
+                                                      "assets/images/dottedcircle.png"),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                width: 17,
+                                              ),
+                                              Text(
+                                                "Add new bike",
+                                                style: k13_400_roboto,
+                                              )
+                                            ]),
+                                          ),
                                         ],
                                       ),
                                     )),
