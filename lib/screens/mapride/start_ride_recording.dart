@@ -146,13 +146,16 @@ class _StartRidingState extends State<StartRiding> {
                     ),
                     Expanded(
                       flex: 6,
+
                       child: Selector<PostValueProvider, double>(
-                        selector: (p0, p1) => p1.inclinationList ,
+                        selector: (p0, p1) => p1.inclineAngle ,
                         builder: (context, value, child) {
                           double normalizedValue =
-                              (value + 90) * (180 / 180) - 90;
+                              (-1*value);
 
-                          return Container(
+                          return
+
+                            Container(
                             width: 120,
                             height: 120,
                             child: SfRadialGauge(

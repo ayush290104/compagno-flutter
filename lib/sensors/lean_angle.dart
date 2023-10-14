@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:developer' as dev;
 
+import 'package:flutter/cupertino.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:vector_math/vector_math.dart';
 
@@ -24,6 +25,8 @@ class LeanAngleSensor {
     double pitch = atan2(x, sqrt(y * y + z * z));
     // Calculate the lean angle in degrees
     double leanAngle = degrees(pitch);
+
+
     return leanAngle;
   }
 
@@ -45,6 +48,7 @@ class LeanAngleSensor {
     final value = counter / count;
     count = 0;
     counter = 0;
+
     return value;
   }
 }

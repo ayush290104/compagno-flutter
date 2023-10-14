@@ -15,20 +15,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../Controller/dashboardController.dart';
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
 import '../goal/goal_set.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+   Dashboard({Key? key}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
+
 }
 
 class _DashboardState extends State<Dashboard> {
+
+  final DashboardController dashboardController = Get.find();
   final List<LatLng> listLocations = [];
   final List<String> trailXAxis = [];
   final List<String> trailYAxis = [];
@@ -288,9 +293,24 @@ class _DashboardState extends State<Dashboard> {
                     const SizedBox(
                       width: 8,
                     ),
-                    Text(
-                      "McDowell Mountain Loop, Phoenix, AZ",
-                      style: k13_400_roboto,
+                    Expanded(
+                      child: BlocBuilder<DashboardCubit, DashboardState>(
+                        builder: (context, state) {
+                          if (state is DashboardSuccessState) {
+                            if (dashboardCubit
+                                .dashboardClass?.data?.yourRoute!=
+                                null) {
+                              dashboardController.getAddressFromLatLng(listLocations[listLocations.length-1]);
+                              //debugPrint("listLocations at debug $listLocations");
+                            }
+
+
+                            return Obx(() => Text(dashboardController.address.value,style: k13_400_roboto));
+                          } else {
+                            return Text("Wait",style: k13_400_roboto);
+                          }
+                        },
+                      ),
                     ),
                     const SizedBox(
                       width: 8,

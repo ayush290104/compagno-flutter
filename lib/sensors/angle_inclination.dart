@@ -7,6 +7,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:sensors_plus/sensors_plus.dart';
+import 'package:vector_math/vector_math.dart';
 
 // class AngleInclination extends StatefulWidget {
 //   const AngleInclination({Key? key}) : super(key: key);
@@ -46,51 +47,50 @@ import 'package:sensors_plus/sensors_plus.dart';
 
 
 
+
+
+
 class AngleInclinationSensor {
-  List<double> angleOfInclination = [];
+  List<double> angle = [];
   int count = 0;
-  StreamSubscription<GyroscopeEvent>? _gyroscopeSubscription;
+  StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
 
   void startListeningToAccelerometer(Function(double value) valueSetter) {
-    _gyroscopeSubscription = gyroscopeEvents.listen((GyroscopeEvent event) {
-
-      double x = event.x;
-      double y = event.y;
-      double z = event.z;
-      final val = calculateAngleOfInclination(x, y, z);
-      debugPrint("val is value $val");
-
-      angleOfInclination.add(val);
-      valueSetter.call(val);
+    _accelerometerSubscription = accelerometerEvents.listen((AccelerometerEvent event) {
+      angle.add(calculateLeanAngle(event.x, event.y, event.z));
       count += 1;
     });
   }
 
-  double calculateAngleOfInclination(double x, double y, double z) {
-    double radians = atan2(y, sqrt(x * x + z * z));
-    double angle = radians * (180 / pi);
-    return angle;
+  double calculateLeanAngle(double x, double y, double z) {
+    // Convert accelerometer readings to radians
+    double leanAngle = atan2(x, sqrt(y * y + z * z));
+            leanAngle =  leanAngle * (180 / pi);
+    debugPrint("value is $leanAngle");
+    return leanAngle;
   }
 
   double disposeSensor() {
-    double counter = 0.0;
-    counter = angleOfInclination.fold(
-        0, (previousValue, element) => previousValue + element);
+    double totalLeanAngle = angle.fold(0, (previousValue, element) => previousValue + element);
 
-    _gyroscopeSubscription?.cancel();
-    _gyroscopeSubscription = null;
-    return counter / count;
+    _accelerometerSubscription?.cancel();
+    _accelerometerSubscription = null;
+
+    return totalLeanAngle / count;
   }
 
   double handleValue() {
-    double counter = 0.0;
-    counter = angleOfInclination.fold(
-        0, (previousValue, element) => previousValue + element);
-    final value = counter / count;
+    double totalLeanAngle = angle.fold(0, (previousValue, element) => previousValue + element);
+    final value = totalLeanAngle / count;
+
     count = 0;
-    counter = 0;
-    angleOfInclination.clear();
+    totalLeanAngle = 0;
+    angle.clear();
+
     return value;
   }
 }
+
+
+
 

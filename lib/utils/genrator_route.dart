@@ -95,7 +95,7 @@ class RoutesMap {
       splashScreen: (_) => const SplashScreen(),
       login: (_) => const LoginScreen(),
       register: (_) => RegisterScreen(),
-      dashBoard: (_) => const Dashboard(),
+      dashBoard: (_) =>  Dashboard(),
       tabScreen: (_) => const TabScreen(),
       dashBordMap: (context) => const DashboardMap(),
       trailChatter: (context) => const TrailChatter(),

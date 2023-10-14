@@ -100,6 +100,7 @@ class DatabaseRepo {
     }
     return [];
   }
+
   Future<String> getAddressFromLatLng(LatLng location) async {
     final apiKey = 'YOUR_GOOGLE_MAPS_API_KEY'; // Replace with your Google Maps API key
     final response = await http.get(Uri.parse(
@@ -108,15 +109,14 @@ class DatabaseRepo {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['status'] == 'OK') {
-       return data['results'][0]['formatted_address'];
+        return data['results'][0]['formatted_address'];
       } else {
-       return 'Address not found';
+        return 'Address not found';
       }
     } else {
-     return 'Error retrieving address';
-           }
+      return 'Error retrieving address';
+    }
   }
-
   Future<HomePageResponse?> getDashboardData(String tokenid) async {
     var url = Uri.parse("https://compagno.app/api/users/dashboard");
     try {

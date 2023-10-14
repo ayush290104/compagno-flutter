@@ -1,10 +1,19 @@
 import 'dart:async';
+
+import 'package:compagno4/constant/fonts.dart';
 import 'package:compagno4/save_user/constants/constants.dart';
 import 'package:compagno4/save_user/network/local_save.dart';
 import 'package:compagno4/utils/route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:compagno4/constant/fonts.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../../Controller/dashboardController.dart';
+import '../../main.dart';
+import '../dashboard/bloc/dashboard_cubit.dart';
+import '../dashboard/bloc/dashboard_state.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -14,21 +23,22 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final dashboardController = Get.put(DashboardController());
+
   @override
   void initState() {
     super.initState();
-
     startTime();
   }
 
   startTime() async {
-    var duration = const Duration(seconds: 3);
+    var duration = const Duration(seconds: 5); // Reduced from 500 seconds
     return Timer(duration, route);
   }
 
   route() {
     final accessToken = SaveId.getSaveData(key: token).isNotEmpty;
-    if(accessToken){
+    if (accessToken) {
       debugPrint("SaveId.getSaveData(key: token): ${SaveId.getSaveData(key: token)}");
     }
     Navigator.pop(context);
@@ -37,148 +47,138 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(children: [
-      Image.asset(
-        'assets/images/splash1.png',
-        alignment: Alignment.center,
-        height: double.infinity,
-        width: double.infinity,
-        fit: BoxFit.fill,
-      ),
-      Padding(
-        padding: const EdgeInsets.only(
-          left: 26,
-          top: 61,
-        ),
-        child: Row(
-          children: [
-            Text(
-              "COMPAGNO",
-              style: k25_400_noize,
-            ),
-            const Spacer(),
-            Text(
-              "POWERED BY",
-              style: k10_400_bebas,
-            ),
-            Image.asset('assets/images/METALLO.png'),
-          ],
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 150, left: 26),
-        child: Text(
-          "WELCOME \nBACK, DAVID.",
-          style: k36_400_noize,
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 241, left: 26),
-        child: Text(
-          "LET’S RIDE.",
-          style: k32_400_bebas,
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 406, left: 26),
-        child: Text(
-          "YOUR LAST RIDE",
-          style: k16_400_bebas,
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 431, left: 26),
-        child: Row(
-          children: [
-            Image.asset("assets/images/location.png"),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              "McDowell Mountain Loop, Phoenix, AZ",
-              style: k13_400_roboto,
-            )
-          ],
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 484, left: 26),
-        child: Text(
-          "Current tuning settings",
-          style: k16_400_bebas,
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 512, left: 26),
-        child: Text(
-          "Assist with Chatter",
-          style: k13_400_roboto,
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 560, left: 26),
-        child: Text(
-          "Next Award",
-          style: k16_400_bebas,
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 588, left: 26),
-        child: Text(
-          "5 Training Sessions Complete",
-          style: k13_400_roboto,
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 622, left: 26),
-        child: Stack(
-          children: [
-            Container(
-              height: 8.h,
-              width: 317.w,
-              decoration: const BoxDecoration(
-                  color: Color(0xff979797),
-                  borderRadius: BorderRadius.all(Radius.circular(12))),
-            ),
-            Row(
-              children: [
-                Container(
-                  height: 8.h,
-                  width: 242.w,
-                  decoration: const BoxDecoration(
-                      color: Color(0xffFFFFFF),
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 773, left: 26),
-        child: Container(
-          height: 30,
-          width: 325,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: dashboardCubit..fetch(SaveId.getSaveData(key: token)))
+      ],
+      child: Scaffold(
+        body: Container(
+          height: double.infinity,
+          width: double.infinity,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: Colors.black),
-          child: Row(
+            image: DecorationImage(
+              image: AssetImage('assets/images/splash1.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const SizedBox(
-                width: 10,
+              SizedBox(height: 40.0), // Added SizedBox for top spacing
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    Text(
+                      "COMPAGNO",
+                      style: k25_400_noize,
+                    ),
+                    Spacer(),
+                    Text(
+                      "POWERED BY",
+                      style: k10_400_bebas,
+                    ),
+                    Image.asset('assets/images/METALLO.png'),
+                  ],
+                ),
+              ),
+              SizedBox(height: 40.0), // Added SizedBox for spacing
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: BlocBuilder<DashboardCubit, DashboardState>(
+                  builder: (context, state) {
+                    return Text(
+                      (state is DashboardSuccessState)
+                          ? "WELCOME,\n BACK ${dashboardCubit.dashboardClass!.data!.user!.name!.toUpperCase()}"
+                          : "WAIT...",
+                      style: k28_400_noize,
+                      textAlign: TextAlign.center,
+                    );
+                  },
+                ),
+              ),
+              SizedBox(
+                height:30
               ),
               Text(
-                "COUNTINUE",
-                style: k13_700_roboto,
+                "LET’S RIDE.",
+                style: k28_400_noize,
               ),
-              const SizedBox(
-                width: 10,
+              Text(
+                "YOUR LAST RIDE",
+                style: k16_400_bebas,
               ),
-              Image.asset("assets/images/Polygon 1.png")
+              SizedBox(height: 20.0), // Added SizedBox for spacing
+              Text("YOUR LAST RIDE"),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    Image.asset("assets/images/location.png"),
+                    SizedBox(width: 10.0),
+                    Expanded(
+                      child: BlocBuilder<DashboardCubit, DashboardState>(
+                        builder: (context, state) {
+                          if (state is DashboardSuccessState) {
+                            if (dashboardCubit.dashboardClass?.data?.yourRoute != null) {
+                              var latitude = 0.0;
+                              var longitude = 0.0;
+                              for (var i in dashboardCubit.dashboardClass!.data!.yourRoute!) {
+                                if (i == dashboardCubit.dashboardClass!.data!.yourRoute!.last) {
+                                  latitude = i.lat!.toDouble();
+                                  longitude = i.lng!.toDouble();
+                                }
+                              }
+                              dashboardController.getAddressFromLatLng(LatLng(latitude, longitude));
+                            }
+                            return Obx(() => Text(dashboardController.address.value, style: k13_400_roboto));
+                          } else {
+                            return Text("Wait", style: k13_400_roboto);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 20.0), // Added SizedBox for spacing
+              Text(
+                "Current tuning settings",
+                style: k16_400_bebas,
+              ),
+              Text(
+                "Assist with Chatter",
+                style: k13_400_roboto,
+              ),
+              Text(
+                "Next Award",
+                style: k16_400_bebas,
+              ),
+              Text(
+                "5 Training Sessions Complete",
+                style: k13_400_roboto,
+              ),
+              SizedBox(height: 20.0), // Added SizedBox for spacing
+              GestureDetector(
+                child: Container(
+                  height: 40.0,
+                  width: 200.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.black,
+                  ),
+                  child: Center(
+                    child: Text(
+                      "CONTINUE", // Fixed the typo in "COUNTINUE"
+                      style: k13_700_roboto,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ),
-    ]));
+    );
   }
 }

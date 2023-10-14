@@ -35,12 +35,12 @@ class PostValueProvider extends ChangeNotifier {
     trailChatterList = value;
   }
 
-  double? _inclineAngle;
+  double _inclineAngle = 0;
 
-  double? get inclineAngle => _inclineAngle;
+  double get inclineAngle => _inclineAngle;
 
   set inclineAngle(double? value) {
-    _inclineAngle = value;
+    _inclineAngle = value!;
     notifyListeners();
   }
 

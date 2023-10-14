@@ -15,6 +15,7 @@ import 'package:compagno4/utils/genrator_route.dart';
 import 'package:compagno4/utils/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 DashboardCubit dashboardCubit = DashboardCubit();
 TrainCubit trainCubit = TrainCubit();
@@ -46,7 +47,7 @@ class _MyAppState extends State<MyApp> {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MaterialApp(
+          return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             initialRoute: loading,
             navigatorKey: navigatorKey,
