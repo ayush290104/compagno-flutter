@@ -70,32 +70,41 @@ class _SettingsState extends State<Settings> {
                                         "S E T T I N G S",
                                         style: k32_400_bebas,
                                       ),
-                                      Container(
-                                        padding: const EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            color: AppColors.k000000),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'EDIT',
-                                              style: k10_700_roboto,
-                                            ),
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const ModifyProfile()));
-                                              },
-                                              child: Image.asset(
-                                                  "assets/images/edit2.png"),
-                                            ),
-                                          ],
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                  const ModifyProfile()));
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.all(8.0),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: AppColors.k000000),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'EDIT',
+                                                style: k10_700_roboto,
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const ModifyProfile()));
+                                                },
+                                                child: Image.asset(
+                                                    "assets/images/edit2.png"),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       )
                                     ],

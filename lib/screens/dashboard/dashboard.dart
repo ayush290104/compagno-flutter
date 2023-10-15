@@ -299,15 +299,21 @@ class _DashboardState extends State<Dashboard> {
                           if (state is DashboardSuccessState) {
                             if (dashboardCubit
                                 .dashboardClass?.data?.yourRoute!=
-                                null) {
+                                null && listLocations.isNotEmpty) {
                               dashboardController.getAddressFromLatLng(listLocations[listLocations.length-1]);
                               //debugPrint("listLocations at debug $listLocations");
                             }
 
-
                             return Obx(() => Text(dashboardController.address.value,style: k13_400_roboto));
                           } else {
-                            return Text("Wait",style: k13_400_roboto);
+                            return const SizedBox(
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                      "Wait!",
+                                      style: TextStyle(
+                                          color: Colors.white))),
+                            );
                           }
                         },
                       ),

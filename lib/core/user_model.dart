@@ -1,20 +1,22 @@
-class UserData {
-  int? id;
-  String? token;
-  String? name;
-  String? email;
-  String? profile_pic;
-  String? rider_level;
-  String? phone;
-  String? address_line;
-  String? city;
-  String? state;
-  String? zip;
-  String? country;
-  int? is_blocked;
+import 'dart:io';
 
-  String? created_at;
-  String? updated_at;
+class UserData {
+  int? id = 0;
+  String? token = "";
+  String? name = "";
+  String? email = "";
+  String? profile_pic = "";
+  String? rider_level = "";
+  String? phone = "";
+  String? address_line = "";
+  String? city = "";
+  String? state = "";
+  String? zip = "";
+  String? country = "";
+  int? is_blocked = 0;
+
+  String? created_at = "";
+  String? updated_at = "";
 
   UserData(
       {this.id,
@@ -70,13 +72,7 @@ class UserData {
       'country' : country,
       'is_blocked' : is_blocked,
       'created_at' : created_at,
-      'is_blocked' : updated_at,
-
-
-
-
-
-
+      'update_at' : updated_at,
 
 
 
