@@ -44,6 +44,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
     debugPrint("image is this : ${image}");
     modifyController.userDataMap.value['profile_pic'] = image.toString();
     setState(() {});
+     
   }
 
   @override

@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:compagno4/screens/settings/setting.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
 import '../../utils/useful.dart';
+import 'controller/BikeController.dart';
 
 class AddBikesScreen extends StatefulWidget {
   const AddBikesScreen({Key? key}) : super(key: key);
@@ -32,12 +34,16 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
   TextEditingController rear_shock_lsr_Controller = TextEditingController();
   TextEditingController front_tire_psi_Controller = TextEditingController();
   TextEditingController rear_tire_psi_Controller = TextEditingController();
-
+  BikeController bikeController = Get.put(BikeController());
   File? image;
 
 
   void selectImage() async {
     image = await pickImageFromGallery(context);
+    if(image!=null){
+      bikeController.bikemodel.value.image = image!;
+      debugPrint("${ bikeController.bikemodel.value.image = image!}");
+    }
     setState(() {});
   }
 
@@ -117,6 +123,7 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                           ),
                           InkWell(
                             onTap: () {
+                              bikeController.Bikeadded();
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -167,6 +174,10 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                 title: TextField(
                     controller: brandController,
                     style: k13_400_roboto,
+                    onChanged: (value){
+                      bikeController.bikemodel.value.brand = value;
+
+                    },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Brand name",
@@ -174,6 +185,11 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                 subtitle: TextField(
                     controller: modelController,
                     style: k13_400_roboto,
+                    onChanged: (value){
+                      bikeController.bikemodel.value.modelName = value;
+                      debugPrint("${bikeController.bikemodel.value}");
+
+                    },
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: "Model name",
@@ -205,7 +221,7 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                 child: SizedBox(
                                   height: 24,
                                   width: 24,
-                                  child: Image.asset("assets/images/edit2.png"),
+
                                 ),
                               ),
                             ],
@@ -222,9 +238,13 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: front_shock_psi_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.frontShockPsi = value;
+
+                                      },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -254,9 +274,14 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: front_shock_sag_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.frontShockSag = value;
+
+                                      },
+
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -286,9 +311,13 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: front_shock_hsc_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.frontShockHsc = value;
+
+                                      },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -317,9 +346,13 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: front_shock_lsc_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.frontShockLsc = value;
+
+                                      },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -347,9 +380,12 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: front_shock_hsr_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.frontShockHsr = value;
+                                        },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -377,9 +413,12 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: front_shock_lsr_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.frontShockLsr = value;
+                                      },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -520,9 +559,12 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: rear_shock_psi_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.rearShockPsi = value;
+                                      },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -552,9 +594,12 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: rear_shock_sag_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.rearShockSag = value;
+                                      },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -584,9 +629,12 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: rear_shock_hsc_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.rearShockHsc = value;
+                                      },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -615,9 +663,12 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: rear_shock_lsc_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.rearShockLsc = value;
+                                      },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -645,9 +696,12 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: rear_shock_hsr_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.rearShockHsr = value;
+                                      },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -675,9 +729,12 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                   child: TextFormField(
                                       controller: rear_shock_lsr_Controller,
                                       style: k13_400_roboto,
+                                      onChanged: (value){
+                                        bikeController.bikemodel.value.rearShockLsr = value;
+                                      },
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "??",
+                                          hintText: "Enter the value",
                                           hintStyle: k13_400_roboto)),
                                 ),
                               ),
@@ -747,9 +804,13 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                     child: TextFormField(
                                         controller: front_tire_psi_Controller,
                                         style: k13_400_roboto,
+                                        onChanged: (value){
+                                          bikeController.bikemodel.value.frontTirePsi = value;
+                                        },
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: "??",
+                                            hintText: "Enter the value",
+
                                             hintStyle: k13_400_roboto)),
                                   ),
                                   SizedBox(height: 5),
@@ -757,10 +818,13 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                     padding: const EdgeInsets.only(left: 50),
                                     child: TextFormField(
                                         controller: rear_tire_psi_Controller,
+                                        onChanged: (value){
+                                          bikeController.bikemodel.value.rearTirePsi = value;
+                                        },
                                         style: k13_400_roboto,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
-                                            hintText: "??",
+                                            hintText: "Enter the value",
                                             hintStyle: k13_400_roboto)),
                                   )
                                 ],
