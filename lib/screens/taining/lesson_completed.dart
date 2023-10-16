@@ -9,7 +9,8 @@ import '../../constant/fonts.dart';
 
 class LessonCompleted extends StatefulWidget {
   final Videos video;
-  const LessonCompleted({Key? key, required this.video}) : super(key: key);
+  final int particular;
+  const LessonCompleted({Key? key, required this.video, required this.particular}) : super(key: key);
 
   @override
   State<LessonCompleted> createState() => _LessonCompletedState();
@@ -79,59 +80,67 @@ class _LessonCompletedState extends State<LessonCompleted> {
                       ),
                     ],
                   ),
-                  Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        height: 8.h,
-                        width: 266,
-                        decoration: const BoxDecoration(
-                            color: Color(0xff39453C),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
-                      ),
-                      Container(
-                        height: 8.h,
-                        width: 266 *
-                            (trainCubit.getLessonIndex() /
-                                trainCubit
-                                    .trains![trainCubit.getLessonIndex() - 1]
-                                    .videos
-                                    .length),
-                        decoration: const BoxDecoration(
-                            color: Color(0xff69806F),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: 9,
-                  ),
-                  Container(
-                    width: 266,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        for (int i = 0;
-                            i <
-                                trainCubit.trains![trainCubit.currentTrains]
-                                    .videos.length;
-                            i++)
-                          Container(
-                            width: 3,
-                            height: 20,
-                            color: AppColors.kFFFFFF,
-                          ),
-                        Container(
-                          width: 3,
-                          height: 20,
-                          color: AppColors.kFFFFFF,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
+
+                  LinearProgressIndicator(
+                    value: (trainCubit.getLessonIndex()/(trainCubit.trains![widget.particular].videos.length)),
+                    borderRadius: BorderRadius.circular(10),
+                    minHeight: 10,
+                    backgroundColor: const Color(0xffB69F4C),
+                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xffFFFFFF)),
+                  )
+                  // Stack(
+                  //   alignment: Alignment.center,
+                  //   children: [
+                  //     Container(
+                  //       height: 8.h,
+                  //       width: 266,
+                  //       decoration: const BoxDecoration(
+                  //           color: Color(0xff39453C),
+                  //           borderRadius:
+                  //               BorderRadius.all(Radius.circular(12))),
+                  //     ),
+                  //     Container(
+                  //       height: 8.h,
+                  //       width: 266 *
+                  //           (trainCubit.getLessonIndex() /
+                  //               trainCubit
+                  //                   .trains![trainCubit.getLessonIndex() - 1]
+                  //                   .videos
+                  //                   .length),
+                  //       decoration: const BoxDecoration(
+                  //           color: Color(0xff69806F),
+                  //           borderRadius:
+                  //               BorderRadius.all(Radius.circular(12))),
+                  //     )
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: 9,
+                  // ),
+                  // Container(
+                  //   width: 266,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       for (int i = 0;
+                  //           i <
+                  //               trainCubit.trains![trainCubit.currentTrains]
+                  //                   .videos.length;
+                  //           i++)
+                  //         Container(
+                  //           width: 3,
+                  //           height: 20,
+                  //           color: AppColors.kFFFFFF,
+                  //         ),
+                  //       Container(
+                  //         width: 3,
+                  //         height: 20,
+                  //         color: AppColors.kFFFFFF,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  ,SizedBox(
                     height: 9,
                   ),
                   Row(
@@ -187,7 +196,7 @@ class _LessonCompletedState extends State<LessonCompleted> {
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
                           builder: (context) =>
-                              TrainingLesson(video: trainCubit.nextVideo())));
+                              TrainingLesson(video: trainCubit.nextVideo(), particular: widget.particular,)));
                     },
                     child: Container(
                       height: 141,

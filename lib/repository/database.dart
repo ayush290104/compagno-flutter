@@ -136,15 +136,18 @@ class DatabaseRepo {
   }
   Future<HomePageResponse?> getDashboardData(String tokenid) async {
     var url = Uri.parse("https://compagno.app/api/users/dashboard");
+
     try {
       var response = await http.get(url, headers: {
         'Authorization': "Bearer $tokenid",
       });
 
+
       print(response.statusCode.toString());
       if (response.statusCode != 200) {
         return null;
       } else{
+        debugPrint("came here atleast ${response.body.toString()}");
         final data = jsonDecode(response.body);
 
         final parsedResponse = HomePageResponse.fromJson(data);

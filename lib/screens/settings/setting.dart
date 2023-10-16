@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:compagno4/screens/login/login.dart';
 import 'package:compagno4/screens/settings/modify_profile.dart';
 import 'package:compagno4/screens/settings/setting_tuning.dart';
@@ -6,20 +8,26 @@ import 'package:compagno4/screens/tabsrceen/user_model_cubit.dart';
 import 'package:compagno4/utils/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
+import 'controller/BikeController.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
 
   @override
   State<Settings> createState() => _SettingsState();
+
 }
 
 class _SettingsState extends State<Settings> {
+  BikeController bikeController = Get.put(BikeController());
+
   @override
   Widget build(BuildContext context) {
+    bikeController.GetListofbike();
     return BlocProvider(
       create: (context) => UserModelCubit()..getUserData(),
       child: BlocConsumer<UserModelCubit, UserModelState>(
@@ -245,7 +253,7 @@ class _SettingsState extends State<Settings> {
                                     width: 325,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
-                                        color: AppColors.k000000),
+                                        color: Colors.black),
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: 18, top: 19, right: 9),
@@ -257,112 +265,42 @@ class _SettingsState extends State<Settings> {
                                                 "Bikes",
                                                 style: k20_400_bebas,
                                               ),
-                                              const Spacer(),
-                                              Image.asset(
-                                                  "assets/images/edit2.png")
                                             ],
                                           ),
                                           const SizedBox(
                                             height: 19,
                                           ),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                height: 50,
-                                                width: 50,
-                                                decoration: const BoxDecoration(
-                                                    shape: BoxShape.circle),
-                                                child: Image.asset(
-                                                    "assets/images/bikeimg.png"),
-                                              ),
-                                              const SizedBox(
-                                                width: 17,
-                                              ),
-                                              Column(
-                                                children: [
-                                                  Text.rich(
-                                                    TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                            text: 'Monte',
-                                                            style:
-                                                                k13_800_roboto),
-                                                        TextSpan(
-                                                          text:
-                                                              '\nMETALLO M150 STR 2022',
-                                                          style: k13_400_roboto,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const SettingTuning()));
-                                                    },
-                                                    child: Container(
-                                                      height: 30,
-                                                      width: 185,
-                                                      decoration: BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                          color: AppColors
-                                                              .k69806F),
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                left: 5,
-                                                                top: 5,
-                                                                right: 4),
-                                                        child: Row(
-                                                          children: [
-                                                            Text(
-                                                              "CURRENT TUNING SETTINGS",
-                                                              style:
-                                                                  k11_800_roboto,
-                                                            ),
-                                                            const Spacer(),
-                                                            Image.asset(
-                                                                "assets/images/Polygon 1.png")
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              )
-                                            ],
+                                          Expanded(
+
+                                              child: Obx(() =>  getlistView())
                                           ),
-                                          const SizedBox(
-                                            height: 28,
-                                          ),
+
+
                                           GestureDetector(
                                             onTap: (){
                                               Navigator.pushNamed(context, addBikes);
                                             },
-                                            child: Row(children: [
-                                              Stack(
-                                                children: [
-                                                  Image.asset(
-                                                      "assets/images/dottedcircle.png"),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                width: 17,
-                                              ),
-                                              Text(
-                                                "Add new bike",
-                                                style: k13_400_roboto,
-                                              )
-                                            ]),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 8.0),
+                                              child: Row(children: [
+                                                Stack(
+                                                  children: [
+                                                    Image.asset(
+                                                        "assets/images/dottedcircle.png",width: 34,height: 34,),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  width: 17,
+                                                ),
+                                                Text(
+                                                  "Add new bike",
+                                                  style: k13_400_roboto,
+                                                )
+                                              ]),
+                                            ),
                                           ),
                                         ],
-                                      ),
+                                      )
                                     )),
                                 const SizedBox(
                                   height: 18,
@@ -508,7 +446,71 @@ class _SettingsState extends State<Settings> {
                       ),
                     ));
         },
+
       ),
     );
+  }
+  Widget getlistView() {
+    if (bikeController.listofbike.isEmpty) {
+      return Center(
+        child: Text("Please Wait", style: TextStyle(color: Colors.white)),
+      );
+    } else {
+      return ListView.builder(
+          itemCount: bikeController.listofbike.length,
+          itemBuilder: (context, index) {
+            String imagePath = bikeController.listofbike[index].image
+                .toString();
+            File imageFile = File(imagePath);
+
+            Widget imageWidget;
+
+
+            return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.white),
+                  ),
+                  child: ListTile(
+                    onTap: (){
+                      bikeController.bikeselect.value =  bikeController.listofbike[index];
+
+            Navigator.push(
+            context,
+            MaterialPageRoute(
+            builder: (context) =>
+            const SettingTuning()));
+
+
+                    },
+                    leading: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Colors.transparent,
+                      child: Image.network(
+                        "https://compagno.app${bikeController.listofbike[index]
+                            .image.toString()
+                            .replaceFirst("/api/", "")}",
+
+
+                      ),),
+
+                    title: Text(
+                      bikeController.listofbike[index].brand,
+                      style: k13_400_roboto,
+                    ),
+                    subtitle: Text(
+                      bikeController.listofbike[index].modelName,
+                      style: k13_400_roboto,
+                    ),
+                  ),
+
+                )
+
+            );
+          }
+      );
+    }
   }
 }

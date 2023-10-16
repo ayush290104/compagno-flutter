@@ -9,8 +9,8 @@ import 'lesson_completed.dart';
 
 class TrainingLesson extends StatefulWidget {
   final Videos video;
-
-  const TrainingLesson({Key? key, required this.video}) : super(key: key);
+  final int particular;
+  const TrainingLesson({Key? key, required this.video, required this.particular}) : super(key: key);
 
   @override
   State<TrainingLesson> createState() => _TrainingLessonState();
@@ -31,7 +31,7 @@ class _TrainingLessonState extends State<TrainingLesson> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => LessonCompleted(video: widget.video),
+            builder: (context) => LessonCompleted(video: widget.video, particular: trainCubit.currentTrains),
           ),
         );
       }
@@ -247,7 +247,7 @@ class _TrainingLessonState extends State<TrainingLesson> {
               padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
               child: YoutubePlayer(
                 controller: _controller,
-                showVideoProgressIndicator: true,
+
                 onReady: () {
                   _controller.addListener(
                     () => _videoListener(),

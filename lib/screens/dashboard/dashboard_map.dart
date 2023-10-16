@@ -1,9 +1,11 @@
+import 'package:compagno4/Controller/dashboardController.dart';
 import 'package:draw_graph/draw_graph.dart';
 import 'package:draw_graph/models/feature.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../constant/color.dart';
@@ -24,7 +26,7 @@ class DashboardMap extends StatefulWidget {
 
 class _DashboardMapState extends State<DashboardMap> {
   final List<LatLng> listLocations = [];
-
+  final DashboardController dashboardController = Get.find();
   final List<Feature> features = [
     Feature(
       title: "Drink Water",
@@ -212,11 +214,11 @@ class _DashboardMapState extends State<DashboardMap> {
                                   builder: (context, state) {
                                     if (state is DashboardSuccessState) {
                                       if (dashboardCubit
-                                          .dashboardClass?.data?.yourRoute !=
+                                          .dashboardClass?.data?.lastRide!.route !=
                                           null) {
                                         listLocations.clear();
                                         for (var i in dashboardCubit
-                                            .dashboardClass!.data!.yourRoute!) {
+                                            .dashboardClass!.data!.lastRide!.route!) {
                                           listLocations.add(LatLng(
                                               i.lat!.toDouble(), i.lng!.toDouble()));
                                           //debugPrint("listLocations at debug $listLocations");
@@ -276,7 +278,7 @@ class _DashboardMapState extends State<DashboardMap> {
                                                         color: Colors.white))),
                                           ));
                                     } else {
-                                      return const Text("Waiting");
+                                      return Center(child: const CircularProgressIndicator());
                                     }
                                   },
                                 )),
@@ -287,61 +289,174 @@ class _DashboardMapState extends State<DashboardMap> {
               ],
             ),
             SizedBox(height: 27,),
-            Text("McDowell Mountain Loop, Phoenix, AZ",style: k13_400_roboto,),
+            BlocBuilder<DashboardCubit, DashboardState>(
+              builder: (context, state) {
+                if (state is DashboardSuccessState) {
+                  if (dashboardCubit
+                      .dashboardClass?.data?.lastRide!.route!=
+                      null && listLocations.isNotEmpty) {
+                    dashboardController.getAddressFromLatLng(listLocations[listLocations.length-1]);
+                    //debugPrint("listLocations at debug $listLocations");
+                  }
+
+                  return Obx(() => Text(dashboardController.address.value,style: k13_400_roboto));
+                } else {
+                  return const SizedBox(
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                            "Wait!",
+                            style: TextStyle(
+                                color: Colors.white))),
+                  );
+                }
+              },
+            ),
             SizedBox(height: 27,),
-            Container(height: 287,
-              width: 325,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: AppColors.k000000),
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 16,left: 21),
-                  child: Row(
-                    children: [
-                      Text("Elevation",style: k16_400_bebas,),
-                    ],
-                  ),
-                ),
-                LineGraph(
-                  features: features,
-                  size: Size(175, 244),
-                  labelX: ['0', '2', '4', '6','8'],
-                  labelY: ['1548ft', '', '', '1781ft',],
-                  //showDescription: true,
-                  graphColor: Colors.white,
-                  graphOpacity: 0.2,
-                  verticalFeatureDirection: true,
-                  // descriptionHeight: 100,
-                ),
-              ],),),
+            BlocBuilder<DashboardCubit, DashboardState>(
+              builder: (context, state) {
+                if (state is DashboardSuccessState) {
+                  final List<String> elevationTimes = dashboardCubit.dashboardClass!.data!.lastRide!.elevation!.time!;
+
+                  // Extract the first and last times
+                  final String firstTime = elevationTimes.first;
+                  final String lastTime = elevationTimes.last;
+
+                  // Create a new list with the first and last times and empty strings for the rest
+                  final List<String> labelX = [firstTime] + List.filled(elevationTimes.length - 2, "") + [lastTime];
+                  final List<int> elevationData = dashboardCubit.dashboardClass!.data!.lastRide!.elevation!.elevation!;
+                  final int minValue = elevationData.reduce((a, b) => a < b ? a : b); // Find the minimum
+                  final int maxValue = elevationData.reduce((a, b) => a > b ? a : b); // Find the maximum
+
+// Create a list of labels with the same length as the elevation data
+                  final List<String> labelY = List.filled(elevationData.length, '');
+
+// Set the labels for the minimum and maximum values
+                  labelY[0] = '$minValue ft';
+                  labelY[elevationData.length - 1] = '$maxValue ft';
+                  return Container(height: 287,
+                    width: 325,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: AppColors.k000000),
+                    child: Column(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16,left: 21),
+                        child: Row(
+                          children: [
+                            Text("Elevation",style: k16_400_bebas,),
+                          ],
+                        ),
+                      ),
+                      LineGraph(
+                        features: [
+
+                          Feature(
+                              title: "ELEVATION",
+                              color: AppColors.kB69F4C,
+                              data: fnToDouble2(dashboardCubit
+                              .dashboardClass!.data!.lastRide!.elevation!.elevation!) )
+                        ],
+                        size: Size(244, 244),
+                        labelX: labelX,
+                        labelY: labelY,
+                        //showDescription: true,
+                        graphColor: Colors.white,
+                        graphOpacity: 0.2,
+                        verticalFeatureDirection: true,
+                        // descriptionHeight: 100,
+                      ),
+                    ],),);
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
+
             SizedBox(height: 25,),
-            Container(height: 287,
-              width: 325,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: AppColors.k000000),
-              child: Column(children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 16,left: 21),
-                  child: Row(
-                    children: [
-                      Text("Chatter size",style: k16_400_bebas,),
-                    ],
-                  ),
-                ),
-                LineGraph(
-                  features: features1,
-                  size: Size(175, 244),
-                  labelX: ['0', '2', '4', '6','8'],
-                  labelY: ['small', 'medium', 'large',],
-                  //showDescription: true,
-                  graphColor: Colors.white,
-                  //graphOpacity: 0.4,
-                  verticalFeatureDirection: true,
-                  // descriptionHeight: 100,
-                ),
-              ],),),
+            BlocBuilder<DashboardCubit, DashboardState>(
+              builder: (context, state) {
+                if (state is DashboardSuccessState) {
+
+
+// Set the labels for the minimum and maximum values
+
+                  return Container(height: 287,
+                    width: 325,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: AppColors.k000000),
+                    child: Column(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16,left: 21),
+                        child: Row(
+                          children: [
+                            Text("CHATTER SIZE",style: k16_400_bebas,),
+                          ],
+                        ),
+                      ),
+                      LineGraph(
+                        features: [
+
+                          Feature(
+                              title: "CHATTER SIZE",
+                              color: AppColors.kB69F4C,
+                              data: fnToDouble3(dashboardCubit
+                                  .dashboardClass!.data!.lastRide!.trailChatter!.data!) )
+                        ],
+                        size: Size(244, 244),
+                        labelX: ["Small","Medium","Large"],
+                        labelY: ["0.33","0.66","1"],
+                        //showDescription: true,
+                        graphColor: Colors.white,
+                        graphOpacity: 0.2,
+                        verticalFeatureDirection: true,
+                        // descriptionHeight: 100,
+                      ),
+                    ],),);
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
           ],),
         ),
       ),
     );
+  }
+  List<double> fnToDouble2(List<int> ab) {
+    List<double> hello = [];
+    int maxNumber = ab.reduce((value, element) => value > element ? value : element);
+    for (var a in ab) {
+     hello.add((a.toDouble()/maxNumber.toDouble()));
+    }
+
+    return hello;
+  }
+  List<double> fnToDouble3(List<double> ab) {
+    List<double> hello = [0.0,0.0,0.0];
+var count = 0.0;
+    for(var i in ab){
+      count++;
+      if(i<0.5){
+         hello[0]++;
+      }
+      else if(i>0.5&&i<1){
+        hello[1]++;
+      }
+      else{
+        hello[2]++;
+      }
+    }
+
+
+    debugPrint("hello is $hello");
+    for (int index = 0; index < hello.length; index++) {
+      hello[index] = hello[index] / count;
+    }
+
+    debugPrint("hello is $count");
+
+    debugPrint("hello is $hello");
+
+    return hello;
+
   }
 }
 

@@ -114,7 +114,7 @@ class _MoreVideosScreenState extends State<MoreVideosScreen> {
                                                   builder: (context) =>
                                                       TrainingLesson(
                                                           video: widget.training
-                                                              .videos[index])));
+                                                              .videos[index], particular: trainCubit.currentTrains,)));
                                         },
                                         child: Column(
                                           children: [

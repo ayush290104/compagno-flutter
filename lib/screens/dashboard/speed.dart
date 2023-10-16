@@ -131,7 +131,7 @@ class _SpeedGraphState extends State<SpeedGraph> {
                         if (state is DashboardSuccessState) {
                           return (dashboardCubit
                               .dashboardClass!
-                              .data!
+                              .data!.lastRide!
                               .speed!
                               .speed!.length >
                                   1)
@@ -142,7 +142,7 @@ class _SpeedGraphState extends State<SpeedGraph> {
                                         color: AppColors.k69806F,
                                         data: fnToDouble(dashboardCubit
                                             .dashboardClass!
-                                            .data!
+                                            .data!.lastRide!
                                             .speed!
                                             .speed!))
                                   ],
@@ -162,9 +162,9 @@ class _SpeedGraphState extends State<SpeedGraph> {
 
                             labelX: [
 
-                              for (int i = 0; i<=fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1; i++)
-                                i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1
-                                    ? dashboardCubit.dashboardClass!.data!.speed!.time![i]
+                              for (int i = 0; i<=fnToDouble(dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!).length - 1; i++)
+                                i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!).length - 1
+                                    ? dashboardCubit.dashboardClass!.data!.lastRide!.speed!.time![i]
                                     : "",
 
                             ],

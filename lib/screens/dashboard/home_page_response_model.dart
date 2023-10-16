@@ -35,22 +35,14 @@ class HomePageResponse {
 class Data {
     final User? user;
     final LastRide? lastRide;
-     final List<PreviousRide>? previousRide;
-       final List<YourRoute>? yourRoute;
-    final TrailChatter? trailChatter;
-     final Speed? speed;
-      final Map<String, num>? turnIncline;
-    final String? totalTime;
+      final List<PreviousRide>? previousRide;
+
 
     Data({
         this.user,
         this.lastRide,
          this.previousRide,
-          this.yourRoute,
-        this.trailChatter,
-         this.speed,
-         this.turnIncline,
-        this.totalTime,
+
     });
 
     factory Data.fromRawJson(String str) => Data.fromJson(json.decode(str));
@@ -60,33 +52,38 @@ class Data {
     factory Data.fromJson(Map<String, dynamic> json) => Data(
         user: json["user"] == null ? null : User.fromJson(json["user"]),
          lastRide: json["last_ride"] == null ? null : LastRide.fromJson(json["last_ride"]),
-         previousRide: json["previous_ride"] == null ? [] : List<PreviousRide>.from(json["previous_ride"]!.map((x) => PreviousRide.fromJson(x))),
-          yourRoute: json["your_route"] == null ? [] : List<YourRoute>.from(json["your_route"]!.map((x) => YourRoute.fromJson(x))),
-         trailChatter: json["trail_chatter"] == null ? null : TrailChatter.fromJson(json["trail_chatter"]),
-         speed: json["speed"] == null ? null : Speed.fromJson(json["speed"]),
-         turnIncline: Map.from(json["turn_incline"]!).map((k, v) => MapEntry<String, num>(k, v)),
-        totalTime: json["total_time"],
+        previousRide: json["previous_ride"] == null ? [] : List<PreviousRide>.from(json["previous_ride"]!.map((x) => PreviousRide.fromJson(x))),
+
     );
 
     Map<String, dynamic> toJson() => {
         "user": user?.toJson(),
          "last_ride": lastRide?.toJson(),
          "previous_ride": previousRide == null ? [] : List<dynamic>.from(previousRide!.map((x) => x.toJson())),
-          "your_route": yourRoute == null ? [] : List<dynamic>.from(yourRoute!.map((x) => x.toJson())),
-         "trail_chatter": trailChatter?.toJson(),
-        "speed": speed?.toJson(),
-         "turn_incline": Map.from(turnIncline!).map((k, v) => MapEntry<String, dynamic>(k, v)),
-        "total_time": totalTime,
+
     };
 }
-
 class LastRide {
     final int? id;
     final String? name;
+    final String? totalTime;
+    final TrailChatter? trailChatter;
+    final Speed? speed;
+    final Turnincline? turnincline;
+    final Acceleration? acceleration;
+    final Elevation? elevation;
+    final List<YourRoute>? route;
 
     LastRide({
         this.id,
         this.name,
+        this.totalTime,
+        this.trailChatter,
+        this.speed,
+        this.turnincline,
+        this.acceleration,
+        this.elevation,
+        this.route,
     });
 
     factory LastRide.fromRawJson(String str) => LastRide.fromJson(json.decode(str));
@@ -96,42 +93,156 @@ class LastRide {
     factory LastRide.fromJson(Map<String, dynamic> json) => LastRide(
         id: json["id"],
         name: json["name"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-    };
-}
-
-class PreviousRide {
-    final int? id;
-    final String? name;
-    final String? totalTime;
-
-    PreviousRide({
-        this.id,
-        this.name,
-        this.totalTime,
-    });
-
-    factory PreviousRide.fromRawJson(String str) => PreviousRide.fromJson(json.decode(str));
-
-    String toRawJson() => json.encode(toJson());
-
-    factory PreviousRide.fromJson(Map<String, dynamic> json) => PreviousRide(
-        id: json["id"],
-        name: json["name"],
         totalTime: json["total_time"],
+        trailChatter: TrailChatter.fromJson(json["trail_chatter"]),
+        speed: Speed.fromJson(json["speed"]),
+        turnincline: Turnincline.fromJson(json["turn_incline"]),
+        acceleration: Acceleration.fromJson(json["acceleration"]),
+        elevation: Elevation.fromJson(json["elevation"]),
+        route: (json["route"] as List)
+            .map((route) => YourRoute.fromJson(route))
+            .toList(),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "total_time": totalTime,
+        "trail_chatter": trailChatter?.toJson(),
+        "speed": speed?.toJson(),
+        "turn_incline": turnincline?.toJson(),
+        "acceleration": acceleration?.toJson(),
+        "elevation": elevation?.toJson(),
+        "route": route?.map((r) => r.toJson()).toList(),
     };
 }
 
+class Elevation {
+    final List<int>? elevation;
+    final List<String>? time;
+
+    Elevation({
+        this.elevation,
+        this.time,
+    });
+
+    factory Elevation.fromRawJson(String str) =>
+        Elevation.fromJson(json.decode(str));
+
+    String toRawJson() => json.encode(toJson());
+
+    factory Elevation.fromJson(Map<String, dynamic> json) => Elevation(
+        elevation: List<int>.from(json["elevation"].map((x) => x)),
+        time: List<String>.from(json["time"].map((x) => x)),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "elevation": List<dynamic>.from(elevation!.map((x) => x)),
+        "time": List<dynamic>.from(time!.map((x) => x)),
+    };
+}
+
+class Turnincline {
+    final double? average;
+    final int? max;
+
+    Turnincline({
+        this.average,
+        this.max,
+    });
+
+    factory Turnincline.fromRawJson(String str) =>
+        Turnincline.fromJson(json.decode(str));
+
+    String toRawJson() => json.encode(toJson());
+
+    factory Turnincline.fromJson(Map<String, dynamic> json) => Turnincline(
+        average: json["avg"]?.toDouble(),
+        max: json["max"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "avg": average,
+        "max": max,
+    };
+}
+class Acceleration {
+    final List<double>? acceleration;
+    final List<String>? time;
+
+    Acceleration({
+        this.acceleration,
+        this.time,
+    });
+
+    factory Acceleration.fromRawJson(String str) =>
+        Acceleration.fromJson(json.decode(str));
+
+    String toRawJson() => json.encode(toJson());
+
+    factory Acceleration.fromJson(Map<String, dynamic> json) => Acceleration(
+        acceleration: List<double>.from(json["acceleration"].map((x) => x.toDouble())),
+        time: List<String>.from(json["time"].map((x) => x)),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "acceleration": List<dynamic>.from(acceleration!.map((x) => x)),
+        "time": List<dynamic>.from(time!.map((x) => x)),
+    };
+}
+
+
+class PreviousRide {
+    final int? id;
+    final String? name;
+    final String? totalTime;
+    final TrailChatter? trailChatter;
+    final Speed? speed;
+    final Turnincline? turnincline;
+    final Acceleration? acceleration;
+    final Elevation? elevation;
+    final List<YourRoute>? route;
+
+    PreviousRide({
+        this.id,
+        this.name,
+        this.totalTime,
+        this.trailChatter,
+        this.speed,
+        this.turnincline,
+        this.acceleration,
+        this.elevation,
+        this.route,
+    });
+
+    factory PreviousRide.fromJson(Map<String, dynamic> json) {
+        return PreviousRide(
+            id: json["id"],
+            name: json["name"],
+            totalTime: json["total_time"],
+            trailChatter: TrailChatter.fromJson(json["trail_chatter"]),
+            speed: Speed.fromJson(json["speed"]),
+            turnincline: Turnincline.fromJson(json["turn_incline"]),
+            acceleration: Acceleration.fromJson(json["acceleration"]),
+            elevation: Elevation.fromJson(json["elevation"]),
+            route: (json["route"] as List).map((route) => YourRoute.fromJson(route)).toList(),
+        );
+    }
+
+    Map<String, dynamic> toJson() {
+        return {
+            "id": id,
+            "name": name,
+            "total_time": totalTime,
+            "trail_chatter": trailChatter?.toJson(),
+            "speed": speed?.toJson(),
+            "turn_incline": turnincline?.toJson(),
+            "acceleration": acceleration?.toJson(),
+            "elevation": elevation?.toJson(),
+            "route": route?.map((r) => r.toJson()).toList(),
+        };
+    }
+}
 class Speed {
     final List<int>? speed;
     final List<String>? time;

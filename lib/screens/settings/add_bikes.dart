@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:compagno4/Bikes/bike_web.dart';
 import 'package:compagno4/screens/settings/setting.dart';
+import 'package:compagno4/screens/tabsrceen/tabscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,6 +20,9 @@ class AddBikesScreen extends StatefulWidget {
 }
 
 class _AddBikesScreenState extends State<AddBikesScreen> {
+
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController brandController = TextEditingController();
   TextEditingController modelController = TextEditingController();
   TextEditingController front_shock_psi_Controller = TextEditingController();
@@ -34,7 +39,7 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
   TextEditingController rear_shock_lsr_Controller = TextEditingController();
   TextEditingController front_tire_psi_Controller = TextEditingController();
   TextEditingController rear_tire_psi_Controller = TextEditingController();
-  BikeController bikeController = Get.put(BikeController());
+  BikeController bikeController = Get.find();
   File? image;
 
 
@@ -70,6 +75,7 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    BikeWeb().getBikeModels();
     return Scaffold(
       backgroundColor: AppColors.k47574C,
       body: SafeArea(
@@ -123,11 +129,18 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                           ),
                           InkWell(
                             onTap: () {
-                              bikeController.Bikeadded();
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const Settings()));
+                              if (_formKey.currentState!.validate()&&image!=null) {
+                                bikeController.Bikeadded();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const TabScreen()));
+                              }
+                              else{
+                                Get.snackbar("", "Please select an Image",snackPosition: SnackPosition.BOTTOM,colorText: Colors.white);
+                              }
+
+
                             },
                             child: SizedBox(
                               height: 24,
@@ -153,10 +166,13 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                         radius: 30,
                       )
                           : CircleAvatar(
+
                         backgroundImage: FileImage(
                           image!,
+
                         ),
                         radius: 30,
+
                       ),
                       // Positioned(
                       //   bottom: -10,
@@ -171,29 +187,47 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                     ],
                   ),
                 ),
-                title: TextField(
-                    controller: brandController,
-                    style: k13_400_roboto,
-                    onChanged: (value){
-                      bikeController.bikemodel.value.brand = value;
+                title: Form(
+                  key: _formKey,
+                  child: TextFormField(
 
-                    },
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Brand name",
-                        hintStyle: k13_400_roboto)),
-                subtitle: TextField(
-                    controller: modelController,
-                    style: k13_400_roboto,
-                    onChanged: (value){
-                      bikeController.bikemodel.value.modelName = value;
-                      debugPrint("${bikeController.bikemodel.value}");
+                      controller: brandController,
+                      style: k13_400_roboto,
+                      validator: (value) {
+                        if (value!=null&&value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null; // Return null if the input is valid
+                      },
+                      onChanged: (value){
+                        bikeController.bikemodel.value.brand = value;
+                        },
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Brand name",
+                          hintStyle: k13_400_roboto)),
+                ),
+                subtitle: Form(
 
-                    },
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        hintText: "Model name",
-                        hintStyle: k13_400_roboto)),
+                  child: TextFormField(
+                      controller: modelController,
+                      style: k13_400_roboto,
+                      validator: (value) {
+                        if (value!=null&&value.isEmpty) {
+                          return 'Please enter some model name';
+                        }
+                        return null; // Return null if the input is valid
+                      },
+                      onChanged: (value){
+                        bikeController.bikemodel.value.modelName = value;
+                        debugPrint("${bikeController.bikemodel.value}");
+
+                      },
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Model name",
+                          hintStyle: k13_400_roboto)),
+                ),
               ),
               const SizedBox(height: 34),
               Padding(
@@ -805,8 +839,9 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                         controller: front_tire_psi_Controller,
                                         style: k13_400_roboto,
                                         onChanged: (value){
-                                          bikeController.bikemodel.value.frontTirePsi = value;
+                                          bikeController.bikemodel.value.frontTirePsi = int.parse(value);
                                         },
+                                        keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,
                                             hintText: "Enter the value",
@@ -819,8 +854,9 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                     child: TextFormField(
                                         controller: rear_tire_psi_Controller,
                                         onChanged: (value){
-                                          bikeController.bikemodel.value.rearTirePsi = value;
+                                          bikeController.bikemodel.value.rearTirePsi = int.parse(value);
                                         },
+                                        keyboardType: TextInputType.number,
                                         style: k13_400_roboto,
                                         decoration: InputDecoration(
                                             border: InputBorder.none,

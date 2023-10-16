@@ -132,7 +132,7 @@ class _TrailChatterState extends State<TrailChatter> {
                           builder: (context, state) {
                         if (state is DashboardSuccessState) {
                           return (dashboardCubit.dashboardClass!.data!
-                              .trailChatter!.data!.length >
+                              .lastRide!.trailChatter!.data!.length >
                                   1)
                               ? LineGraph(
                                   features: [
@@ -142,7 +142,7 @@ class _TrailChatterState extends State<TrailChatter> {
                                         data: fnToDouble2(dashboardCubit
                                             .dashboardClass!
                                             .data!
-                                            .trailChatter!
+                                            .lastRide!.trailChatter!
                                             .data!))
                                   ],
                                   size: Size(
@@ -150,32 +150,32 @@ class _TrailChatterState extends State<TrailChatter> {
                                       307),
                             labelX: [
 
-                              for (int i = 0; i <= fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!
+                              for (int i = 0; i <= fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!
                                   .data!).length - 1; i++)
                                 // i <= 0 || i == fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!
                                 //     .data!).length - 1
                                 //     ? dashboardCubit.dashboardClass!.data!.speed!.time![i]
                                 //     : "",
-                                if(i==0||i==1||i==2||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!
-                                .data!).length - 1||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!
-                                    .data!).length - 2||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!
+                                if(i==0||i==1||i==2||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!
+                                .data!).length - 1||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!
+                                    .data!).length - 2||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!
                                     .data!).length - 3)
-                                dashboardCubit.dashboardClass!.data!.speed!.time![i]
+                                dashboardCubit.dashboardClass!.data!.lastRide!.speed!.time![i]
 
                             ],
                               labelY: [
 
-                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).isNotEmpty)
-                                  fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).first.toString(),
+                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).isNotEmpty)
+                                  fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).first.toString(),
                                 // ...List<String>.generate(
                                 //   fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).length - 2,
                                 //       (index) => "",
                                 // ),
-                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).isNotEmpty)
-                                  fnToDouble2(dashboardCubit!.dashboardClass!.data!.trailChatter!.data!)[(fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).length)~/2].toString(),
-                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).isNotEmpty)
+                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).isNotEmpty)
+                                  fnToDouble2(dashboardCubit!.dashboardClass!.data!.lastRide!.trailChatter!.data!)[(fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).length)~/2].toString(),
+                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).isNotEmpty)
 
-                                  fnToDouble2(dashboardCubit!.dashboardClass!.data!.trailChatter!.data!).last.toString(),
+                                  fnToDouble2(dashboardCubit!.dashboardClass!.data!.lastRide!.trailChatter!.data!).last.toString(),
                               ],
 
 

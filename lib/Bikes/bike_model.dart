@@ -15,9 +15,9 @@ class BikeModel {
   String? rearShockLsc;
   String? rearShockHsr;
   String? rearShockLsr;
-  String? frontTirePsi;
-  String? rearTirePsi;
-  File image;
+  int? frontTirePsi;
+  int? rearTirePsi;
+  dynamic image;
 
   BikeModel({
     required this.brand,

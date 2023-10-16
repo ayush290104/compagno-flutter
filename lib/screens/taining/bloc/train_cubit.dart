@@ -21,6 +21,7 @@ class TrainCubit extends Cubit<TrainState> {
   }
 
   int getLessonIndex() {
+    debugPrint("current video is ${currentVideo}");
     return currentVideo ;
   }
 

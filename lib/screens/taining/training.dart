@@ -125,7 +125,7 @@ class _TrainingState extends State<Training> {
                                                                 builder: (context) =>
                                                                     TrainingLesson(
                                                                         video: training
-                                                                            .videos[index])));
+                                                                            .videos[index], particular: trainCubit.currentTrains)));
                                                       },
                                                       child: Column(
                                                         children: [

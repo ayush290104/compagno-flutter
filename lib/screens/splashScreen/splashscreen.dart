@@ -167,15 +167,15 @@ class _SplashScreenState extends State<SplashScreen> {
                                 builder: (context, state) {
                                   if (state is DashboardSuccessState) {
                                     if (dashboardCubit
-                                        .dashboardClass?.data?.yourRoute !=
+                                        .dashboardClass!.data!.lastRide!.route !=
                                         null) {
                                       var latitude = 0.0;
                                       var longitude = 0.0;
                                       for (var i in dashboardCubit
-                                          .dashboardClass!.data!.yourRoute!) {
+                                          .dashboardClass!.data!.lastRide!.route!) {
                                         if (i ==
-                                            dashboardCubit.dashboardClass!.data!
-                                                .yourRoute!.last) {
+                                            dashboardCubit.dashboardClass!.data!.lastRide!
+                                                .route!.last) {
                                           latitude = i.lat!.toDouble();
                                           longitude = i.lng!.toDouble();
                                         }

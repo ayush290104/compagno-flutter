@@ -2,6 +2,8 @@
 import 'dart:io';
 
 import 'package:compagno4/screens/settings/controller/modifycontroller.dart';
+import 'package:compagno4/screens/settings/setting.dart';
+import 'package:compagno4/screens/tabsrceen/tabscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +44,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
   void selectImage() async {
     image = await pickImageFromGallery(context);
     debugPrint("image is this : ${image}");
-    modifyController.userDataMap.value['profile_pic'] = image.toString();
+    modifyController.userDataMap.value['profile_pic'] = image!.path;
     setState(() {});
      
   }
@@ -61,11 +63,11 @@ class _ModifyProfileState extends State<ModifyProfile> {
           addressController.text = cubit.userData?.address_line ?? 'Empty';
           usernameController.text = cubit.userData?.name ?? 'Empty';
           modifyController.userDataMap.value['address_line'] =
-              cubit.userData?.address_line ?? 'Empty';
+              cubit.userData?.address_line ?? '';
           modifyController.userDataMap.value['phone'] =
-              cubit.userData?.phone ?? 'Empty';
+              cubit.userData?.phone ?? '';
           modifyController.userDataMap.value['name'] =
-              cubit.userData?.name ?? 'Empty';
+              cubit.userData?.name ?? '';
           modifyController.userDataMap.value['email'] =
               cubit.userData?.email ?? '';
           // modifyController.user.value = cubit.userData ?? UserData() ;
@@ -134,15 +136,21 @@ key: _formKey,
                                                   if (_formKey.currentState!.validate()) {
                                                     // Only update the profile if the form is valid
                                                     cubit.updateUserProfile(modifyController.userDataMap.value);
+                                                    Navigator.of(context).pop(true);
                                                     Navigator.pop(context);
-
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                            const TabScreen()));
                                                   }
                                                 }
 
                                                 else{
                                                   showSnackBar(context: context, content: 'Fill in the email and name');
+                                                  Navigator.of(context).pop(true);
                                                 }
-                                                Navigator.of(context).pop(true);
+
                                                   // Returning true if "Yes" is selected
                                               },
                                             ),
@@ -273,12 +281,15 @@ key: _formKey,
                                   children: [
                                     Expanded(
                                       flex: 3,
-                                      child: Row(
-                                        children: [
-                                          RiderChip("Strength Fitness"),
-                                          RiderChip("Casual Riding"),
-                                          RiderChip("Racing"),
-                                        ],
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Row(
+                                          children: [
+                                            RiderChip("Strength Fitness"),
+                                            RiderChip("Casual Riding"),
+                                            RiderChip("Racing"),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
