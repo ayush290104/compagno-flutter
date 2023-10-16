@@ -243,6 +243,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
                   // Added SizedBox for spacing
                   GestureDetector(
+                    onTap: () => route(),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -255,12 +256,9 @@ class _SplashScreenState extends State<SplashScreen> {
                           ),
                         ),
                         child: Center(
-                          child: GestureDetector(
-                            onTap: () => route(),
-                            child: Text(
-                              "CONTINUE", // Fixed the typo in "COUNTINUE"
-                              style: k13_700_roboto,
-                            ),
+                          child: Text(
+                            "CONTINUE", // Fixed the typo in "COUNTINUE"
+                            style: k13_700_roboto,
                           ),
                         ),
                       ),

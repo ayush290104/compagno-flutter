@@ -14,10 +14,10 @@ class AwardsCubit extends Cubit<AwardsState> {
   AwardsClass? award;
   AwardsCubit() : super(AwardsInitialState());
 
-  fetch() async {
+  fetch(String tokenid) async {
     debugPrint("fetching...");
     emit(AwardsLoadingState());
-    award = await databaseRepo.getAward();
+    award = await databaseRepo.getAward(tokenid);
 
     if (award != null) {
       emit(AwardsSuccessState());

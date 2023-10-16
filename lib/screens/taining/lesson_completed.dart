@@ -1,5 +1,6 @@
 import 'package:compagno4/core/class.dart';
 import 'package:compagno4/main.dart';
+import 'package:compagno4/screens/taining/traininglesson.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -36,7 +37,7 @@ class _LessonCompletedState extends State<LessonCompleted> {
                     style: k10_400_bebas,
                   ),
                   Image.asset('assets/images/METALLO.png'),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   )
                 ],
@@ -47,7 +48,7 @@ class _LessonCompletedState extends State<LessonCompleted> {
             ),
             Image.asset("assets/images/ok.png"),
             Text(
-              "L E S S O N  ${trainCubit.getLessonIndex()}  C O M P L E T E D",
+              "L E S S O N  ${trainCubit.getLessonIndex()+1}  C O M P L E T E D",
               style: k20_400_bebas_B69F4C,
             ),
             SizedBox(
@@ -183,9 +184,10 @@ class _LessonCompletedState extends State<LessonCompleted> {
                     trainCubit.currentVideo)
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
                           builder: (context) =>
-                              LessonCompleted(video: trainCubit.nextVideo())));
+                              TrainingLesson(video: trainCubit.nextVideo())));
                     },
                     child: Container(
                       height: 141,

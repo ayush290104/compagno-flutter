@@ -24,7 +24,7 @@ import '../../constant/fonts.dart';
 import '../goal/goal_set.dart';
 
 class Dashboard extends StatefulWidget {
-   Dashboard({Key? key}) : super(key: key);
+  Dashboard({Key? key}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -165,7 +165,7 @@ class _DashboardState extends State<Dashboard> {
     // Process trailChatter distance
     if (dashboardCubit.dashboardClass?.data?.trailChatter?.distance != null) {
       for (var i
-          in dashboardCubit.dashboardClass!.data!.trailChatter!.distance!) {
+      in dashboardCubit.dashboardClass!.data!.trailChatter!.distance!) {
         List<String> timeComponents = i.split(':');
         String hrMin = '${timeComponents[0]}:${timeComponents[1]}';
         trailXAxis.add(hrMin);
@@ -175,7 +175,7 @@ class _DashboardState extends State<Dashboard> {
     // Calculate X values
     String firstXValue = trailXAxis.isNotEmpty ? trailXAxis.first : '';
     String middleXValue =
-        trailXAxis.length > 2 ? trailXAxis[trailXAxis.length ~/ 2] : '';
+    trailXAxis.length > 2 ? trailXAxis[trailXAxis.length ~/ 2] : '';
     String lastXValue = trailXAxis.isNotEmpty ? trailXAxis.last : '';
 
     // Process trailChatter data
@@ -188,7 +188,7 @@ class _DashboardState extends State<Dashboard> {
     // Calculate Y values
     String firstYValue = trailYAxis.isNotEmpty ? trailYAxis.first : '';
     String middleYValue =
-        trailYAxis.length > 2 ? trailYAxis[trailYAxis.length ~/ 2] : '';
+    trailYAxis.length > 2 ? trailYAxis[trailYAxis.length ~/ 2] : '';
     String lastYValue = trailYAxis.isNotEmpty ? trailYAxis.last : '';
 
     // Process trailChatter data
@@ -201,7 +201,7 @@ class _DashboardState extends State<Dashboard> {
     // Calculate Y values
     String sYValue = speedYAxis.isNotEmpty ? speedYAxis.first : '';
     String sMYValue =
-        speedYAxis.length > 2 ? speedYAxis[speedYAxis.length ~/ 2] : '';
+    speedYAxis.length > 2 ? speedYAxis[speedYAxis.length ~/ 2] : '';
     String sLYValue = speedYAxis.isNotEmpty ? speedYAxis.last : '';
 
     return MultiBlocProvider(
@@ -236,25 +236,25 @@ class _DashboardState extends State<Dashboard> {
               ),
               BlocBuilder<DashboardCubit, DashboardState>(
                   builder: (context, state) {
-                return Center(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Text(
-                          (state is DashboardSuccessState)
-                              ? "WELCOME, ${dashboardCubit.dashboardClass!.data!.user!.name!.toUpperCase()}"
-                              : "WAIT...",
-                          style: k28_400_noize,
-                          textAlign: TextAlign.center,
-                        ),
+                    return Center(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Text(
+                              (state is DashboardSuccessState)
+                                  ? "WELCOME, ${dashboardCubit.dashboardClass!.data!.user!.name!.toUpperCase()}"
+                                  : "WAIT...",
+                              style: k28_400_noize,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              }),
+                    );
+                  }),
               const SizedBox(
                 height: 5,
               ),
@@ -396,43 +396,43 @@ class _DashboardState extends State<Dashboard> {
                           ),
                           BlocBuilder<DashboardCubit, DashboardState>(
                               builder: (context, state) {
-                            if ((state is DashboardSuccessState)) {
-                              return (dashboardCubit.dashboardClass!.data!
-                                          .trailChatter!.data!.length >
+                                if ((state is DashboardSuccessState)) {
+                                  return (dashboardCubit.dashboardClass!.data!
+                                      .trailChatter!.data!.length >
                                       1)
-                                  ? LineGraph(
-                                      features: [
-                                        Feature(
-                                          title: "TRAIL CHATTER",
-                                          color: AppColors.kB69F4C,
-                                          data: fnToDouble2(dashboardCubit
-                                              .dashboardClass!
-                                              .data!
-                                              .trailChatter!
-                                              .data!),
-                                        )
-                                      ],
-                                      size: Size(
-                                          MediaQuery.of(context).size.width /
-                                                  2 -
-                                              8 * 3,
-                                          100),
-                                      labelX: [
-                                        firstXValue,
-                                        middleXValue,
-                                        lastXValue
-                                      ],
+                                      ? LineGraph(
+                                    features: [
+                                      Feature(
+                                        title: "TRAIL CHATTER",
+                                        color: AppColors.kB69F4C,
+                                        data: fnToDouble2(dashboardCubit
+                                            .dashboardClass!
+                                            .data!
+                                            .trailChatter!
+                                            .data!),
+                                      )
+                                    ],
+                                    size: Size(
+                                        MediaQuery.of(context).size.width /
+                                            2 -
+                                            8 * 3,
+                                        100),
+                                    labelX: [
+                                      firstXValue,
+                                      middleXValue,
+                                      lastXValue
+                                    ],
 
-                                      labelY: ["1", "2", "3"],
-                                      //showDescription: true,
-                                      graphColor: Colors.white,
-                                      graphOpacity: 0.2,
-                                      verticalFeatureDirection: true,
-                                      // descriptionHeight: 100,
-                                    )
-                                  : SizedBox(
+                                    labelY: ["1", "2", "3"],
+                                    //showDescription: true,
+                                    graphColor: Colors.white,
+                                    graphOpacity: 0.2,
+                                    verticalFeatureDirection: true,
+                                    // descriptionHeight: 100,
+                                  )
+                                      : SizedBox(
                                       width: MediaQuery.of(context).size.width /
-                                              2 -
+                                          2 -
                                           8 * 5,
                                       height: 100,
                                       child: const Align(
@@ -440,20 +440,20 @@ class _DashboardState extends State<Dashboard> {
                                         child: Text(
                                             "Sorry, we need more data to display it!",
                                             style:
-                                                TextStyle(color: Colors.white)),
+                                            TextStyle(color: Colors.white)),
                                       ));
-                            } else {
-                              return SizedBox(
-                                  width: MediaQuery.of(context).size.width / 2 -
-                                      8 * 6,
-                                  height: 100,
-                                  child: const Align(
-                                    alignment: Alignment.center,
-                                    child: Text("WAIT...",
-                                        style: TextStyle(color: Colors.white)),
-                                  ));
-                            }
-                          }),
+                                } else {
+                                  return SizedBox(
+                                      width: MediaQuery.of(context).size.width / 2 -
+                                          8 * 6,
+                                      height: 100,
+                                      child: const Align(
+                                        alignment: Alignment.center,
+                                        child: Text("WAIT...",
+                                            style: TextStyle(color: Colors.white)),
+                                      ));
+                                }
+                              }),
                         ],
                       ),
                     ),
@@ -514,7 +514,7 @@ class _DashboardState extends State<Dashboard> {
                               }
 
                               if (dashboardCubit.dashboardClass!.data!.speed!
-                                      .speed!.length >
+                                  .speed!.length >
                                   1) {
                                 return SizedBox(
                                   width: MediaQuery.of(context).size.width / 2 -
@@ -691,98 +691,98 @@ class _DashboardState extends State<Dashboard> {
               ),
               BlocBuilder<DashboardCubit, DashboardState>(
                   builder: (context, state) {
-                return Center(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: BlocBuilder<DashboardCubit, DashboardState>(
-                            builder: (context, state) {
-                              if (state is DashboardSuccessState) {
-                                if (dashboardCubit
+                    return Center(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              child: BlocBuilder<DashboardCubit, DashboardState>(
+                                builder: (context, state) {
+                                  if (state is DashboardSuccessState) {
+                                    if (dashboardCubit
                                         .dashboardClass?.data?.yourRoute !=
-                                    null) {
-                                  listLocations.clear();
-                                  for (var i in dashboardCubit
-                                      .dashboardClass!.data!.yourRoute!) {
-                                    listLocations.add(LatLng(
-                                        i.lat!.toDouble(), i.lng!.toDouble()));
-                                    //debugPrint("listLocations at debug $listLocations");
-                                  }
-                                }
+                                        null) {
+                                      listLocations.clear();
+                                      for (var i in dashboardCubit
+                                          .dashboardClass!.data!.yourRoute!) {
+                                        listLocations.add(LatLng(
+                                            i.lat!.toDouble(), i.lng!.toDouble()));
+                                        //debugPrint("listLocations at debug $listLocations");
+                                      }
+                                    }
 
-                                return Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: (listLocations.isNotEmpty)
-                                        ? SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.4,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.8,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(20)),
-                                              child: GoogleMap(
-                                                markers: <Marker>{
-                                                  Marker(
-                                                      markerId: MarkerId(
-                                                          'start destination'),
-                                                      position:
-                                                          listLocations[0]),
-                                                  Marker(
-                                                      markerId: MarkerId(
-                                                          'end destination'),
-                                                      position: listLocations[
-                                                          listLocations.length -
-                                                              1]),
-                                                },
-                                                polylines: _createPolylines(
-                                                    listLocations),
-                                                onMapCreated:
-                                                    (GoogleMapController
-                                                        controller) {
-                                                  _controller = controller;
+                                    return Padding(
+                                        padding: const EdgeInsets.all(20.0),
+                                        child: (listLocations.isNotEmpty)
+                                            ? SizedBox(
+                                          height: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                              0.4,
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width *
+                                              0.8,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                            const BorderRadius.all(
+                                                Radius.circular(20)),
+                                            child: GoogleMap(
+                                              markers: <Marker>{
+                                                Marker(
+                                                    markerId: MarkerId(
+                                                        'start destination'),
+                                                    position:
+                                                    listLocations[0]),
+                                                Marker(
+                                                    markerId: MarkerId(
+                                                        'end destination'),
+                                                    position: listLocations[
+                                                    listLocations.length -
+                                                        1]),
+                                              },
+                                              polylines: _createPolylines(
+                                                  listLocations),
+                                              onMapCreated:
+                                                  (GoogleMapController
+                                              controller) {
+                                                _controller = controller;
 
-                                                  // Zoom to the initial target position
-                                                  controller.animateCamera(
-                                                    CameraUpdate.newLatLngZoom(
-                                                        listLocations[0],
-                                                        15.0), // Adjust the zoom level as needed
-                                                  );
-                                                },
-                                                myLocationEnabled: true,
-                                                mapType: MapType.normal,
-                                                initialCameraPosition:
-                                                    CameraPosition(
-                                                        target:
-                                                            listLocations[0]),
-                                              ),
+                                                // Zoom to the initial target position
+                                                controller.animateCamera(
+                                                  CameraUpdate.newLatLngZoom(
+                                                      listLocations[0],
+                                                      15.0), // Adjust the zoom level as needed
+                                                );
+                                              },
+                                              myLocationEnabled: true,
+                                              mapType: MapType.normal,
+                                              initialCameraPosition:
+                                              CameraPosition(
+                                                  target:
+                                                  listLocations[0]),
                                             ),
-                                          )
-                                        : const SizedBox(
-                                            child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                    "Sorry, we need more data to display it!",
-                                                    style: TextStyle(
-                                                        color: Colors.white))),
-                                          ));
-                              } else {
-                                return const Text("Waiting");
-                              }
-                            },
-                          )),
-                    ],
-                  ),
-                );
-              }),
+                                          ),
+                                        )
+                                            : const SizedBox(
+                                          child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                  "Sorry, we need more data to display it!",
+                                                  style: TextStyle(
+                                                      color: Colors.white))),
+                                        ));
+                                  } else {
+                                    return const Text("Waiting");
+                                  }
+                                },
+                              )),
+                        ],
+                      ),
+                    );
+                  }),
 
               // Image.asset("assets/images/mapimage.png"),
               const SizedBox(

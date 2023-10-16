@@ -60,14 +60,15 @@
 // }
 
 
-
 import 'package:compagno4/screens/awards/awardgallery.dart';
 import 'package:compagno4/screens/awards/awards.dart';
+
 import 'package:compagno4/screens/background/background.dart';
 import 'package:compagno4/screens/dashboard/dashboard.dart';
 import 'package:compagno4/screens/dashboard/dashboard_map.dart';
 import 'package:compagno4/screens/dashboard/previous_rides.dart';
 import 'package:compagno4/screens/dashboard/trail_chatter.dart';
+
 import 'package:compagno4/screens/goal/goal_set.dart';
 import 'package:compagno4/screens/goal/goal_set_chatter_complete.dart';
 import 'package:compagno4/screens/goal/goal_set_larger_chatter_step2.dart';
@@ -85,6 +86,7 @@ import 'package:compagno4/screens/settings/setting_tuning.dart';
 import 'package:compagno4/screens/splashScreen/splashscreen.dart';
 import 'package:compagno4/screens/styleguide.dart';
 import 'package:compagno4/screens/tabsrceen/tabscreen.dart';
+import 'package:compagno4/screens/taining/more_videos.dart';
 import 'package:compagno4/screens/taining/training.dart';
 import 'package:compagno4/utils/route.dart';
 import 'package:flutter/material.dart';
@@ -95,7 +97,7 @@ class RoutesMap {
       splashScreen: (_) => const SplashScreen(),
       login: (_) => const LoginScreen(),
       register: (_) => RegisterScreen(),
-      dashBoard: (_) =>  Dashboard(),
+      dashBoard: (_) => Dashboard(),
       tabScreen: (_) => const TabScreen(),
       dashBordMap: (context) => const DashboardMap(),
       trailChatter: (context) => const TrailChatter(),
@@ -115,8 +117,10 @@ class RoutesMap {
       training: (context) => const Training(),
       styleguide: (context) => const StyleGuide(),
       modifyProfile: (context) => const ModifyProfile(),
-      previousRides: (context)=> const PreviousRidesScreen(),
+      previousRides: (context) => const PreviousRidesScreen(),
       addBikes: (context) => const AddBikesScreen(),
+
+
     };
     return map;
   }

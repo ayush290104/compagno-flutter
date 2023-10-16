@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:compagno4/core/class.dart';
 import 'package:compagno4/screens/dashboard/home_page_response_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,11 +16,11 @@ class DatabaseRepo {
     });
   }
 
-  Future<AwardsClass?> getAward() async {
+  Future<AwardsClass?> getAward(String tokenid) async {
     var url = Uri.parse("https://compagno.app/api/users/awards");
     try {
       var response = await http.get(url, headers: {
-        'Authorization': "Bearer $token",
+        'Authorization': "Bearer $tokenid",
       });
       if (response.statusCode != 200) {
         return null;
@@ -45,7 +46,23 @@ class DatabaseRepo {
                   rideCount: json['ride_count'],
                 ),
             ],
-            completedAwards: [],
+            completedAwards: [
+              for (Map json in data["completed_awards"])
+                AwardsProgress(
+                  id: json['id'],
+                  userId: json['user_id'],
+                  awardId: json['award_id'],
+                  progressCount: json['progress_count'],
+                  completeCount: json['complete_count'],
+                  isCompleted: json['is_completed'],
+                  createdAt: json['created_at'],
+                  updatedAt: json['updated_at'],
+                  title: json['title'],
+                  icon: json['icon'],
+                  completionType: json['completion_type'],
+                  sessionCount: json['session_count'],
+                  rideCount: json['ride_count'],),
+            ],
             lifeTime: LifeTime(
                 ridesCompleted: data["life_time"]['rides_completed'] ?? 0,
                 sessionsCompleted:
@@ -53,17 +70,17 @@ class DatabaseRepo {
             compagnoRewards: []);
       }
     } catch (e) {
-      print(e.toString());
+      print("The error is in award ${e.toString()}");
       return null;
     }
     return null;
   }
 
-  Future<List<TrainingClass>> getTraininigData() async {
+  Future<List<TrainingClass>> getTrainingData(String tokenid) async {
     var url = Uri.parse("https://compagno.app/api/training");
     try {
       var response = await http.get(url, headers: {
-        'Authorization': "Bearer $token",
+        'Authorization': "Bearer $tokenid",
       });
       if (response.statusCode != 200) {
         return [];
@@ -121,7 +138,7 @@ class DatabaseRepo {
     var url = Uri.parse("https://compagno.app/api/users/dashboard");
     try {
       var response = await http.get(url, headers: {
-        'Authorization': "Bearer ${tokenid}",
+        'Authorization': "Bearer $tokenid",
       });
 
       print(response.statusCode.toString());

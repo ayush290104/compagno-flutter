@@ -22,7 +22,7 @@ class DashboardController extends GetxController {
         address.value = data['results'][0]['formatted_address'];
       } else {
         address.value =  'Address not found';
-       debugPrint("value is data address : $data");
+        debugPrint("value is data address : $data");
       }
     } else {
       address.value = 'Error retrieving address';

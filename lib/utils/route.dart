@@ -26,3 +26,5 @@ const String styleguide = '/styleguid';
 const String modifyProfile = '/modifyProfile';
 const String previousRides = '/previousRides';
 const String addBikes = '/addBikes';
+const String completedAward = '/completedAward';
+const String moreVideos = '/moreVideos';

@@ -59,6 +59,7 @@ dependencies:
   vector_math: ^2.1.4
   syncfusion_flutter_gauges: ^21.2.4
   get: ^4.6.6
+  youtube_player_flutter: ^8.1.2
 
 
 dev_dependencies:

@@ -1,14 +1,15 @@
 import 'package:compagno4/core/class.dart';
 import 'package:compagno4/main.dart';
 import 'package:flutter/material.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
 import 'lesson_completed.dart';
-import 'package:video_player/video_player.dart';
 
 class TrainingLesson extends StatefulWidget {
   final Videos video;
+
   const TrainingLesson({Key? key, required this.video}) : super(key: key);
 
   @override
@@ -16,44 +17,74 @@ class TrainingLesson extends StatefulWidget {
 }
 
 class _TrainingLessonState extends State<TrainingLesson> {
-  late VideoPlayerController _controller;
+  late YoutubePlayerController _controller;
   bool isPlayed = false;
 
   void _videoListener() {
-    final bool isVideoFinished =
-        _controller.value.position >= _controller.value.duration;
+    try{
+      if (_controller.value.playerState == PlayerState.ended) {
+        // Perform any actions you want after the video has finished playing.
+        print('Video has finished playing.');
 
-    if (isVideoFinished) {
-      // Perform any actions you want after the video has finished playing.
-      print('Video has finished playing.');
+        trainCubit.submitIfFinish(widget.video.id.toString());
 
-      trainCubit.submitIfFinish(widget.video.id.toString());
-
-      Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => LessonCompleted(video: widget.video)));
+            builder: (context) => LessonCompleted(video: widget.video),
+          ),
+        );
+      }
+    } catch(e){
+      debugPrint("the error is $e");
     }
+  }
+
+  void runYoutubePlayer() {
+    // Check if the URL is not null before initializing the controller
+    _controller = YoutubePlayerController(
+      initialVideoId: YoutubePlayer.convertUrlToId(widget.video.url) ?? '',
+      flags: YoutubePlayerFlags(
+        enableCaption: true,
+        isLive: false,
+        autoPlay: true,
+      ),
+    );
   }
 
   @override
   void initState() {
+    runYoutubePlayer();
     super.initState();
-    _controller = VideoPlayerController.network(
-        "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4")
-      ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
-        _controller.play();
-        isPlayed = true;
-        _controller.addListener(_videoListener);
-      });
   }
 
   @override
+  void deactivate() {
+    _controller.pause();
+    super.deactivate();
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   try {
+  //     _controller = YoutubePlayerController(
+  //       // initialVideoId: YoutubePlayer.convertUrlToId(widget.video.url) ?? '',
+  //       initialVideoId: 'q6SelIOjCEA',
+  //       flags: YoutubePlayerFlags(
+  //         autoPlay: true,
+  //         mute: false,
+  //       ),
+  //     )..addListener(_videoListener);
+  //     debugPrint('_controller.value.isReady ${_controller.value.playerState}');
+  //   } catch (e) {
+  //     debugPrint('Error: $e');
+  //   }
+  // }
+
+  @override
   void dispose() {
-    _controller
-        .removeListener(_videoListener); // Remove listener before disposing.
+    // _controller.removeListener(_videoListener);
     _controller.dispose();
     super.dispose();
   }
@@ -73,19 +104,19 @@ class _TrainingLessonState extends State<TrainingLesson> {
                     "COMPAGNO",
                     style: k25_400_noize,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     "POWERED BY",
                     style: k10_400_bebas,
                   ),
                   Image.asset('assets/images/METALLO.png'),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   )
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Padding(
@@ -98,7 +129,7 @@ class _TrainingLessonState extends State<TrainingLesson> {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 6,
             ),
             Padding(
@@ -112,7 +143,7 @@ class _TrainingLessonState extends State<TrainingLesson> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 36,
             ),
             InkWell(
@@ -142,7 +173,7 @@ class _TrainingLessonState extends State<TrainingLesson> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 45,
             ),
             Padding(
@@ -156,21 +187,23 @@ class _TrainingLessonState extends State<TrainingLesson> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 21,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 51, bottom: 21),
-              child: Row(
-                children: [
-                  Text(
-                    widget.video.trainingSteps,
-                    style: k13_400_roboto,
-                  ),
-                ],
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+
+                child: Text(
+                  widget.video.trainingSteps,
+                  style: k13_400_roboto,
+
+                  softWrap: true,
+
+                ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Container(
@@ -181,17 +214,17 @@ class _TrainingLessonState extends State<TrainingLesson> {
                   color: AppColors.kB69F4C),
               child: Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 17,
                   ),
                   Image.asset('assets/images/light.png'),
-                  SizedBox(
+                  const SizedBox(
                     width: 17,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 12,
                       ),
                       Text(
@@ -207,25 +240,57 @@ class _TrainingLessonState extends State<TrainingLesson> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
-            _controller.value.isInitialized
-                ? AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: GestureDetector(
-                        onTap: () {
-                          if (isPlayed) {
-                            _controller.pause();
-                          } else {
-                            _controller.play();
-                          }
-                          isPlayed = !isPlayed;
-                          setState(() {});
-                        },
-                        child: VideoPlayer(_controller)),
-                  )
-                : Container(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+              child: YoutubePlayer(
+                controller: _controller,
+                showVideoProgressIndicator: true,
+                onReady: () {
+                  _controller.addListener(
+                    () => _videoListener(),
+                  );
+                  _controller.play();
+                },
+                onEnded: (data) {
+                  // Handle video end event
+                  _videoListener();
+                },
+
+              ),
+            )
+            // if (_controller.value.isReady)
+            //   // Show video player if initialized
+            //   AspectRatio(
+            //     aspectRatio: 16 / 9, // Adjust aspect ratio if needed
+            //     child: YoutubePlayer(
+            //       controller: _controller,
+            //       onReady: () {
+            //         _controller.addListener(
+            //           () => _videoListener(),
+            //         );
+            //         _controller.play();
+            //       },
+            //       onEnded: (data) {
+            //         // Handle video end event
+            //         _videoListener();
+            //       },
+            //     ),
+            //   )
+            // else
+            //   // Show loading indicator if the video is not initialized
+            //   Container(
+            //     color: Colors.black,
+            //     width: 325,
+            //     height: 200, // Adjust the height as needed
+            //     child: const Center(
+            //       child: CircularProgressIndicator(
+            //         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            //       ),
+            //     ),
+            //   ),
           ],
         ),
       ),

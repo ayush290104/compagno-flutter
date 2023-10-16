@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class UserData {
   int? id = 0;
   String? token = "";
@@ -80,4 +78,3 @@ class UserData {
 
   }
 }
-

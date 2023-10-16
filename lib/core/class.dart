@@ -175,16 +175,16 @@ class AwardsClass {
 class AwardsProgress {
   int id;
   int userId;
-  int awardId;
-  int progressCount;
-  int completeCount;
-  int isCompleted;
+  int? awardId;
+  int? progressCount;
+  int? completeCount;
+  int? isCompleted;
   String createdAt;
   String updatedAt;
   String title;
   String icon;
   String completionType;
-  int sessionCount;
+  int? sessionCount;
   int? rideCount;
 
   AwardsProgress(
@@ -200,12 +200,15 @@ class AwardsProgress {
       required this.icon,
       required this.completionType,
       required this.sessionCount,
-      this.rideCount});
+      required this.rideCount});
 }
 
 class LifeTime {
-  int ridesCompleted;
-  int sessionsCompleted;
+  int? ridesCompleted;
+  int? sessionsCompleted; // Update the type to allow for null values
 
-  LifeTime({required this.ridesCompleted, required this.sessionsCompleted});
+  LifeTime({
+     this.ridesCompleted,
+    this.sessionsCompleted,
+  });
 }
