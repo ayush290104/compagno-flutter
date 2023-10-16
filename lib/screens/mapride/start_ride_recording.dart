@@ -30,17 +30,20 @@ class _StartRidingState extends State<StartRiding> {
         body: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 30, left: 26),
+              padding: const EdgeInsets.only(top: 10, left: 10),
               child: Row(
                 children: [
                   Text(
                     "COMPAGNO",
                     style: k25_400_noize,
                   ),
-                  Spacer(),
-                  Text("POWERED BY", style: k10_400_bebas),
+                  const Spacer(),
+                  Text(
+                    "POWERED BY",
+                    style: k10_400_bebas,
+                  ),
                   Image.asset('assets/images/METALLO.png'),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   )
                 ],
@@ -56,167 +59,184 @@ class _StartRidingState extends State<StartRiding> {
             SizedBox(
               height: 78,
             ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: AppColors.k000000,
-          ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 17, left: 11),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Text(
-                        "TRAIL CHATTER",
-                        style: k11_700_roboto,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        width: 200.0,
-                        height: 20.0,
-                        child: Selector<PostValueProvider, List<double>>(
-                          selector: (p0, p1) => p1.trailChatterList,
-                          shouldRebuild: (previous, next) => true,
-                          builder: (context, value, child) => Sparkline(
-                            data: value,
-                            useCubicSmoothing: true,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: AppColors.k000000,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 22, left: 11),
-                child: Row(
+                child: Column(
                   children: [
-                    Expanded(
-                      flex: 1,
-                      child: Text(
-                        "ACCELERATION",
-                        style: k11_700_roboto,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        width: 200.0,
-                        height: 20.0,
-                        child: Selector<PostValueProvider, List<double>>(
-                          selector: (p0, p1) => p1.accelerationList,
-                          shouldRebuild: (previous, next) => true,
-                          builder: (context, value, child) => Sparkline(
-                            data: value,
-                            useCubicSmoothing: true,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                 padding: const EdgeInsets.only(top: 22, left: 11),
-                child: Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: Text(
-                        "INCLINE",
-                        style: k11_700_roboto,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 70,
-                    ),
-                    Expanded(
-                      flex: 6,
-
-                      child: Selector<PostValueProvider, double>(
-                        selector: (p0, p1) => p1.inclineAngle ,
-                        builder: (context, value, child) {
-                          double normalizedValue =
-                              (-1*value);
-
-                          return
-
-                            Container(
-                            width: 120,
-                            height: 120,
-                            child: SfRadialGauge(
-                              axes: <RadialAxis>[
-                                RadialAxis(
-                                  minimum: -90,
-                                  maximum: 91,
-                                  startAngle: 180,
-                                  endAngle: 0,
-                                  radiusFactor: 1,
-                                  showLabels: true,
-                                  interval: 45,
-                                  onLabelCreated: (args) {
-                                    // Custom label formatter to display only positive values
-                                    args.text = '${double.parse(args.text).abs().toInt()}';
-                                    args.labelStyle = const GaugeTextStyle(
-                                        color: Colors.white, fontSize: 10);
-                                  },
-                                  ranges: <GaugeRange>[
-                                    GaugeRange(
-                                      startValue: -90,
-                                      endValue: -45,
-                                      color: Colors.red,
-
-                                    ),
-                                    GaugeRange(
-                                      startValue: -45,
-                                      endValue: 45,
-                                      color: Colors.green,
-                                    ),
-                                    GaugeRange(
-                                      startValue: 45,
-                                      endValue: 90,
-                                      color: Colors.red,
-                                    ),
-                                  ],
-                                  pointers: <GaugePointer>[
-                                    MarkerPointer(
-                                      value: normalizedValue,
-                                      color: Colors.white,
-                                      enableAnimation: true,
-                                    ),
-                                  ],
-                                ),
-                              ],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 17, left: 11),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              "TRAIL CHATTER",
+                              style: k11_700_roboto,
                             ),
-                          );
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            flex: 4,
+                            child: Container(
+                              width: 200.0,
+                              height: 20.0,
+                              decoration: BoxDecoration(
+
+                              ),
+                              child: Selector<PostValueProvider, List<double>>(
+                                selector: (p0, p1) => p1.trailChatterList,
+                                shouldRebuild: (previous, next) => true,
+                                builder: (context, value, child) => Sparkline(
+                                  data: value,
+                                  useCubicSmoothing: true,
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              width: 2.0,
+                              height: 20.0,
+
+                              child: Selector<PostValueProvider, List<double>>(
+                                selector: (p0, p1) => p1.trailChatterList,
+                                shouldRebuild: (previous, next) => true,
+                                builder: (context, value, child) => Text(value.last.toString())
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 22, left: 11),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              "ACCELERATION",
+                              style: k11_700_roboto,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              width: 200.0,
+                              height: 20.0,
+                              child: Selector<PostValueProvider, List<double>>(
+                                selector: (p0, p1) => p1.accelerationList,
+                                shouldRebuild: (previous, next) => true,
+                                builder: (context, value, child) => Sparkline(
+                                  data: value,
+                                  useCubicSmoothing: true,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 22, left: 11),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              "INCLINE",
+                              style: k11_700_roboto,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 70,
+                          ),
+                          Expanded(
+                            flex: 6,
+
+                            child: Selector<PostValueProvider, double>(
+                              selector: (p0, p1) => p1.inclineAngle ,
+                              builder: (context, value, child) {
+                                double normalizedValue =
+                                (-1*value);
+
+                                return
+
+                                  Container(
+                                    width: 120,
+                                    height: 120,
+                                    child: SfRadialGauge(
+                                      axes: <RadialAxis>[
+                                        RadialAxis(
+                                          minimum: -90,
+                                          maximum: 91,
+                                          startAngle: 180,
+                                          endAngle: 0,
+                                          radiusFactor: 1,
+                                          showLabels: true,
+                                          interval: 45,
+                                          onLabelCreated: (args) {
+                                            // Custom label formatter to display only positive values
+                                            args.text = '${double.parse(args.text).abs().toInt()}';
+                                            args.labelStyle = const GaugeTextStyle(
+                                                color: Colors.white, fontSize: 10);
+                                          },
+                                          ranges: <GaugeRange>[
+                                            GaugeRange(
+                                              startValue: -90,
+                                              endValue: -45,
+                                              color: Colors.red,
+
+                                            ),
+                                            GaugeRange(
+                                              startValue: -45,
+                                              endValue: 45,
+                                              color: Colors.green,
+                                            ),
+                                            GaugeRange(
+                                              startValue: 45,
+                                              endValue: 90,
+                                              color: Colors.red,
+                                            ),
+                                          ],
+                                          pointers: <GaugePointer>[
+                                            MarkerPointer(
+                                              value: normalizedValue,
+                                              color: Colors.white,
+                                              enableAnimation: true,
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  );
 
 
-                        },
+                              },
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
 
-      SizedBox(
+            SizedBox(
               height: 98,
             ),
             InkWell(
@@ -255,9 +275,9 @@ class _StartRidingState extends State<StartRiding> {
                 color: Colors.transparent,
                 child: Center(
                     child: Text(
-                  "TAP TO STOP",
-                  style: k13_700_roboto,
-                ))),
+                      "TAP TO STOP",
+                      style: k13_700_roboto,
+                    ))),
           ],
         ),
       ),

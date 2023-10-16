@@ -111,101 +111,104 @@ class _SpeedGraphState extends State<SpeedGraph> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.k000000),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16, left: 21),
-                        child: Row(
-                          children: [
-                            Text(
-                              "SPEED",
-                              style: k16_400_bebas,
-                            ),
-                          ],
-                        ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16, left: 21),
+                      child: Row(
+                        children: [
+                          Text(
+                            "SPEED",
+                            style: k16_400_bebas,
+                          ),
+                        ],
                       ),
-                      BlocBuilder<DashboardCubit, DashboardState>(
-                          builder: (context, state) {
-                        if (state is DashboardSuccessState) {
-                          return (dashboardCubit
-                              .dashboardClass!
-                              .data!.lastRide!
-                              .speed!
-                              .speed!.length >
-                                  1)
-                              ? LineGraph(
-                                  features: [
-                                    Feature(
-                                        title: "SPEED",
-                                        color: AppColors.k69806F,
-                                        data: fnToDouble(dashboardCubit
-                                            .dashboardClass!
-                                            .data!.lastRide!
-                                            .speed!
-                                            .speed!))
-                                  ],
-                                  size: Size(
-                                      (MediaQuery.of(context).size.width - 16 * 2)*2,
-                                      307),
+                    ),
+                    BlocBuilder<DashboardCubit, DashboardState>(
+                        builder: (context, state) {
+                          if (state is DashboardSuccessState) {
+                            double maxElement = fnToDouble2(dashboardCubit
+                                .dashboardClass!
+                                .data!.lastRide!
+                                .speed!
+                                .speed!).reduce((value, element) => value > element ? value : element);
+                            return (dashboardCubit
+                                .dashboardClass!
+                                .data!.lastRide!
+                                .speed!
+                                .speed!.length >
+                                1)
+                                ? LineGraph(
+                              features: [
+                                Feature(
+                                    title: "SPEED",
+                                    color: AppColors.k69806F,
+                                    data: fnToDouble(dashboardCubit
+                                        .dashboardClass!
+                                        .data!.lastRide!
+                                        .speed!
+                                        .speed!))
+                              ],
+                              size: Size(
+                                  (MediaQuery.of(context).size.width - 16 * 2),
+                                  307),
 
 
 
-                            labelY: const [
-                              "10","20","45"
-                              // for (int i = fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1; i >= 0; i--)
-                              //   i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1
-                              //       ? fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!)[i].toString()
-                              //       : "",
-                            ],
+                              labelY:  [
+                                (maxElement/3).round().toStringAsFixed(3),((maxElement/3)*2).toStringAsFixed(3).toString(),maxElement.toStringAsFixed(3)
 
-                            labelX: [
+                                // for (int i = fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1; i >= 0; i--)
+                                //   i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1
+                                //       ? fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!)[i].toString()
+                                //       : "",
+                              ],
 
-                              for (int i = 0; i<=fnToDouble(dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!).length - 1; i++)
-                                i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!).length - 1
-                                    ? dashboardCubit.dashboardClass!.data!.lastRide!.speed!.time![i]
-                                    : "",
+                              labelX: [
 
-                            ],
+                                for (int i = 0; i<=fnToDouble(dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!).length - 1; i++)
+                                  i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!).length - 1
+                                      ? dashboardCubit.dashboardClass!.data!.lastRide!.speed!.time![i]
+                                      : "",
 
-                                  //showDescription: true,
-                                  graphColor: Colors.white,
-                                  graphOpacity: 0.2,
-                                  verticalFeatureDirection: true,
-                                  // descriptionHeight: 100,
-                                )
-                              : Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: SizedBox(
-                                        width: MediaQuery.of(context).size.width -
-                                            16 * 2,
-                                        height: 307,
-                                        child: const Text(
-                                          "sorry, we need more data to display it!",
-                                          style: TextStyle(color: Colors.white),
-                                        )),
-                                  ),
-                                );
-                        } else {
-                          return Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width - 16 * 2,
-                                  height: 307,
-                                  child: const Text(
-                                    "WAITING",
-                                    style: TextStyle(color: Colors.white),
-                                  )),
-                            ),
-                          );
-                        }
-                      }),
-                    ],
-                  ),
+                              ],
+
+                              //showDescription: true,
+                              graphColor: Colors.white,
+                              graphOpacity: 0.2,
+                              verticalFeatureDirection: true,
+                              // descriptionHeight: 100,
+                            )
+                                : Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                    width: MediaQuery.of(context).size.width -
+                                        16 * 2,
+                                    height: 307,
+                                    child: const Text(
+                                      "sorry, we need more data to display it!",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                              ),
+                            );
+                          } else {
+                            return Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                    width:
+                                    MediaQuery.of(context).size.width - 16 * 2,
+                                    height: 307,
+                                    child: const Text(
+                                      "WAITING",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                              ),
+                            );
+                          }
+                        }),
+                  ],
                 ),
               ),
               SizedBox(
@@ -223,7 +226,7 @@ class _SpeedGraphState extends State<SpeedGraph> {
     // hello.add(ab[ab.length~/2].toDouble());
     // hello.add(ab[ab.length-1].toDouble());
     for(var a in ab){
-      hello.add(a.toDouble()/45);
+      hello.add(a.toDouble());
     }
     for(int i = 1;i<hello.length-1;i++){
           if(hello[i]==0&&hello[i-1]!=0&&hello[i+1]!=0){
@@ -231,18 +234,23 @@ class _SpeedGraphState extends State<SpeedGraph> {
           }
 
     }
+    double max = hello.reduce((value, element) => value > element ? value : element);
+
+    for(int i = 1;i<hello.length-1;i++){
+      hello[i] = hello[i]/max;
+    }
 
     debugPrint("list is $hello");
     return hello;
   }
-  List<double> fnToDouble2(List<num> ab) {
+  List<double> fnToDouble2(List<int> ab) {
     List<double> hello = [];
     for(var a in ab){
-      if(hello.length==3){
-        break;
-      }
-      if(a!=0){
-        hello.add(a.toDouble()/3);
+      hello.add(a.toDouble());
+    }
+    for(int i = 1;i<hello.length-1;i++){
+      if(hello[i]==0&&hello[i-1]!=0&&hello[i+1]!=0){
+        hello.remove(hello[i]);
       }
 
     }

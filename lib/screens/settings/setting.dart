@@ -128,22 +128,22 @@ class _SettingsState extends State<Settings> {
                                     clipBehavior: Clip.none,
                                     children: [
                                       Image.asset("assets/images/user.png"),
-                                      Positioned(
-                                        bottom: 10,
-                                        right: 10,
-                                        child: Container(
-                                          height: 35,
-                                          width: 35,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: AppColors.k000000,
-                                          ),
-                                          child: Center(
-                                            child: Image.asset(
-                                                "assets/images/edit.png"),
-                                          ),
-                                        ),
-                                      )
+                                      // Positioned(
+                                      //   bottom: 10,
+                                      //   right: 10,
+                                      //   child: Container(
+                                      //     height: 35,
+                                      //     width: 35,
+                                      //     decoration: const BoxDecoration(
+                                      //       shape: BoxShape.circle,
+                                      //       color: AppColors.k000000,
+                                      //     ),
+                                      //     child: Center(
+                                      //       child: Image.asset(
+                                      //           "assets/images/edit.png"),
+                                      //     ),
+                                      //   ),
+                                      // )
                                     ],
                                   ),
                                 ),
@@ -190,8 +190,8 @@ class _SettingsState extends State<Settings> {
                                                 style: k20_400_bebas,
                                               ),
                                               const Spacer(),
-                                              Image.asset(
-                                                  "assets/images/edit2.png")
+                                              // Image.asset(
+                                              //     "assets/images/edit2.png")
                                             ],
                                           ),
                                           const SizedBox(
@@ -305,12 +305,12 @@ class _SettingsState extends State<Settings> {
                                 const SizedBox(
                                   height: 18,
                                 ),
-                                Container(
-                                    height: 97,
-                                    width: 325,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: AppColors.k000000)),
+                                // Container(
+                                //     height: 97,
+                                //     width: 325,
+                                //     decoration: BoxDecoration(
+                                //         borderRadius: BorderRadius.circular(10),
+                                //         color: AppColors.k000000)),
                                 const SizedBox(
                                   height: 18,
                                 ),
@@ -332,10 +332,10 @@ class _SettingsState extends State<Settings> {
                                               style: k20_400_bebas,
                                             ),
                                             const Spacer(),
-                                            GestureDetector(
-                                                onTap: () {},
-                                                child: Image.asset(
-                                                    'assets/images/edit2.png'))
+                                            // GestureDetector(
+                                            //     onTap: () {},
+                                            //     child: Image.asset(
+                                            //         'assets/images/edit2.png'))
                                           ],
                                         ),
                                         const SizedBox(height: 22),
@@ -433,7 +433,10 @@ class _SettingsState extends State<Settings> {
                                       ),
                                     ),
                                   ),
-                                )
+                                ),
+                                const SizedBox(
+                                  height: 18,
+                                ),
                               ],
                             ),
                           ],

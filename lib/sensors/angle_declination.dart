@@ -16,15 +16,15 @@ class _AngleDeclinationState extends State<AngleDeclination> {
   void _startListeningToMagnetometer() {
     _magnetometerSubscription =
         magnetometerEvents.listen((MagnetometerEvent event) {
-      // Access the magnetometer readings through event.x, event.y, event.z
-      double x = event.x;
-      double y = event.y;
-      double z = event.z;
-      // Perform necessary calculations based on the magnetometer readings
-      angleOfDeclination = calculateAngleOfDeclination(x, y, z);
-      setState(() {});
-      // Use the angleOfDeclination value for further operations
-    });
+          // Access the magnetometer readings through event.x, event.y, event.z
+          double x = event.x;
+          double y = event.y;
+          double z = event.z;
+          // Perform necessary calculations based on the magnetometer readings
+          angleOfDeclination = calculateAngleOfDeclination(x, y, z);
+          setState(() {});
+          // Use the angleOfDeclination value for further operations
+        });
   }
 
   void _stopListeningToMagnetometer() {
@@ -57,14 +57,14 @@ class AngleDelinationSensor {
   void startListeningToMagnetometer() {
     _magnetometerSubscription =
         magnetometerEvents.listen((MagnetometerEvent event) {
-      // Access the magnetometer readings through event.x, event.y, event.z
-      double x = event.x;
-      double y = event.y;
-      double z = event.z;
-      // Perform necessary calculations based on the magnetometer readings
-      angleOfDeclination.add(calculateAngleOfDeclination(x, y, z));
-      // Use the angleOfDeclination value for further operations
-    });
+          // Access the magnetometer readings through event.x, event.y, event.z
+          double x = event.x;
+          double y = event.y;
+          double z = event.z;
+          // Perform necessary calculations based on the magnetometer readings
+          angleOfDeclination.add(calculateAngleOfDeclination(x, y, z));
+          // Use the angleOfDeclination value for further operations
+        });
   }
 
   double calculateAngleOfDeclination(double x, double y, double z) {
@@ -82,7 +82,7 @@ class AngleDelinationSensor {
     _magnetometerSubscription = null;
     return counter / count;
   }
-   double handleValue() {
+  double handleValue() {
     double counter = 0.0;
     counter = angleOfDeclination.fold(
         0, (previousValue, element) => previousValue + element);

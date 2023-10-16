@@ -1,6 +1,7 @@
 import 'dart:io';
 
 class BikeModel {
+  int? id;
   String brand;
   String modelName;
   String? frontShockPsi;
@@ -23,6 +24,7 @@ class BikeModel {
     required this.brand,
     required this.modelName,
     this.frontShockPsi,
+    this.id,
     this.frontShockSag,
     this.frontShockHsc,
     this.frontShockLsc,
@@ -41,6 +43,7 @@ class BikeModel {
 
   factory BikeModel.fromJson(Map<String, dynamic> json) {
     return BikeModel(
+      id: json['id'],
       brand: json['brand'],
       modelName: json['model_name'],
       frontShockPsi: json['front_shock_psi'],

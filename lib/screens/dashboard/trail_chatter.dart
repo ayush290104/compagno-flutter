@@ -109,115 +109,101 @@ class _TrailChatterState extends State<TrailChatter> {
               ),
               Container(
                 height: 412,
-                width: 325,
+                width: 300,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.k000000),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16, left: 21),
-                        child: Row(
-                          children: [
-                            Text(
-                              "Chatter size",
-                              style: k16_400_bebas,
-                            ),
-                          ],
-                        ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16, left: 21),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Chatter size",
+                            style: k16_400_bebas,
+                          ),
+                        ],
                       ),
-                      BlocBuilder<DashboardCubit, DashboardState>(
-                          builder: (context, state) {
-                        if (state is DashboardSuccessState) {
-                          return (dashboardCubit.dashboardClass!.data!
-                              .lastRide!.trailChatter!.data!.length >
-                                  1)
-                              ? LineGraph(
-                                  features: [
-                                    Feature(
-                                        title: "TRAIL CHATTER",
-                                        color: AppColors.k69806F,
-                                        data: fnToDouble2(dashboardCubit
-                                            .dashboardClass!
-                                            .data!
-                                            .lastRide!.trailChatter!
-                                            .data!))
-                                  ],
-                                  size: Size(
-                                      (MediaQuery.of(context).size.width - 16 * 2)*2,
-                                      307),
-                            labelX: [
+                    ),
+                    BlocBuilder<DashboardCubit, DashboardState>(
+                        builder: (context, state) {
+                          if (state is DashboardSuccessState) {
+                            double maxElement = fnToDouble2(dashboardCubit
+                                .dashboardClass!
+                                .data!
+                                .lastRide!.trailChatter!
+                                .data!).reduce((value, element) => value > element ? value : element);
+                            return (dashboardCubit.dashboardClass!.data!
+                                .lastRide!.trailChatter!.data!.length >
+                                1)
+                                ? LineGraph(
+                              features: [
+                                Feature(
+                                    title: "TRAIL CHATTER",
+                                    color: AppColors.k69806F,
+                                    data: fnToDouble2(dashboardCubit
+                                        .dashboardClass!
+                                        .data!
+                                        .lastRide!.trailChatter!
+                                        .data!))
+                              ],
+                              size: Size(
+                                  600,
+                                  307),
+                              labelX: [
 
-                              for (int i = 0; i <= fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!
-                                  .data!).length - 1; i++)
-                                // i <= 0 || i == fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!
-                                //     .data!).length - 1
-                                //     ? dashboardCubit.dashboardClass!.data!.speed!.time![i]
-                                //     : "",
-                                if(i==0||i==1||i==2||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!
-                                .data!).length - 1||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!
-                                    .data!).length - 2||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!
-                                    .data!).length - 3)
-                                dashboardCubit.dashboardClass!.data!.lastRide!.speed!.time![i]
 
-                            ],
+                                for (int i = 0; i < fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).length; i++)
+                                  i==0||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).length - 1
+                                      ? dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.distance![i]
+                                      : "",
+
+
+                              ],
                               labelY: [
-
-                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).isNotEmpty)
-                                  fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).first.toString(),
-                                // ...List<String>.generate(
-                                //   fnToDouble2(dashboardCubit.dashboardClass!.data!.trailChatter!.data!).length - 2,
-                                //       (index) => "",
-                                // ),
-                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).isNotEmpty)
-                                  fnToDouble2(dashboardCubit!.dashboardClass!.data!.lastRide!.trailChatter!.data!)[(fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).length)~/2].toString(),
-                                if (fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).isNotEmpty)
-
-                                  fnToDouble2(dashboardCubit!.dashboardClass!.data!.lastRide!.trailChatter!.data!).last.toString(),
+                                (maxElement/3).round().toStringAsFixed(3),((maxElement/3)*2).toStringAsFixed(3).toString(),maxElement.toString()
                               ],
 
 
 
 
-                            //showDescription: true,
-                                  graphColor: Colors.white,
-                                  graphOpacity: 0.2,
-                                  verticalFeatureDirection: true,
-                                  // descriptionHeight: 100,
-                                )
-                              : Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: SizedBox(
-                                        width: MediaQuery.of(context).size.width -
-                                            16 * 2,
-                                        height: 307,
-                                        child: const Text(
-                                          "sorry, we need more data to display it!",
-                                          style: TextStyle(color: Colors.white),
-                                        )),
-                                  ),
-                                );
-                        } else {
-                          return Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width - 16 * 2,
-                                  height: 307,
-                                  child: const Text(
-                                    "WAITING",
-                                    style: TextStyle(color: Colors.white),
-                                  )),
-                            ),
-                          );
-                        }
-                      }),
-                    ],
-                  ),
+                              //showDescription: true,
+                              graphColor: Colors.white,
+                              graphOpacity: 0.2,
+                              verticalFeatureDirection: true,
+                              // descriptionHeight: 100,
+                            )
+                                : Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                    width: MediaQuery.of(context).size.width -
+                                        16 * 2,
+                                    height: 307,
+                                    child: const Text(
+                                      "sorry, we need more data to display it!",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                              ),
+                            );
+                          } else {
+                            return Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SizedBox(
+                                    width:
+                                    MediaQuery.of(context).size.width - 16 * 2,
+                                    height: 307,
+                                    child: const Text(
+                                      "WAITING",
+                                      style: TextStyle(color: Colors.white),
+                                    )),
+                              ),
+                            );
+                          }
+                        }),
+                  ],
                 ),
               ),
               SizedBox(
@@ -287,10 +273,14 @@ class _TrailChatterState extends State<TrailChatter> {
       ),
     );
   }
-  List<double> fnToDouble2(List<num> ab) {
+  List<double> fnToDouble2(List<double> ab) {
     List<double> hello = [];
     for(var a in ab){
         hello.add(a.toDouble());
+    }
+    double max = hello.reduce((value, element) => value > element ? value : element);
+    for(int i = 0;i<hello.length;i++){
+      hello[i] = hello[i]/max;
     }
      debugPrint("hello is :$hello");
     return hello;

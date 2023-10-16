@@ -91,10 +91,6 @@ class _SettingTuningScreenState extends State<SettingTuning> {
     rear_shock_lsr_Controller.text = bikeController.bikeselect.value.rearShockLsr ?? '';
     front_tire_psi_Controller.text = bikeController.bikeselect.value.frontTirePsi?.toString() ?? '';
     rear_tire_psi_Controller.text = bikeController.bikeselect.value.rearTirePsi?.toString() ?? '';
-
-
-
-    BikeWeb().getBikeModels();
     return Scaffold(
       backgroundColor: AppColors.k47574C,
       body: SafeArea(
@@ -148,13 +144,32 @@ class _SettingTuningScreenState extends State<SettingTuning> {
                           ),
                           InkWell(
                             onTap: () {
-                              if (_formKey.currentState!.validate()) {
-                                bikeController.Bikeadded();
-                                Navigator.push(
+                             bikeController.bikemodelMap['rear_tire_psi'] = rear_tire_psi_Controller.text.toString();
+                             bikeController.bikemodelMap['front_tire_psi'] = front_tire_psi_Controller.text.toString();
+                             bikeController.bikemodelMap['rear_shock_lsr'] =rear_shock_lsr_Controller.text.toString();
+                             bikeController.bikemodelMap['rear_shock_hsr'] = rear_shock_hsr_Controller.text.toString();
+                             bikeController.bikemodelMap['rear_shock_lsc'] = rear_shock_lsc_Controller.text.toString();
+                             bikeController.bikemodelMap['rear_shock_hsc'] = rear_shock_hsc_Controller.text.toString();
+                             bikeController.bikemodelMap['rear_shock_sag'] = rear_shock_sag_Controller.text.toString();
+                             bikeController.bikemodelMap['rear_shock_psi'] = rear_shock_psi_Controller.text.toString();
+                             bikeController.bikemodelMap['rear_shock_lsr'] = rear_shock_lsr_Controller.text.toString();
+                             bikeController.bikemodelMap['rear_shock_lsr'] =rear_shock_lsr_Controller.text.toString();
+                             bikeController.bikemodelMap['front_shock_hsr'] = front_shock_hsr_Controller.text.toString();
+                             bikeController.bikemodelMap['front_shock_lsc'] = front_shock_lsc_Controller.text.toString();
+                             bikeController.bikemodelMap['front_shock_hsc'] = front_shock_hsc_Controller.text.toString();
+                             bikeController.bikemodelMap['front_shock_sag'] = front_shock_sag_Controller.text.toString();
+                             bikeController.bikemodelMap['front_shock_psi'] = front_shock_psi_Controller.text.toString();
+                             bikeController.bikemodelMap['front_shock_lsr'] = front_shock_lsr_Controller.text.toString();
+                             debugPrint(bikeController.bikemodelMap.toString());
+                             BikeWeb().updatebikemodel(bikeController.bikeselect.value.id!, bikeController.bikemodelMap);
+
+
+
+                             Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => const TabScreen()));
-                              }
+
 
 
 

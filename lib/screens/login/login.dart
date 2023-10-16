@@ -173,6 +173,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               context.read<LoginVM>().login(onError: (msg) {
                                 FlutterToastr.show(msg, context);
                               }, onSuccess: (response) {
+                                Navigator.pop(context);
                                 Navigator.pushNamed(context, tabScreen);
                               });
                             }

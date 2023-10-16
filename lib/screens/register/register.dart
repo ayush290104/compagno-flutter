@@ -75,6 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           context.read<RegisterVM>().register(onError: (msg) {
                             FlutterToastr.show(msg, context);
                           }, onSuccess: (_) {
+                            Navigator.pop(context);
                             Navigator.pushNamed(context, tabScreen);
                           });
                         }

@@ -20,15 +20,15 @@ class _AccelerationWidgetState extends State<AccelerationWidget> {
   void _startListeningToAccelerometer() {
     _accelerometerSubscription =
         userAccelerometerEvents.listen((UserAccelerometerEvent event) {
-      // Access the accelerometer readings through event.x, event.y, event.z
-      double x = event.x;
-      double y = event.y;
-      double z = event.z;
-      // Perform necessary calculations based on the accelerometer readings
-      acceleration = calculateAcceleration(x, y, z);
-      setState(() {});
-      // Use the acceleration value for further operations
-    });
+          // Access the accelerometer readings through event.x, event.y, event.z
+          double x = event.x;
+          double y = event.y;
+          double z = event.z;
+          // Perform necessary calculations based on the accelerometer readings
+          acceleration = calculateAcceleration(x, y, z);
+          setState(() {});
+          // Use the acceleration value for further operations
+        });
   }
 
   double calculateAcceleration(double x, double y, double z) {
@@ -47,6 +47,7 @@ class _AccelerationWidgetState extends State<AccelerationWidget> {
     super.initState();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,17 +65,17 @@ class AccelrationSensor {
   void startListeningToMagnetometer(Function(List<double> value) valueSetter) {
     _accelerometerSubscription =
         userAccelerometerEvents.listen((UserAccelerometerEvent event) {
-      // Access the accelerometer readings through event.x, event.y, event.z
-      double x = event.x;
-      double y = event.y;
-      double z = event.z;
-      final val = calculateAcceleration(x, y, z);
-      // Perform necessary calculations based on the accelerometer readings
-      acceleration.add(val);
-      valueSetter.call(acceleration);
-      count += 1;
-      // Use the acceleration value for further operations
-    });
+          // Access the accelerometer readings through event.x, event.y, event.z
+          double x = event.x;
+          double y = event.y;
+          double z = event.z;
+          final val = calculateAcceleration(x, y, z);
+          // Perform necessary calculations based on the accelerometer readings
+          acceleration.add(val);
+          valueSetter.call(acceleration);
+          count += 1;
+          // Use the acceleration value for further operations
+        });
   }
 
   double calculateAcceleration(double x, double y, double z) {
@@ -99,6 +100,7 @@ class AccelrationSensor {
     final value = counter / count;
     count = 0;
     counter = 0;
+    acceleration.clear();
     return value;
   }
 }

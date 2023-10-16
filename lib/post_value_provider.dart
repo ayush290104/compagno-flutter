@@ -26,6 +26,8 @@ class PostValueProvider extends ChangeNotifier {
 
   double? get trailChatter => _trailChatter;
 
+
+
   set trailChatter(double? value) {
     _trailChatter = value;
     notifyListeners();
@@ -83,7 +85,7 @@ class PostValueProvider extends ChangeNotifier {
   Timer? _timer;
 
   void startRide() {
-
+    hitStarRideApi();
     speedSensor.startSpeedSensor();
     leanAngleSensor.startListeningToAccelerometer();
     inclineSensor.startListeningToAccelerometer((value) {
@@ -95,8 +97,9 @@ class PostValueProvider extends ChangeNotifier {
     });
     accelrationSensor.startListeningToMagnetometer((value) {
       accelerationList = value;
+
     });
-    hitStarRideApi();
+
   }
 
   Future<void> hitStarRideApi() async {
@@ -231,6 +234,8 @@ class PostValueProvider extends ChangeNotifier {
 
   set accelerationList(List<double> value) {
     _accelerationList = value;
+    debugPrint("acceleration list is $accelerationList");
+
     notifyListeners();
   }
 

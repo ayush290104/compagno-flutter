@@ -192,11 +192,13 @@ key: _formKey,
                         children: [
                           image == null
                               ? const CircleAvatar(
+                            backgroundColor: Colors.transparent,
                                   backgroundImage:
-                                      AssetImage("assets/images/bikeimg.png"),
+                                  AssetImage("assets/images/user.png"),
                                   radius: 60,
                                 )
                               : CircleAvatar(
+                            backgroundColor: Colors.transparent,
                                   backgroundImage: FileImage(
                                     image!,
                                   ),
@@ -253,52 +255,52 @@ key: _formKey,
                         ),
                       ),
                       SizedBox(height: 20,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.k000000,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 15, left: 18, right: 9),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "INTERESTS",
-                                      style: k20_400_bebas,
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                const Row(
-                                  children: [
-                                    Expanded(
-                                      flex: 3,
-                                      child: SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Row(
-                                          children: [
-                                            RiderChip("Strength Fitness"),
-                                            RiderChip("Casual Riding"),
-                                            RiderChip("Racing"),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                      //   child: Container(
+                      //     decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //       color: AppColors.k000000,
+                      //     ),
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.only(
+                      //           top: 15, left: 18, right: 9),
+                      //       child: Column(
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         children: [
+                      //           Row(
+                      //             children: [
+                      //               Text(
+                      //                 "INTERESTS",
+                      //                 style: k20_400_bebas,
+                      //               ),
+                      //             ],
+                      //           ),
+                      //           SizedBox(
+                      //             height: 10,
+                      //           ),
+                      //           const Row(
+                      //             children: [
+                      //               Expanded(
+                      //                 flex: 3,
+                      //                 child: SingleChildScrollView(
+                      //                   scrollDirection: Axis.horizontal,
+                      //                   child: Row(
+                      //                     children: [
+                      //                       RiderChip("Strength Fitness"),
+                      //                       RiderChip("Casual Riding"),
+                      //                       RiderChip("Racing"),
+                      //                     ],
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           )
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       // const SizedBox(
                       //   height: 18,
                       // ),

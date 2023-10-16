@@ -14,15 +14,15 @@ class TrailChatterSensor {
   void startListeningToAccelerometer(Function(List<double> value) valueSetter) {
     _accelerometerSubscription =
         accelerometerEvents.listen((AccelerometerEvent event) {
-      // dev.log(event.toString());
-      double x = event.x;
-      double y = event.y;
-      double z = event.z;
-      final trail = calculateTrailChatterValue(x, y, z);
-      trailChatterValue.add(trail);
-      valueSetter.call(trailChatterValue);
-      count += 1;
-    });
+          // dev.log(event.toString());
+          double x = event.x;
+          double y = event.y;
+          double z = event.z;
+          final trail = calculateTrailChatterValue(x, y, z);
+          trailChatterValue.add(trail);
+          valueSetter.call(trailChatterValue);
+          count += 1;
+        });
   }
 
   double calculateTrailChatterValue(double x, double y, double z) {
@@ -59,9 +59,10 @@ class TrailChatterSensor {
     counter = trailChatterValue.fold(
         0, (previousValue, element) => previousValue + element);
     final value = counter / count;
-    // dev.log("value $value");
+    dev.log("value $value");
     count = 0;
     counter = 0;
+    trailChatterValue.clear();
     return value;
   }
 }

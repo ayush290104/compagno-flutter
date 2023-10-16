@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:developer' as dev;
 
-import 'package:flutter/cupertino.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:vector_math/vector_math.dart';
 
@@ -13,10 +12,10 @@ class LeanAngleSensor {
   void startListeningToAccelerometer() {
     _accelerometerSubscription =
         accelerometerEvents.listen((AccelerometerEvent event) {
-      angle.add(calculateLeanAngle(event.x, event.y, event.z));
-      count += 1;
-      // dev.log("lean angle ${calculateLeanAngle(event.x, event.y, event.z).toString()}");
-    });
+          angle.add(calculateLeanAngle(event.x, event.y, event.z));
+          count += 1;
+          dev.log(calculateLeanAngle(event.x, event.y, event.z).toString());
+        });
   }
 
   double calculateLeanAngle(double x, double y, double z) {
@@ -25,8 +24,6 @@ class LeanAngleSensor {
     double pitch = atan2(x, sqrt(y * y + z * z));
     // Calculate the lean angle in degrees
     double leanAngle = degrees(pitch);
-
-
     return leanAngle;
   }
 
@@ -37,7 +34,7 @@ class LeanAngleSensor {
 
     _accelerometerSubscription?.cancel();
     _accelerometerSubscription = null;
-    // dev.log("(counter/count) lean angle ${(counter / count).toString()}");
+    dev.log((counter / count).toString());
     return counter / count;
   }
 
@@ -48,7 +45,6 @@ class LeanAngleSensor {
     final value = counter / count;
     count = 0;
     counter = 0;
-
     return value;
   }
 }
