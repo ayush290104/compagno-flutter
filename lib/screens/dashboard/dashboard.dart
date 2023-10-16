@@ -22,19 +22,16 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../Controller/dashboardController.dart';
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
-import '../../utils/route.dart';
 import '../goal/goal_set.dart';
 
 class Dashboard extends StatefulWidget {
-   Dashboard({Key? key}) : super(key: key);
+  Dashboard({Key? key}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
-
 }
 
 class _DashboardState extends State<Dashboard> {
-
   final DashboardController dashboardController = Get.find();
   final List<LatLng> listLocations = [];
   final List<String> trailXAxis = [];
@@ -165,9 +162,10 @@ class _DashboardState extends State<Dashboard> {
     listLocations.clear();
 
     // Process trailChatter distance
-    if (dashboardCubit.dashboardClass?.data?.lastRide!.trailChatter?.distance != null) {
-      for (var i
-          in dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.distance!) {
+    if (dashboardCubit.dashboardClass?.data?.lastRide!.trailChatter?.distance !=
+        null) {
+      for (var i in dashboardCubit
+          .dashboardClass!.data!.lastRide!.trailChatter!.distance!) {
         List<String> timeComponents = i.split(':');
         String hrMin = '${timeComponents[0]}:${timeComponents[1]}';
         trailXAxis.add(hrMin);
@@ -181,8 +179,10 @@ class _DashboardState extends State<Dashboard> {
     String lastXValue = trailXAxis.isNotEmpty ? trailXAxis.last : '';
 
     // Process trailChatter data
-    if (dashboardCubit.dashboardClass?.data?.lastRide!.trailChatter?.data != null) {
-      for (var i in dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!) {
+    if (dashboardCubit.dashboardClass?.data?.lastRide!.trailChatter?.data !=
+        null) {
+      for (var i in dashboardCubit
+          .dashboardClass!.data!.lastRide!.trailChatter!.data!) {
         trailYAxis.add(i.toString());
       }
     }
@@ -195,7 +195,8 @@ class _DashboardState extends State<Dashboard> {
 
     // Process trailChatter data
     if (dashboardCubit.dashboardClass?.data?.lastRide!.speed?.speed != null) {
-      for (var i in dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!) {
+      for (var i
+          in dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!) {
         speedYAxis.add(i.toString());
       }
     }
@@ -213,294 +214,411 @@ class _DashboardState extends State<Dashboard> {
       ],
       child: Scaffold(
         backgroundColor: AppColors.k47574C,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 71, left: 26),
-                child: Row(
-                  children: [
-                    Text(
-                      "COMPAGNO",
-                      style: k25_400_noize,
-                    ),
-                    const Spacer(),
-                    Text(
-                      "POWERED BY",
-                      style: k10_400_bebas,
-                    ),
-                    Image.asset('assets/images/METALLO.png'),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 35,
-              ),
-              BlocBuilder<DashboardCubit, DashboardState>(
-                  builder: (context, state) {
-                return Center(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 10, left: 10),
                   child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        child: Text(
-                          (state is DashboardSuccessState)
-                              ? "WELCOME, ${dashboardCubit.dashboardClass!.data!.user!.name!.toUpperCase()}"
-                              : "WAIT...",
-                          style: k28_400_noize,
-                          textAlign: TextAlign.center,
+                      Text(
+                        "COMPAGNO",
+                        style: k25_400_noize,
+                      ),
+                      const Spacer(),
+                      Text(
+                        "POWERED BY",
+                        style: k10_400_bebas,
+                      ),
+                      Image.asset('assets/images/METALLO.png'),
+                      const SizedBox(
+                        width: 20,
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 35,
+                ),
+                BlocBuilder<DashboardCubit, DashboardState>(
+                    builder: (context, state) {
+                  return Center(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          child: Text(
+                            (state is DashboardSuccessState)
+                                ? "WELCOME, ${dashboardCubit.dashboardClass!.data!.user!.name!.toUpperCase()}"
+                                : "WAIT...",
+                            style: k28_400_noize,
+                            textAlign: TextAlign.center,
+                          ),
                         ),
+                      ],
+                    ),
+                  );
+                }),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Let’s amplify your ride experience.",
+                  style: k13_400_roboto,
+                ),
+                const SizedBox(
+                  height: 14,
+                ),
+                Container(
+                  height: 100,
+                  width: 100,
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: Image.asset("assets/images/user.png"),
+                ),
+                const SizedBox(
+                  height: 39,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 26),
+                  child: Row(
+                    children: [
+                      Text(
+                        "YOUR LAST RIDE",
+                        style: k20_400_bebas,
                       ),
                     ],
                   ),
-                );
-              }),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                "Let’s amplify your ride experience.",
-                style: k13_400_roboto,
-              ),
-              const SizedBox(
-                height: 14,
-              ),
-              Container(
-                height: 100,
-                width: 100,
-                decoration: const BoxDecoration(shape: BoxShape.circle),
-                child: Image.asset("assets/images/user.png"),
-              ),
-              const SizedBox(
-                height: 39,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 26),
-                child: Row(
-                  children: [
-                    Text(
-                      "YOUR LAST RIDE",
-                      style: k20_400_bebas,
-                    ),
-                  ],
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 9, left: 26),
-                child: Row(
-                  children: [
-                    Image.asset("assets/images/location.png"),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Expanded(
-                      child: BlocBuilder<DashboardCubit, DashboardState>(
-                        builder: (context, state) {
-                          if (state is DashboardSuccessState) {
-                            if (dashboardCubit
-                                .dashboardClass?.data?.lastRide!.route!=
-                                null && listLocations.isNotEmpty) {
-                              dashboardController.getAddressFromLatLng(listLocations[listLocations.length-1]);
-                              //debugPrint("listLocations at debug $listLocations");
-                            }
 
-                            return Obx(() => Text(dashboardController.address.value,style: k13_400_roboto));
-                          } else {
-                            return const SizedBox(
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                      "Wait!",
-                                      style: TextStyle(
-                                          color: Colors.white))),
-                            );
-                          }
-                        },
+                const SizedBox(
+                  height: 10,
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    children: [
+                      Image.asset("assets/images/location.png"),
+                      const SizedBox(
+                        width: 8,
                       ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const DashboardMap()));
-                      },
-                      child: Container(
-                        width: 57,
-                        height: 20,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.k000000),
-                        child: Row(
+                      Expanded(
+                        child: BlocBuilder<DashboardCubit, DashboardState>(
+                          builder: (context, state) {
+                            if (state is DashboardSuccessState) {
+                              if (dashboardCubit.dashboardClass?.data?.lastRide!
+                                          .route !=
+                                      null &&
+                                  listLocations.isNotEmpty) {
+                                dashboardController.getAddressFromLatLng(
+                                    listLocations[listLocations.length - 1]);
+                                //debugPrint("listLocations at debug $listLocations");
+                              }
+
+                              return Obx(() => Text(
+                                  dashboardController.address.value,
+                                  style: k13_400_roboto));
+                            } else {
+                              return const SizedBox(
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text("Wait!",
+                                        style: TextStyle(color: Colors.white))),
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const DashboardMap()));
+                        },
+                        child: Container(
+                          width: 57,
+                          height: 20,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: AppColors.k000000),
+                          child: Row(
+                            children: [
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "MAP",
+                                style: k10_700_roboto,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Image.asset("assets/images/Polygon 1.png")
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 33,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width / 2 - 8 * 3,
+                      height: 170,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.k000000),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const TrailChatter()));
+                        },
+                        child: Column(
                           children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 15, right: 10),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 18),
+                                    child: Text(
+                                      "Trail Chatter",
+                                      style: k16_400_bebas,
+                                    ),
+                                  ),
+                                  const Spacer(),
+                                  SizedBox(
+                                      child: Image.asset(
+                                          "assets/images/iconsforword.png"))
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            BlocBuilder<DashboardCubit, DashboardState>(
+                                builder: (context, state) {
+                              if ((state is DashboardSuccessState)) {
+                                return (dashboardCubit
+                                            .dashboardClass!
+                                            .data!
+                                            .lastRide!
+                                            .trailChatter!
+                                            .data!
+                                            .length >
+                                        1)
+                                    ? LineGraph(
+                                        features: [
+                                          Feature(
+                                            title: "TRAIL CHATTER",
+                                            color: AppColors.kB69F4C,
+                                            data: fnToDouble2(dashboardCubit
+                                                .dashboardClass!
+                                                .data!
+                                                .lastRide!
+                                                .trailChatter!
+                                                .data!),
+                                          )
+                                        ],
+                                        size: Size(
+                                            MediaQuery.of(context).size.width /
+                                                    2 -
+                                                8 * 5,
+                                            100),
+                                        labelX: [
+                                          firstXValue,
+                                          middleXValue,
+                                          lastXValue
+                                        ],
+
+                                        labelY: ["1", "2", "3"],
+                                        //showDescription: true,
+                                        graphColor: Colors.white,
+                                        graphOpacity: 0.2,
+                                        verticalFeatureDirection: true,
+                                        // descriptionHeight: 100,
+                                      )
+                                    : SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                    2 -
+                                                8 * 5,
+                                        height: 100,
+                                        child: const Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                              "Sorry, we need more data to display it!",
+                                              style: TextStyle(
+                                                  color: Colors.white)),
+                                        ));
+                              } else {
+                                return SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            8 * 6,
+                                    height: 100,
+                                    child: const Align(
+                                      alignment: Alignment.center,
+                                      child: Text("WAIT...",
+                                          style:
+                                              TextStyle(color: Colors.white)),
+                                    ));
+                              }
+                            }),
                             const SizedBox(
-                              width: 10,
+                              height: 10,
                             ),
-                            Text(
-                              "MAP",
-                              style: k10_700_roboto,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Image.asset("assets/images/Polygon 1.png")
                           ],
                         ),
                       ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 33,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2 - 8 * 3,
-                    height: 170,
-                    decoration: BoxDecoration(
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 2 - 8 * 3,
+                      height: 170,
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: AppColors.k000000),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
+                        color: AppColors.k000000,
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const TrailChatter()));
-                      },
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 23, right: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 18),
-                                  child: Text(
-                                    "Trail Chatter",
-                                    style: k16_400_bebas,
+                                builder: (context) => const SpeedGraph()),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 18),
+                                    child: Text(
+                                      "Speed",
+                                      style: k16_400_bebas,
+                                    ),
                                   ),
-                                ),
-                                const Spacer(),
-                                SizedBox(
+                                  const Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
                                     child: Image.asset(
-                                        "assets/images/iconsforword.png"))
-                              ],
+                                        "assets/images/iconsforword.png"),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          BlocBuilder<DashboardCubit, DashboardState>(
+                            const SizedBox(height: 10),
+                            BlocBuilder<DashboardCubit, DashboardState>(
                               builder: (context, state) {
-                            if ((state is DashboardSuccessState)) {
-                              return (dashboardCubit.dashboardClass!.data!.lastRide!
-                                          .trailChatter!.data!.length >
-                                      1)
-                                  ? LineGraph(
-                                      features: [
-                                        Feature(
-                                          title: "TRAIL CHATTER",
-                                          color: AppColors.kB69F4C,
-                                          data: fnToDouble2(dashboardCubit
-                                              .dashboardClass!
-                                              .data!.lastRide!
-                                              .trailChatter!
-                                              .data!),
-                                        )
-                                      ],
-                                      size: Size(
-                                          MediaQuery.of(context).size.width /
-                                                  2 -
-                                              8 * 3,
-                                          100),
-                                      labelX: [
-                                        firstXValue,
-                                        middleXValue,
-                                        lastXValue
-                                      ],
+                                if (state is! DashboardSuccessState) {
+                                  return SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            8 * 5,
+                                    height: 100,
+                                    child: const Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "WAIT...",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  );
+                                }
 
-                                      labelY: ["1", "2", "3"],
-                                      //showDescription: true,
-                                      graphColor: Colors.white,
-                                      graphOpacity: 0.2,
-                                      verticalFeatureDirection: true,
-                                      // descriptionHeight: 100,
-                                    )
-                                  : SizedBox(
-                                      width: MediaQuery.of(context).size.width /
-                                              2 -
-                                          8 * 5,
-                                      height: 100,
-                                      child: const Align(
-                                        alignment: Alignment.center,
-                                        child: Text(
-                                            "Sorry, we need more data to display it!",
-                                            style:
-                                                TextStyle(color: Colors.white)),
-                                      ));
-                            } else {
-                              return SizedBox(
-                                  width: MediaQuery.of(context).size.width / 2 -
-                                      8 * 6,
-                                  height: 100,
-                                  child: const Align(
-                                    alignment: Alignment.center,
-                                    child: Text("WAIT...",
-                                        style: TextStyle(color: Colors.white)),
-                                  ));
-                            }
-                          }),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2 - 8 * 3,
-                    height: 170,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.k000000,
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const SpeedGraph()),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 23),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 18),
-                                  child: Text(
-                                    "Speed",
-                                    style: k16_400_bebas,
-                                  ),
-                                ),
-                                const Spacer(),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: Image.asset(
-                                      "assets/images/iconsforword.png"),
-                                )
-                              ],
-                            ),
-                          ),
-                          BlocBuilder<DashboardCubit, DashboardState>(
-                            builder: (context, state) {
-                              if (state is! DashboardSuccessState) {
+                                if (dashboardCubit.dashboardClass!.data!
+                                        .lastRide!.speed!.speed!.length >
+                                    1) {
+                                  return SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            8 * 5,
+                                    height: 100,
+                                    child: (fnToDouble(dashboardCubit
+                                                .dashboardClass!
+                                                .data!
+                                                .lastRide!
+                                                .speed!
+                                                .speed!)
+                                            .isNotEmpty)
+                                        ? LineGraph(
+                                            features: [
+                                              Feature(
+                                                title: "speed",
+                                                color: AppColors.kB69F4C,
+                                                data: fnToDouble(dashboardCubit
+                                                    .dashboardClass!
+                                                    .data!
+                                                    .lastRide!
+                                                    .speed!
+                                                    .speed!),
+                                              )
+                                            ],
+                                            size: Size(
+                                              MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      2 -
+                                                  8 * 5,
+                                              100,
+                                            ),
+                                            labelX: [
+                                              firstXValue,
+                                              middleXValue,
+                                              lastXValue
+                                            ],
+                                            labelY: const ["10", "25", "45"],
+                                            graphColor: Colors.white,
+                                            graphOpacity: 0.2,
+                                            verticalFeatureDirection: true,
+                                          )
+                                        : LineGraph(
+                                            features: [
+                                              Feature(
+                                                title: "speed",
+                                                color: AppColors.kB69F4C,
+                                                data: [0.0, 0.0, 0.0],
+                                              )
+                                            ],
+                                            size: Size(
+                                              MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      2 -
+                                                  8 * 5,
+                                              100,
+                                            ),
+                                            labelX: [
+                                              firstXValue,
+                                              middleXValue,
+                                              lastXValue
+                                            ],
+                                            labelY: const ["10", "25", "45"],
+                                            graphColor: Colors.white,
+                                            graphOpacity: 0.2,
+                                            verticalFeatureDirection: true,
+                                          ),
+                                  );
+                                }
                                 return SizedBox(
                                   width: MediaQuery.of(context).size.width / 2 -
                                       8 * 5,
@@ -508,338 +626,296 @@ class _DashboardState extends State<Dashboard> {
                                   child: const Align(
                                     alignment: Alignment.center,
                                     child: Text(
-                                      "WAIT...",
+                                      "Sorry, we need more data to display it!",
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 );
-                              }
-
-                              if (dashboardCubit.dashboardClass!.data!.lastRide!.speed!
-                                      .speed!.length >
-                                  1) {
-                                return SizedBox(
-                                  width: MediaQuery.of(context).size.width / 2 -
-                                      8 * 5,
-                                  height: 100,
-                                  child: LineGraph(
-                                    features: [
-                                      Feature(
-                                        title: "speed",
-                                        color: AppColors.kB69F4C,
-                                        data: fnToDouble(dashboardCubit
-                                            .dashboardClass!
-                                            .data!.lastRide!
-                                            .speed!
-                                            .speed!),
-                                      )
-                                    ],
-                                    size: Size(
-                                      MediaQuery.of(context).size.width / 2 -
-                                          8 * 5,
-                                      100,
-                                    ),
-                                    labelX: [
-                                      firstXValue,
-                                      middleXValue,
-                                      lastXValue
-                                    ],
-                                    labelY: const ["10", "25", "45"],
-                                    graphColor: Colors.white,
-                                    graphOpacity: 0.2,
-                                    verticalFeatureDirection: true,
-                                  ),
-                                );
-                              }
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width / 2 -
-                                    8 * 5,
-                                height: 100,
-                                child: const Align(
-                                  alignment: Alignment.center,
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width / 2 - 8 * 3,
+                      height: 170,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.k000000),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 23),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 18),
                                   child: Text(
-                                    "Sorry, we need more data to display it!",
-                                    style: TextStyle(color: Colors.white),
+                                    "Total time",
+                                    style: k16_400_bebas,
                                   ),
                                 ),
-                              );
-                            },
+                                const Spacer(),
+                                // Padding(
+                                //   padding: const EdgeInsets.only(right: 10),
+                                //   child: Image.asset(
+                                //       "assets/images/iconsforword.png"),
+                                // ),
+                              ],
+                            ),
                           ),
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          Text(
+                              dashboardCubit.dashboardClass?.data!.lastRide!
+                                      .totalTime! ??
+                                  "0:00:00",
+                              style: k30_400_bebas),
                         ],
                       ),
                     ),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width / 2 - 8 * 3,
-                    height: 170,
+                  ],
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 34),
+                      child: Text(
+                        "Tuning",
+                        style: k20_400_bebas,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const GoalSet()));
+                  },
+                  child: Container(
+                    height: 54,
+                    width: 325,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: AppColors.k000000),
-                    child: Column(
+                        color: AppColors.kB69F4C),
+                    child: Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 23),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 18),
-                                child: Text(
-                                  "Total time",
-                                  style: k16_400_bebas,
-                                ),
-                              ),
-                              const Spacer(),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10),
-                                child: Image.asset(
-                                    "assets/images/iconsforword.png"),
-                              ),
-                            ],
-                          ),
+                          padding: const EdgeInsets.only(left: 10),
+                          child: Image.asset("assets/images/light.png"),
                         ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        Text(
-                            dashboardCubit.dashboardClass?.data!.lastRide!.totalTime! ??
-                                "0:00:00",
-                            style: k30_400_bebas),
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 19, top: 11),
+                              child: Text(
+                                "Want to improve how you rode this trail?\n Let’s tune your bike.",
+                                style: k13_400_roboto,
+                              ),
+                            )
+                          ],
+                        )
                       ],
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Row(
-                children: [
-                  Padding(
+                ),
+                const SizedBox(
+                  height: 52,
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const DashboardMap()));
+                  },
+                  child: Padding(
                     padding: const EdgeInsets.only(left: 34),
-                    child: Text(
-                      "Tuning",
-                      style: k20_400_bebas,
+                    child: Row(
+                      children: [
+                        Text(
+                          "YOUR ROUTE",
+                          style: k20_400_bebas,
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const GoalSet()));
-                },
-                child: Container(
-                  height: 54,
-                  width: 325,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.kB69F4C),
+                ),
+                const SizedBox(
+                  height: 13,
+                ),
+                BlocBuilder<DashboardCubit, DashboardState>(
+                    builder: (context, state) {
+                  return Center(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: BlocBuilder<DashboardCubit, DashboardState>(
+                              builder: (context, state) {
+                                if (state is DashboardSuccessState) {
+                                  if (dashboardCubit.dashboardClass?.data
+                                          ?.lastRide!.route !=
+                                      null) {
+                                    listLocations.clear();
+                                    for (var i in dashboardCubit.dashboardClass!
+                                        .data!.lastRide!.route!) {
+                                      listLocations.add(LatLng(
+                                          i.lat!.toDouble(),
+                                          i.lng!.toDouble()));
+                                      //debugPrint("listLocations at debug $listLocations");
+                                    }
+                                  }
+
+                                  return Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: (listLocations.isNotEmpty)
+                                          ? SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.4,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.8,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(20)),
+                                                child: GoogleMap(
+                                                  markers: <Marker>{
+                                                    Marker(
+                                                        markerId: const MarkerId(
+                                                            'start destination'),
+                                                        position:
+                                                            listLocations[0]),
+                                                    Marker(
+                                                        markerId: const MarkerId(
+                                                            'end destination'),
+                                                        position: listLocations[
+                                                            listLocations
+                                                                    .length -
+                                                                1]),
+                                                  },
+                                                  polylines: _createPolylines(
+                                                      listLocations),
+                                                  onMapCreated:
+                                                      (GoogleMapController
+                                                          controller) {
+                                                    _controller = controller;
+
+                                                    // Zoom to the initial target position
+                                                    controller.animateCamera(
+                                                      CameraUpdate.newLatLngZoom(
+                                                          listLocations[0],
+                                                          15.0), // Adjust the zoom level as needed
+                                                    );
+                                                  },
+                                                  myLocationEnabled: true,
+                                                  mapType: MapType.normal,
+                                                  initialCameraPosition:
+                                                      CameraPosition(
+                                                          target:
+                                                              listLocations[0]),
+                                                ),
+                                              ),
+                                            )
+                                          : const SizedBox(
+                                              child: Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                      "Sorry, we need more data to display it!",
+                                                      style: TextStyle(
+                                                          color:
+                                                              Colors.white))),
+                                            ));
+                                } else {
+                                  return const Text("Waiting");
+                                }
+                              },
+                            )),
+                      ],
+                    ),
+                  );
+                }),
+
+                // Image.asset("assets/images/mapimage.png"),
+                const SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 32),
                   child: Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Image.asset("assets/images/light.png"),
-                      ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 19, top: 11),
-                            child: Text(
-                              "Want to improve how you rode this trail?\n Let’s tune your bike.",
-                              style: k13_400_roboto,
-                            ),
-                          )
-                        ],
+                      Text(
+                        "PREVIOUS RIDES",
+                        style: k20_400_bebas,
                       )
                     ],
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 52,
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const DashboardMap()));
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 34),
-                  child: Row(
-                    children: [
-                      Text(
-                        "YOUR ROUTE",
-                        style: k20_400_bebas,
+                const SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      debugPrint("hello");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const PreviousRidesScreen()));
+                    },
+                    child: Container(
+                      height: 30,
+                      width: MediaQuery.of(context).size.width - 55,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.black),
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            "MORE",
+                            style: k13_700_roboto,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Image.asset("assets/images/Polygon 1.png")
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 13,
-              ),
-              BlocBuilder<DashboardCubit, DashboardState>(
-                  builder: (context, state) {
-                return Center(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width,
-                          child: BlocBuilder<DashboardCubit, DashboardState>(
-                            builder: (context, state) {
-                              if (state is DashboardSuccessState) {
-                                if (dashboardCubit
-                                        .dashboardClass?.data?.lastRide!.route !=
-                                    null) {
-                                  listLocations.clear();
-                                  for (var i in dashboardCubit
-                                      .dashboardClass!.data!.lastRide!.route!) {
-                                    listLocations.add(LatLng(
-                                        i.lat!.toDouble(), i.lng!.toDouble()));
-                                    //debugPrint("listLocations at debug $listLocations");
-                                  }
-                                }
-
-                                return Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: (listLocations.isNotEmpty)
-                                        ? SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.4,
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.8,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(20)),
-                                              child: GoogleMap(
-                                                markers: <Marker>{
-                                                  Marker(
-                                                      markerId: MarkerId(
-                                                          'start destination'),
-                                                      position:
-                                                          listLocations[0]),
-                                                  Marker(
-                                                      markerId: MarkerId(
-                                                          'end destination'),
-                                                      position: listLocations[
-                                                          listLocations.length -
-                                                              1]),
-                                                },
-                                                polylines: _createPolylines(
-                                                    listLocations),
-                                                onMapCreated:
-                                                    (GoogleMapController
-                                                        controller) {
-                                                  _controller = controller;
-
-                                                  // Zoom to the initial target position
-                                                  controller.animateCamera(
-                                                    CameraUpdate.newLatLngZoom(
-                                                        listLocations[0],
-                                                        15.0), // Adjust the zoom level as needed
-                                                  );
-                                                },
-                                                myLocationEnabled: true,
-                                                mapType: MapType.normal,
-                                                initialCameraPosition:
-                                                    CameraPosition(
-                                                        target:
-                                                            listLocations[0]),
-                                              ),
-                                            ),
-                                          )
-                                        : const SizedBox(
-                                            child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                    "Sorry, we need more data to display it!",
-                                                    style: TextStyle(
-                                                        color: Colors.white))),
-                                          ));
-                              } else {
-                                return const Text("Waiting");
-                              }
-                            },
-                          )),
-                    ],
-                  ),
-                );
-              }),
-
-              // Image.asset("assets/images/mapimage.png"),
-              const SizedBox(
-                height: 40,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 32),
-                child: Row(
-                  children: [
-                    Text(
-                      "PREVIOUS RIDES",
-                      style: k20_400_bebas,
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GestureDetector(
-
-                  onTap: (){
-                  debugPrint("hello");
-                    Navigator.push(context,MaterialPageRoute(
-                        builder: (context) =>
-                        const PreviousRidesScreen()) );
-                  },
-                  child: Container(
-                    height: 30,
-                    width: MediaQuery.of(context).size.width - 16.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.black),
-                    child: Row(
-                      children: [
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "MORE",
-                          style: k13_700_roboto,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Image.asset("assets/images/Polygon 1.png")
-                      ],
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 54),
-            ],
+                const SizedBox(height: 54),
+              ],
+            ),
           ),
         ),
       ),

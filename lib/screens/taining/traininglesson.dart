@@ -31,7 +31,7 @@ class _TrainingLessonState extends State<TrainingLesson> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => LessonCompleted(video: widget.video, particular: trainCubit.currentTrains),
+            builder: (context) => LessonCompleted(video: widget.video, particular: widget.particular),
           ),
         );
       }

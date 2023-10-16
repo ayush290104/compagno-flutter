@@ -17,12 +17,17 @@ class TrainCubit extends Cubit<TrainState> {
   }
 
   Videos nextVideo() {
-    return trains![currentTrains].videos[currentVideo + 1];
+    currentVideo+=1;
+    return trains![currentTrains].videos[currentVideo];
   }
 
   int getLessonIndex() {
-    debugPrint("current video is ${currentVideo}");
+    debugPrint("current video is $currentVideo");
     return currentVideo ;
+  }
+
+  int getCurrentTrainTotalVideosLength(){
+    return trains![currentTrains].videos.length;
   }
 
   int getTrainsNumber() => (trains ?? []).length;

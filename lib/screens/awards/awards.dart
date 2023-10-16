@@ -40,7 +40,8 @@ class _AwardsState extends State<Awards> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 26),
+                  padding:
+                  const EdgeInsets.only(top: 10, left: 10),
                   child: Row(
                     children: [
                       Text(

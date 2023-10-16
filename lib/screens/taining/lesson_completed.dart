@@ -2,7 +2,6 @@ import 'package:compagno4/core/class.dart';
 import 'package:compagno4/main.dart';
 import 'package:compagno4/screens/taining/traininglesson.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
@@ -10,7 +9,10 @@ import '../../constant/fonts.dart';
 class LessonCompleted extends StatefulWidget {
   final Videos video;
   final int particular;
-  const LessonCompleted({Key? key, required this.video, required this.particular}) : super(key: key);
+
+  const LessonCompleted(
+      {Key? key, required this.video, required this.particular})
+      : super(key: key);
 
   @override
   State<LessonCompleted> createState() => _LessonCompletedState();
@@ -19,6 +21,8 @@ class LessonCompleted extends StatefulWidget {
 class _LessonCompletedState extends State<LessonCompleted> {
   @override
   Widget build(BuildContext context) {
+    debugPrint(
+        "widget.particular ${widget.particular} trainCubit.currentVideo  ${trainCubit.currentVideo}");
     return Scaffold(
       backgroundColor: AppColors.k47574C,
       body: SingleChildScrollView(
@@ -49,7 +53,7 @@ class _LessonCompletedState extends State<LessonCompleted> {
             ),
             Image.asset("assets/images/ok.png"),
             Text(
-              "L E S S O N  ${trainCubit.getLessonIndex()+1}  C O M P L E T E D",
+              "L E S S O N  ${trainCubit.getLessonIndex() + 1}  C O M P L E T E D",
               style: k20_400_bebas_B69F4C,
             ),
             SizedBox(
@@ -63,7 +67,7 @@ class _LessonCompletedState extends State<LessonCompleted> {
               height: 50,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 8, right: 8.0, bottom: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -80,13 +84,14 @@ class _LessonCompletedState extends State<LessonCompleted> {
                       ),
                     ],
                   ),
-
                   LinearProgressIndicator(
-                    value: (trainCubit.getLessonIndex()/(trainCubit.trains![widget.particular].videos.length)),
+                    value: ((trainCubit.getLessonIndex() + 1) /
+                        (trainCubit.trains![widget.particular].videos.length)),
                     borderRadius: BorderRadius.circular(10),
                     minHeight: 10,
                     backgroundColor: const Color(0xffB69F4C),
-                    valueColor: const AlwaysStoppedAnimation<Color>(Color(0xffFFFFFF)),
+                    valueColor:
+                        const AlwaysStoppedAnimation<Color>(Color(0xffFFFFFF)),
                   )
                   // Stack(
                   //   alignment: Alignment.center,
@@ -140,23 +145,27 @@ class _LessonCompletedState extends State<LessonCompleted> {
                   //     ],
                   //   ),
                   // ),
-                  ,SizedBox(
-                    height: 9,
+                  ,
+                  SizedBox(
+                    height: 20,
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "LESSON PROGRESS",
                         style: k11_700_roboto,
                       ),
+                      Text(
+                        "${(trainCubit.getLessonIndex() + 1) / (trainCubit.trains![widget.particular].videos.length) * 100}%",
+                        style: k11_700_roboto,
+                      )
                     ],
-                  ),
-                  SizedBox(
-                    height: 68,
                   ),
                 ],
               ),
             ),
+            SizedBox(height: 100),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -193,10 +202,11 @@ class _LessonCompletedState extends State<LessonCompleted> {
                     trainCubit.currentVideo)
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                          builder: (context) =>
-                              TrainingLesson(video: trainCubit.nextVideo(), particular: widget.particular,)));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => TrainingLesson(
+                                video: trainCubit.nextVideo(),
+                                particular: widget.particular,
+                              )));
                     },
                     child: Container(
                       height: 141,
@@ -218,7 +228,7 @@ class _LessonCompletedState extends State<LessonCompleted> {
                             style: k13_400_roboto,
                           ),
                           Text(
-                            "Lesson ${trainCubit.getLessonIndex() + 1}",
+                            "Lesson ${trainCubit.getLessonIndex() + 2}",
                             style: k13_400_roboto,
                           )
                         ],
