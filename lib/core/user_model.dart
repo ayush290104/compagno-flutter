@@ -3,7 +3,7 @@ class UserData {
   String? token = "";
   String? name = "";
   String? email = "";
-  String? profile_pic = "";
+  dynamic profile_pic;
   String? rider_level = "";
   String? phone = "";
   String? address_line = "";

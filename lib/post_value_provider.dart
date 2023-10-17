@@ -22,7 +22,7 @@ class PostValueProvider extends ChangeNotifier {
   final inclineSensor = AngleInclinationSensor();
   final leanAngleSensor = LeanAngleSensor();
   final timerHelper = TimerHelper();
-  double? _trailChatter;
+  double? _trailChatter = 0;
 
   double? get trailChatter => _trailChatter;
 
@@ -55,12 +55,13 @@ class PostValueProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  double? _accelration;
+  double _accelration = 0;
 
-  double? get accelration => _accelration;
+  double get accelration => _accelration;
 
-  set accelration(double? value) {
+  set accelration(double value) {
     _accelration = value;
+    debugPrint("acceleration double 12"+accelration.toString());
     notifyListeners();
   }
 
@@ -88,16 +89,21 @@ class PostValueProvider extends ChangeNotifier {
     hitStarRideApi();
     speedSensor.startSpeedSensor();
     leanAngleSensor.startListeningToAccelerometer();
+    debugPrint("did this happen");
     inclineSensor.startListeningToAccelerometer((value) {
+
       inclinationList = value;
+      notifyListeners();
     });
     declineSensor.startListeningToMagnetometer();
-    trailSensor.startListeningToAccelerometer((value) {
+    trailSensor.startListeningToAccelerometer((value){
+      debugPrint("trail angle is this $value");
       trailChatterList = value;
+      notifyListeners();
     });
     accelrationSensor.startListeningToMagnetometer((value) {
       accelerationList = value;
-
+      notifyListeners();
     });
 
   }

@@ -1,3 +1,4 @@
+import 'package:compagno4/Controller/dashboardController.dart';
 import 'package:compagno4/main.dart';
 import 'package:compagno4/screens/dashboard/bloc/dashboard_cubit.dart';
 import 'package:compagno4/screens/dashboard/bloc/dashboard_state.dart';
@@ -7,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
 
@@ -18,6 +21,7 @@ class SpeedGraph extends StatefulWidget {
 }
 
 class _SpeedGraphState extends State<SpeedGraph> {
+  DashboardController dashboardController = Get.find();
   final List<Feature> features = [
     Feature(
       title: "Drink Water",
@@ -96,9 +100,36 @@ class _SpeedGraphState extends State<SpeedGraph> {
                   SizedBox(
                     width: 10,
                   ),
-                  Text(
-                    "McDowell Mountain Loop, Phoenix, AZ",
-                    style: k13_400_roboto,
+                  BlocBuilder<DashboardCubit, DashboardState>(
+                    builder: (context, state) {
+                      if (state is DashboardSuccessState) {
+                        if (dashboardCubit.dashboardClass?.data?.lastRide!
+                            .route !=
+                            null ) {
+
+                          dashboardController.getAddressFromLatLng(
+                              LatLng( dashboardCubit.dashboardClass!.data!.lastRide!
+                                  .route!.last.lat!.toDouble(), dashboardCubit.dashboardClass!.data!.lastRide!
+                                  .route!.last.lng!.toDouble())
+
+
+                          );
+                          //debugPrint("listLocations at debug $listLocations");
+                        }
+
+
+                        return Obx(() => Text(
+                            dashboardController.address.value,
+                            style: k13_400_roboto));
+                      } else {
+                        return const SizedBox(
+                          child: Align(
+                              alignment: Alignment.center,
+                              child: Text("Wait!",
+                                  style: TextStyle(color: Colors.white))),
+                        );
+                      }
+                    },
                   )
                 ],
               ),
@@ -114,7 +145,7 @@ class _SpeedGraphState extends State<SpeedGraph> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 16, left: 21),
+                      padding: const EdgeInsets.only(top: 46, left: 21),
                       child: Row(
                         children: [
                           Text(
@@ -138,38 +169,42 @@ class _SpeedGraphState extends State<SpeedGraph> {
                                 .speed!
                                 .speed!.length >
                                 1)
-                                ? LineGraph(
+                                ? Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 8.0,top: 8),
+                                    child: LineGraph(
                               features: [
-                                Feature(
-                                    title: "SPEED",
-                                    color: AppColors.k69806F,
-                                    data: fnToDouble(dashboardCubit
-                                        .dashboardClass!
-                                        .data!.lastRide!
-                                        .speed!
-                                        .speed!))
+                                    Feature(
+                                        title: "SPEED",
+                                        color: AppColors.k69806F,
+                                        data: fnToDouble(dashboardCubit
+                                            .dashboardClass!
+                                            .data!.lastRide!
+                                            .speed!
+                                            .speed!))
                               ],
                               size: Size(
-                                  (MediaQuery.of(context).size.width - 16 * 2),
-                                  307),
+                                      (MediaQuery.of(context).size.width - 16 * 2),
+                                      307),
 
 
 
                               labelY:  [
-                                (maxElement/3).round().toStringAsFixed(3),((maxElement/3)*2).toStringAsFixed(3).toString(),maxElement.toStringAsFixed(3)
+                                    (maxElement/3).round().toStringAsFixed(3),((maxElement/3)*2).toStringAsFixed(3).toString(),maxElement.toStringAsFixed(3)
 
-                                // for (int i = fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1; i >= 0; i--)
-                                //   i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1
-                                //       ? fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!)[i].toString()
-                                //       : "",
+                                    // for (int i = fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1; i >= 0; i--)
+                                    //   i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!).length - 1
+                                    //       ? fnToDouble(dashboardCubit.dashboardClass!.data!.speed!.speed!)[i].toString()
+                                    //       : "",
                               ],
 
                               labelX: [
 
-                                for (int i = 0; i<=fnToDouble(dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!).length - 1; i++)
-                                  i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!).length - 1
-                                      ? dashboardCubit.dashboardClass!.data!.lastRide!.speed!.time![i]
-                                      : "",
+                                    for (int i = 0; i<=fnToDouble(dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!).length - 1; i++)
+                                      i == 0 || i == fnToDouble(dashboardCubit.dashboardClass!.data!.lastRide!.speed!.speed!).length - 1
+                                          ? dashboardCubit.dashboardClass!.data!.lastRide!.speed!.time![i]
+                                          : "",
 
                               ],
 
@@ -178,7 +213,9 @@ class _SpeedGraphState extends State<SpeedGraph> {
                               graphOpacity: 0.2,
                               verticalFeatureDirection: true,
                               // descriptionHeight: 100,
-                            )
+                            ),
+                                  ),
+                                )
                                 : Center(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -234,13 +271,13 @@ class _SpeedGraphState extends State<SpeedGraph> {
           }
 
     }
-    double max = hello.reduce((value, element) => value > element ? value : element);
+    int max = ab.reduce((value, element) => value > element ? value : element);
 
-    for(int i = 1;i<hello.length-1;i++){
-      hello[i] = hello[i]/max;
+    for(int i = 0;i<=hello.length-1;i++){
+      hello[i] /=max;
     }
 
-    debugPrint("list is $hello");
+    debugPrint("list is speed $max ki list $hello");
     return hello;
   }
   List<double> fnToDouble2(List<int> ab) {

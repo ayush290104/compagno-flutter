@@ -100,7 +100,7 @@ class AccelrationSensor {
     final value = counter / count;
     count = 0;
     counter = 0;
-    acceleration.clear();
+
     return value;
   }
 }

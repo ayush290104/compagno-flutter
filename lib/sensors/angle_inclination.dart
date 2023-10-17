@@ -59,6 +59,7 @@ class AngleInclinationSensor {
     _accelerometerSubscription = accelerometerEvents.listen((AccelerometerEvent event) {
       angle.add(calculateLeanAngle(event.x, event.y, event.z));
       count += 1;
+       valueSetter.call(calculateLeanAngle(event.x, event.y, event.z));
     });
   }
 

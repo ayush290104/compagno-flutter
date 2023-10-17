@@ -60,9 +60,8 @@ class TrailChatterSensor {
         0, (previousValue, element) => previousValue + element);
     final value = counter / count;
     dev.log("value $value");
-    count = 0;
     counter = 0;
-    trailChatterValue.clear();
+
     return value;
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:compagno4/Controller/dashboardController.dart';
 import 'package:compagno4/main.dart';
 import 'package:compagno4/screens/dashboard/bloc/dashboard_cubit.dart';
 import 'package:compagno4/screens/dashboard/bloc/dashboard_state.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
 
@@ -30,6 +33,7 @@ class _TrailChatterState extends State<TrailChatter> {
 
   @override
   Widget build(BuildContext context) {
+    DashboardController dashboardController = Get.find();
     return MultiBlocProvider(
       providers: [BlocProvider.value(value: dashboardCubit)],
       child: Scaffold(
@@ -98,9 +102,36 @@ class _TrailChatterState extends State<TrailChatter> {
                   SizedBox(
                     width: 10,
                   ),
-                  Text(
-                    "McDowell Mountain Loop, Phoenix, AZ",
-                    style: k13_400_roboto,
+                  BlocBuilder<DashboardCubit, DashboardState>(
+                    builder: (context, state) {
+                      if (state is DashboardSuccessState) {
+                        if (dashboardCubit.dashboardClass?.data?.lastRide!
+                            .route !=
+                            null ) {
+
+                          dashboardController.getAddressFromLatLng(
+                            LatLng( dashboardCubit.dashboardClass!.data!.lastRide!
+                                .route!.last.lat!.toDouble(), dashboardCubit.dashboardClass!.data!.lastRide!
+                                .route!.last.lng!.toDouble())
+
+
+                          );
+                          //debugPrint("listLocations at debug $listLocations");
+                        }
+
+
+                        return Obx(() => Text(
+                            dashboardController.address.value,
+                            style: k13_400_roboto));
+                      } else {
+                        return const SizedBox(
+                          child: Align(
+                              alignment: Alignment.center,
+                              child: Text("Wait!",
+                                  style: TextStyle(color: Colors.white))),
+                        );
+                      }
+                    },
                   )
                 ],
               ),
@@ -109,7 +140,7 @@ class _TrailChatterState extends State<TrailChatter> {
               ),
               Container(
                 height: 412,
-                width: 300,
+                width: 350,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.k000000),
@@ -126,6 +157,7 @@ class _TrailChatterState extends State<TrailChatter> {
                         ],
                       ),
                     ),
+                    SizedBox(height: 39,),
                     BlocBuilder<DashboardCubit, DashboardState>(
                         builder: (context, state) {
                           if (state is DashboardSuccessState) {
@@ -137,32 +169,34 @@ class _TrailChatterState extends State<TrailChatter> {
                             return (dashboardCubit.dashboardClass!.data!
                                 .lastRide!.trailChatter!.data!.length >
                                 1)
-                                ? LineGraph(
+                                ? Padding(
+                                  padding: const EdgeInsets.only(right: 15),
+                                  child: LineGraph(
                               features: [
-                                Feature(
-                                    title: "TRAIL CHATTER",
-                                    color: AppColors.k69806F,
-                                    data: fnToDouble2(dashboardCubit
-                                        .dashboardClass!
-                                        .data!
-                                        .lastRide!.trailChatter!
-                                        .data!))
+                                  Feature(
+                                      title: "TRAIL CHATTER",
+                                      color: AppColors.k69806F,
+                                      data: fnToDouble2(dashboardCubit
+                                          .dashboardClass!
+                                          .data!
+                                          .lastRide!.trailChatter!
+                                          .data!))
                               ],
                               size: Size(
-                                  600,
-                                  307),
+                                    600,
+                                    307),
                               labelX: [
 
 
-                                for (int i = 0; i < fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).length; i++)
-                                  i==0||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).length - 1
-                                      ? dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.distance![i]
-                                      : "",
+                                  for (int i = 0; i < fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).length; i++)
+                                    i==0||i == fnToDouble2(dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.data!).length - 1
+                                        ? dashboardCubit.dashboardClass!.data!.lastRide!.trailChatter!.distance![i]
+                                        : "",
 
 
                               ],
                               labelY: [
-                                (maxElement/3).round().toStringAsFixed(3),((maxElement/3)*2).toStringAsFixed(3).toString(),maxElement.toString()
+                                  (maxElement/3).round().toStringAsFixed(3),((maxElement/3)*2).toStringAsFixed(3).toString(),maxElement.toString()
                               ],
 
 
@@ -173,13 +207,14 @@ class _TrailChatterState extends State<TrailChatter> {
                               graphOpacity: 0.2,
                               verticalFeatureDirection: true,
                               // descriptionHeight: 100,
-                            )
+                            ),
+                                )
                                 : Center(
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
                                     width: MediaQuery.of(context).size.width -
-                                        16 * 2,
+                                        16 * 3,
                                     height: 307,
                                     child: const Text(
                                       "sorry, we need more data to display it!",
@@ -193,7 +228,7 @@ class _TrailChatterState extends State<TrailChatter> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
                                     width:
-                                    MediaQuery.of(context).size.width - 16 * 2,
+                                    MediaQuery.of(context).size.width - 16 * 4,
                                     height: 307,
                                     child: const Text(
                                       "WAITING",
@@ -209,70 +244,146 @@ class _TrailChatterState extends State<TrailChatter> {
               SizedBox(
                 height: 56,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 32),
-                child: Stack(
-                  children: [
-                    Container(
-                      height: 8.h,
-                      width: 324.w,
-                      decoration: BoxDecoration(
-                          color: Color(0xff39453C),
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                    ),
-                    Container(
-                      height: 8.h,
-                      width: 283.w,
-                      decoration: BoxDecoration(
-                          color: Color(0xff69806F),
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
-                    ),
-                    Row(
-                      children: [
-                        Container(
-                          height: 8.h,
-                          width: 192.w,
-                          decoration: BoxDecoration(
-                              color: Color(0xffEAE9E5),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
+              BlocBuilder<DashboardCubit, DashboardState>(
+                  builder: (context, state) {
+                    if (state is DashboardSuccessState) {
+                      List<double> percent = fnToDouble3(dashboardCubit.dashboardClass!.data!
+                          .lastRide!.trailChatter!.data!);
+                      return (dashboardCubit.dashboardClass!.data!
+                          .lastRide!.trailChatter!.data!.length >
+                          1)
+                          ? Column(
+                            children: [
+                              Padding(
+                        padding: const EdgeInsets.only(left: 32),
+                        child: Stack(
+                              children: [
+                                Container(
+                                  height: 8.h,
+                                  width: Get.width*0.8,
+                                  decoration: BoxDecoration(
+                                      color: Color(0xFF3F4640),
+                                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                                ),
+                                Container(
+                                  height: 8.h,
+                                  width: Get.width*0.8*(percent[0]+percent[1]),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xff69806F),
+                                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      height: 8.h,
+                                      width: Get.width*0.8*(percent[0]),
+                                      decoration: BoxDecoration(
+                                          color: Color(0xffEAE9E5),
+                                          borderRadius:
+                                          BorderRadius.all(Radius.circular(12))),
+                                    ),
+                                  ],
+                                )
+                              ],
                         ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 32, top: 10),
-                child: Row(
-                  children: [
-                    Text(
-                      "60%\nSmall",
-                      style: k13_400_roboto,
-                    ),
-                    SizedBox(
-                      width: 140,
-                    ),
-                    Text(
-                      "30%\nMedium",
-                      style: k13_400_roboto,
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Text(
-                      "10%\nLarge",
-                      style: k13_400_roboto,
-                    ),
-                  ],
-                ),
-              )
+                      ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 32, top: 10),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      "${percent[0] * 100}%\nSmall",
+                                      style: k13_400_roboto,
+                                    ),
+                                    SizedBox(
+                                      width: 140,
+                                    ),
+                                    Text(
+                                      "${(percent[1]) * 100}%\nMedium",
+                                      style: k13_400_roboto,
+                                    ),
+                                    SizedBox(
+                                      width: 30,
+                                    ),
+                                    Text(
+                                      "${(percent[2]) * 100}%\nLarge",
+                                      style: k13_400_roboto,
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          )
+                          : Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                              width: MediaQuery.of(context).size.width -
+                                  16 * 2,
+                              height: 307,
+                              child: const Text(
+                                "sorry, we need more data to display it!",
+                                style: TextStyle(color: Colors.white),
+                              )),
+                        ),
+                      );
+                    } else {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                              width:
+                              MediaQuery.of(context).size.width - 16 * 7,
+                              height: 307,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  "WAITING",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )),
+                        ),
+                      );
+                    }
+                  }),
+
+
             ],
           ),
         ),
       ),
     );
   }
+
+  List<double> fnToDouble3(List<double> ab) {
+    List<double> rate = [0.0,0.0,0.0];
+   if(ab.length==0){
+     return rate;
+   }
+    for(var i in ab){
+      if(i<0.5){
+        rate[0]++;
+      }
+      else if(i<1){
+        rate[1]++;
+      }
+      else{
+        rate[2]++;
+      }
+    }
+
+    rate[0] = (rate[0]/ab.length);
+    rate[1] = (rate[1]/ab.length);
+    rate[2] = (rate[2]/ab.length);
+
+    debugPrint("rate of values = ${rate.toString()}");
+    return rate;
+
+
+  }
+
+
+
   List<double> fnToDouble2(List<double> ab) {
     List<double> hello = [];
     for(var a in ab){

@@ -14,7 +14,8 @@ class ModifyController extends GetxController {
     'address_line': '',
     'phone': '',
     'email':'',
-    'profile_pic':""
+    'profile_pic':File(""),
+    'name':''
   });
 
 

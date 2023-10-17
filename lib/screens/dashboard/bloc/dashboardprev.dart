@@ -18,6 +18,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../Controller/dashboardController.dart';
 import '../../../constant/color.dart';
 import '../../../constant/fonts.dart';
+import '../../tabsrceen/user_mode_state.datr.dart';
+import '../../tabsrceen/user_model_cubit.dart';
 
 class Dashboard2 extends StatefulWidget {
   final int myInteger;
@@ -157,6 +159,7 @@ class _DashboardState extends State<Dashboard2> {
 
   @override
   Widget build(BuildContext context) {
+
     trailXAxis.clear();
     trailYAxis.clear();
     speedYAxis.clear();
@@ -215,7 +218,10 @@ class _DashboardState extends State<Dashboard2> {
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(
-            value: dashboardCubit..fetch(SaveId.getSaveData(key: token)))
+            value: dashboardCubit..fetch(SaveId.getSaveData(key: token))),
+        BlocProvider.value(
+            value: UserModelCubit()..getUserData())
+
       ],
       child: Scaffold(
         backgroundColor: AppColors.k47574C,
@@ -268,7 +274,7 @@ class _DashboardState extends State<Dashboard2> {
                   );
                 }),
                 const SizedBox(
-                  height: 5,
+                  height: 10,
                 ),
                 Text(
                   "Let’s amplify your ride experience.",
@@ -277,12 +283,23 @@ class _DashboardState extends State<Dashboard2> {
                 const SizedBox(
                   height: 14,
                 ),
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: const BoxDecoration(shape: BoxShape.circle),
-                  child: Image.asset("assets/images/user.png"),
-                ),
+                BlocBuilder<UserModelCubit, UserModelState>(builder: (context, state){
+                  final cubit = BlocProvider.of<UserModelCubit>(context);
+                  return CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 60,
+                    child:(cubit.userData != null)? (cubit.userData!.profile_pic.toString().isNotEmpty)
+                        ? ClipOval(
+                      child: Image.network(
+                        "https://compagno.app${cubit.userData!.profile_pic.toString().replaceFirst("/api/", "")}",
+                        fit: BoxFit.cover, // This ensures the image fills the circle
+                        width: 120, // Set the width and height to match the diameter of the CircleAvatar
+                        height: 120,
+                      ),
+                    )
+                        : Image.asset("assets/images/user.png"):CircularProgressIndicator(color: Colors.white,),
+                  );
+                }),
                 const SizedBox(
                   height: 39,
                 ),
@@ -661,7 +678,7 @@ class _DashboardState extends State<Dashboard2> {
                   height: 50,
                 ),
                 const SizedBox(
-                  height: 52,
+                  height: 30,
                 ),
                 InkWell(
                   onTap: () {

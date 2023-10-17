@@ -40,6 +40,25 @@ class _RideCompleteState extends State<RideComplete> {
                   ],
                 ),
               ),
+
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 26),
+                    child: GestureDetector(
+                        onTap: () {
+
+                          Navigator.pop(context);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => TabScreen()));
+                        },
+                        child: Image.asset("assets/images/back.png")),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10,),
+
               Padding(
                 padding: const EdgeInsets.only(top: 64),
                 child: Text(
@@ -52,6 +71,8 @@ class _RideCompleteState extends State<RideComplete> {
               ),
               InkWell(
                 onTap: () {
+
+                  Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => TabScreen()));
                 },

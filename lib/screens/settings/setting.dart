@@ -19,7 +19,6 @@ class Settings extends StatefulWidget {
 
   @override
   State<Settings> createState() => _SettingsState();
-
 }
 
 class _SettingsState extends State<Settings> {
@@ -84,7 +83,7 @@ class _SettingsState extends State<Settings> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                  const ModifyProfile()));
+                                                      const ModifyProfile()));
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.all(8.0),
@@ -119,35 +118,50 @@ class _SettingsState extends State<Settings> {
                                   ),
                                 ),
                                 const SizedBox(height: 37),
-                                Container(
-                                  height: 150,
-                                  width: 150,
-                                  decoration: const BoxDecoration(
-                                      shape: BoxShape.circle),
-                                  child: Stack(
-                                    clipBehavior: Clip.none,
-                                    children: [
-                                      Image.asset("assets/images/user.png"),
-                                      // Positioned(
-                                      //   bottom: 10,
-                                      //   right: 10,
-                                      //   child: Container(
-                                      //     height: 35,
-                                      //     width: 35,
-                                      //     decoration: const BoxDecoration(
-                                      //       shape: BoxShape.circle,
-                                      //       color: AppColors.k000000,
-                                      //     ),
-                                      //     child: Center(
-                                      //       child: Image.asset(
-                                      //           "assets/images/edit.png"),
-                                      //     ),
-                                      //   ),
-                                      // )
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(
+                                CircleAvatar(
+                                  backgroundColor: Colors.transparent,
+                                  radius: 60,
+                                  child: (cubit.userData!.profile_pic.toString().isNotEmpty)
+                                      ? ClipOval(
+                                    child: Image.network(
+                                      "https://compagno.app${cubit.userData!.profile_pic.toString().replaceFirst("/api/", "")}",
+                                      fit: BoxFit.cover, // This ensures the image fills the circle
+                                      width: 120, // Set the width and height to match the diameter of the CircleAvatar
+                                      height: 120,
+                                    ),
+                                  )
+                                      : Image.asset("assets/images/user.png"),
+                                )
+
+                                // Container(
+                                //   height: 150,
+                                //   width: 150,
+                                //   decoration: const BoxDecoration(
+                                //       shape: BoxShape.circle),
+                                //   child: Stack(
+                                //     clipBehavior: Clip.none,
+                                //     children: [
+                                //       ,
+                                //       // Positioned(
+                                //       //   bottom: 10,
+                                //       //   right: 10,
+                                //       //   child: Container(
+                                //       //     height: 35,
+                                //       //     width: 35,
+                                //       //     decoration: const BoxDecoration(
+                                //       //       shape: BoxShape.circle,
+                                //       //       color: AppColors.k000000,
+                                //       //     ),
+                                //       //     child: Center(
+                                //       //       child: Image.asset(
+                                //       //           "assets/images/edit.png"),
+                                //       //     ),
+                                //       //   ),
+                                //       // )
+                                //     ],
+                                //   ),
+                                // ),
+                                ,const SizedBox(
                                   height: 17,
                                 ),
                                 Text(
@@ -249,59 +263,60 @@ class _SettingsState extends State<Settings> {
                                   height: 18,
                                 ),
                                 Container(
-                                    height: 274,
+                                    height: 320,
                                     width: 325,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.black),
                                     child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 18, top: 19, right: 9),
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "Bikes",
-                                                style: k20_400_bebas,
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 19,
-                                          ),
-                                          Expanded(
-
-                                              child: Obx(() =>  getlistView())
-                                          ),
-
-
-                                          GestureDetector(
-                                            onTap: (){
-                                              Navigator.pushNamed(context, addBikes);
-                                            },
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(left: 8.0),
-                                              child: Row(children: [
-                                                Stack(
-                                                  children: [
-                                                    Image.asset(
-                                                        "assets/images/dottedcircle.png",width: 34,height: 34,),
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  width: 17,
-                                                ),
+                                        padding: const EdgeInsets.only(
+                                            left: 18, top: 19, right: 9),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
                                                 Text(
-                                                  "Add new bike",
-                                                  style: k13_400_roboto,
-                                                )
-                                              ]),
+                                                  "Bikes",
+                                                  style: k20_400_bebas,
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                    )),
+                                            const SizedBox(
+                                              height: 19,
+                                            ),
+                                            Expanded(
+                                                child:
+                                                    Obx(() => getlistView())),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                    context, addBikes);
+                                              },
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 8.0, top: 15, bottom: 10),
+                                                child: Row(children: [
+                                                  Stack(
+                                                    children: [
+                                                      Image.asset(
+                                                        "assets/images/dottedcircle.png",
+                                                        width: 40,
+                                                        height: 40,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 17,
+                                                  ),
+                                                  Text(
+                                                    "Add new bike",
+                                                    style: k13_400_roboto,
+                                                  )
+                                                ]),
+                                              ),
+                                            ),
+                                          ],
+                                        ))),
                                 const SizedBox(
                                   height: 18,
                                 ),
@@ -449,10 +464,10 @@ class _SettingsState extends State<Settings> {
                       ),
                     ));
         },
-
       ),
     );
   }
+
   Widget getlistView() {
     if (bikeController.listofbike.isEmpty) {
       return Center(
@@ -462,12 +477,11 @@ class _SettingsState extends State<Settings> {
       return ListView.builder(
           itemCount: bikeController.listofbike.length,
           itemBuilder: (context, index) {
-            String imagePath = bikeController.listofbike[index].image
-                .toString();
+            String imagePath =
+                bikeController.listofbike[index].image.toString();
             File imageFile = File(imagePath);
 
             Widget imageWidget;
-
 
             return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -477,43 +491,33 @@ class _SettingsState extends State<Settings> {
                     border: Border.all(color: Colors.white),
                   ),
                   child: ListTile(
-                    onTap: (){
-                      bikeController.bikeselect.value =  bikeController.listofbike[index];
+                    onTap: () {
+                      bikeController.bikeselect.value =
+                          bikeController.listofbike[index];
 
-            Navigator.push(
-            context,
-            MaterialPageRoute(
-            builder: (context) =>
-            const SettingTuning()));
-
-
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SettingTuning()));
                     },
                     leading: CircleAvatar(
                       radius: 20,
                       backgroundColor: Colors.transparent,
                       child: Image.network(
-                        "https://compagno.app${bikeController.listofbike[index]
-                            .image.toString()
-                            .replaceFirst("/api/", "")}",
-
-
-                      ),),
-
+                        "https://compagno.app${bikeController.listofbike[index].image.toString().replaceFirst("/api/", "")}",
+                      ),
+                    ),
                     title: Text(
-                      bikeController.listofbike[index].brand,
+                      'Brand: ${bikeController.listofbike[index].brand}',
                       style: k13_400_roboto,
                     ),
                     subtitle: Text(
-                      bikeController.listofbike[index].modelName,
+                      'Model: ${bikeController.listofbike[index].modelName}',
                       style: k13_400_roboto,
                     ),
                   ),
-
-                )
-
-            );
-          }
-      );
+                ));
+          });
     }
   }
 }

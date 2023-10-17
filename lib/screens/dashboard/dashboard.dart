@@ -23,6 +23,8 @@ import '../../Controller/dashboardController.dart';
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
 import '../goal/goal_set.dart';
+import '../tabsrceen/user_mode_state.datr.dart';
+import '../tabsrceen/user_model_cubit.dart';
 
 class Dashboard extends StatefulWidget {
   Dashboard({Key? key}) : super(key: key);
@@ -210,7 +212,8 @@ class _DashboardState extends State<Dashboard> {
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(
-            value: dashboardCubit..fetch(SaveId.getSaveData(key: token)))
+            value: dashboardCubit..fetch(SaveId.getSaveData(key: token))),
+        BlocProvider.value(value: UserModelCubit()..getUserData())
       ],
       child: Scaffold(
         backgroundColor: AppColors.k47574C,
@@ -272,12 +275,31 @@ class _DashboardState extends State<Dashboard> {
                 const SizedBox(
                   height: 14,
                 ),
-                Container(
-                  height: 100,
-                  width: 100,
-                  decoration: const BoxDecoration(shape: BoxShape.circle),
-                  child: Image.asset("assets/images/user.png"),
-                ),
+                BlocBuilder<UserModelCubit, UserModelState>(
+                    builder: (context, state) {
+                  final cubit = BlocProvider.of<UserModelCubit>(context);
+                  return CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 60,
+                    child: (cubit.userData != null)
+                        ? (cubit.userData!.profile_pic.toString().isNotEmpty)
+                            ? ClipOval(
+                                child: Image.network(
+                                  "https://compagno.app${cubit.userData!.profile_pic.toString().replaceFirst("/api/", "")}",
+                                  fit: BoxFit.cover,
+                                  // This ensures the image fills the circle
+                                  width: 120,
+                                  // Set the width and height to match the diameter of the CircleAvatar
+                                  height: 120,
+                                ),
+                              )
+                            : Image.asset("assets/images/user.png")
+                        : CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                  );
+                }),
+
                 const SizedBox(
                   height: 39,
                 ),
@@ -960,122 +982,3 @@ class _DashboardState extends State<Dashboard> {
   }
 }
 
-// BlocBuilder<DashboardCubit, DashboardState>(
-//     builder: (context, state) {
-//   return Container(
-//     width: MediaQuery.of(context).size.width / 2 - 8 * 3,
-//     height: 158,
-//     decoration: BoxDecoration(
-//         borderRadius: BorderRadius.circular(10),
-//         color: AppColors.k000000),
-//     child: Column(
-//       children: [
-//         Padding(
-//           padding: const EdgeInsets.only(top: 23),
-//           child: Row(
-//             children: [
-//               Padding(
-//                 padding: const EdgeInsets.only(left: 18),
-//                 child: Text(
-//                   "TURN INCLIne",
-//                   style: k16_400_bebas,
-//                 ),
-//               ),
-//               SizedBox(
-//                 width: 20,
-//               ),
-//               Image.asset("assets/images/iconsforword.png")
-//             ],
-//           ),
-//         ),
-//         if (state is DashboardSuccessState)
-//           PrettyGauge(
-//             gaugeSize: 100,
-//             segments: [
-//               GaugeSegment('Low', 20, Colors.red),
-//               GaugeSegment('Medium', 40, Colors.orange),
-//               GaugeSegment('High', 40, Colors.green),
-//             ],
-//             currentValue: (dashboardCubit
-//                     .dashboardClass!.turnIncline.avg ??
-//                 0),
-//             needleColor: Colors.white,
-//             displayWidget: const Text('',
-//                 style: TextStyle(fontSize: 12)),
-//             startMarkerStyle:
-//                 TextStyle(fontSize: 10, color: Colors.grey),
-//             endMarkerStyle:
-//                 TextStyle(fontSize: 10, color: Colors.grey),
-//           ),
-//         if (!(state is DashboardSuccessState))
-//           SizedBox(
-//               width: MediaQuery.of(context).size.width / 2 -
-//                   8 * 5,
-//               height: 100,
-//               child: Text("WAIT...",
-//                   style: TextStyle(color: Colors.white))),
-//       ],
-//     ),
-//   );
-// }),
-
-// BlocBuilder<DashboardCubit, DashboardState>(
-//     builder: (context, state) {
-//   if ((state is! DashboardSuccessState)) {
-//     return const Padding(
-//       padding: EdgeInsets.all(8.0),
-//       child:
-//           Text("WAIT...", style: TextStyle(color: Colors.white)),
-//     );
-//   }
-//   if (dashboardCubit.dashboardClass!.previousRide.isEmpty) {
-//     return Padding(
-//       padding: const EdgeInsets.all(8.0),
-//       child: const Text("nothing yet !  first lets go to a ride ",
-//           style: TextStyle(color: Colors.white)),
-//     );
-//   }
-//   return Column(
-//     children: [
-//       for (dynamic ride
-//           in dashboardCubit.dashboardClass!.previousRide)
-//         Container(
-//           height: 37,
-//           width: MediaQuery.of(context).size.width - 16.0,
-//           decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(10),
-//               color: AppColors.k39453C),
-//           child: Row(
-//             children: [
-//               SizedBox(
-//                 width: 10,
-//               ),
-//               Image.asset("assets/images/location.png"),
-//               SizedBox(
-//                 width: 10,
-//               ),
-//               Text(
-//                 ride.tpString(),
-//                 style: k13_400_roboto,
-//               ),
-//               Spacer(),
-//               Image.asset("assets/images/iconplus.png"),
-//               SizedBox(
-//                 width: 10,
-//               ),
-//             ],
-//           ),
-//         ),
-//     ],
-//   );
-// }
-
-// BlocBuilder<DashboardCubit, DashboardState>(
-//     builder: (context, state) {
-//   return Text(
-//     (state is DashboardSuccessState)
-//         ? dashboardCubit.dashboardClass!.totalTime
-//         : "WAIT...",
-//     style: k30_400_bebas,
-//   );
-// }),

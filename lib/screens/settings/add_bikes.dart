@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:compagno4/Bikes/bike_web.dart';
@@ -120,17 +121,13 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'ADD',
-                            style: k10_700_roboto,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          InkWell(
+                          GestureDetector(
                             onTap: () {
                               if (_formKey.currentState!.validate()&&image!=null) {
+                                debugPrint("hello bikerider ${bikeController.bikemodel.value.rearShockSag}");
                                 bikeController.Bikeadded();
+
+
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -142,12 +139,15 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
 
 
                             },
-                            child: SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: Image.asset("assets/images/edit2.png"),
+                            child: Text(
+                              'ADD',
+                              style: k10_700_roboto,
                             ),
                           ),
+                          SizedBox(
+                            width: 5,
+                          ),
+
                         ],
                       ),
                     )

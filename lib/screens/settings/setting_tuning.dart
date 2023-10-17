@@ -127,60 +127,56 @@ class _SettingTuningScreenState extends State<SettingTuning> {
                       "Update YOUR BIKE",
                       style: k32_400_bebas,
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: AppColors.k000000),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Update',
-                            style: k10_700_roboto,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          InkWell(
-                            onTap: () {
-                             bikeController.bikemodelMap['rear_tire_psi'] = rear_tire_psi_Controller.text.toString();
-                             bikeController.bikemodelMap['front_tire_psi'] = front_tire_psi_Controller.text.toString();
-                             bikeController.bikemodelMap['rear_shock_lsr'] =rear_shock_lsr_Controller.text.toString();
-                             bikeController.bikemodelMap['rear_shock_hsr'] = rear_shock_hsr_Controller.text.toString();
-                             bikeController.bikemodelMap['rear_shock_lsc'] = rear_shock_lsc_Controller.text.toString();
-                             bikeController.bikemodelMap['rear_shock_hsc'] = rear_shock_hsc_Controller.text.toString();
-                             bikeController.bikemodelMap['rear_shock_sag'] = rear_shock_sag_Controller.text.toString();
-                             bikeController.bikemodelMap['rear_shock_psi'] = rear_shock_psi_Controller.text.toString();
-                             bikeController.bikemodelMap['rear_shock_lsr'] = rear_shock_lsr_Controller.text.toString();
-                             bikeController.bikemodelMap['rear_shock_lsr'] =rear_shock_lsr_Controller.text.toString();
-                             bikeController.bikemodelMap['front_shock_hsr'] = front_shock_hsr_Controller.text.toString();
-                             bikeController.bikemodelMap['front_shock_lsc'] = front_shock_lsc_Controller.text.toString();
-                             bikeController.bikemodelMap['front_shock_hsc'] = front_shock_hsc_Controller.text.toString();
-                             bikeController.bikemodelMap['front_shock_sag'] = front_shock_sag_Controller.text.toString();
-                             bikeController.bikemodelMap['front_shock_psi'] = front_shock_psi_Controller.text.toString();
-                             bikeController.bikemodelMap['front_shock_lsr'] = front_shock_lsr_Controller.text.toString();
-                             debugPrint(bikeController.bikemodelMap.toString());
-                             BikeWeb().updatebikemodel(bikeController.bikeselect.value.id!, bikeController.bikemodelMap);
+                    GestureDetector(
+                      onTap: () {
+                        bikeController.bikemodelMap['rear_tire_psi'] = rear_tire_psi_Controller.text.toString();
+                        bikeController.bikemodelMap['front_tire_psi'] = front_tire_psi_Controller.text.toString();
+                        bikeController.bikemodelMap['rear_shock_lsr'] =rear_shock_lsr_Controller.text.toString();
+                        bikeController.bikemodelMap['rear_shock_hsr'] = rear_shock_hsr_Controller.text.toString();
+                        bikeController.bikemodelMap['rear_shock_lsc'] = rear_shock_lsc_Controller.text.toString();
+                        bikeController.bikemodelMap['rear_shock_hsc'] = rear_shock_hsc_Controller.text.toString();
+                        bikeController.bikemodelMap['rear_shock_sag'] = rear_shock_sag_Controller.text.toString();
+                        bikeController.bikemodelMap['rear_shock_psi'] = rear_shock_psi_Controller.text.toString();
+                        bikeController.bikemodelMap['rear_shock_lsr'] = rear_shock_lsr_Controller.text.toString();
+                        bikeController.bikemodelMap['rear_shock_lsr'] =rear_shock_lsr_Controller.text.toString();
+                        bikeController.bikemodelMap['front_shock_hsr'] = front_shock_hsr_Controller.text.toString();
+                        bikeController.bikemodelMap['front_shock_lsc'] = front_shock_lsc_Controller.text.toString();
+                        bikeController.bikemodelMap['front_shock_hsc'] = front_shock_hsc_Controller.text.toString();
+                        bikeController.bikemodelMap['front_shock_sag'] = front_shock_sag_Controller.text.toString();
+                        bikeController.bikemodelMap['front_shock_psi'] = front_shock_psi_Controller.text.toString();
+                        bikeController.bikemodelMap['front_shock_lsr'] = front_shock_lsr_Controller.text.toString();
+                        debugPrint(bikeController.bikemodelMap.toString());
+                        BikeWeb().updatebikemodel(bikeController.bikeselect.value.id!, bikeController.bikemodelMap);
 
 
 
-                             Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => const TabScreen()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TabScreen()));
 
 
 
 
-                            },
-                            child: SizedBox(
-                              height: 24,
-                              width: 24,
-                              child: Image.asset("assets/images/edit2.png"),
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: AppColors.k000000),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Update',
+                              style: k10_700_roboto,
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: 5,
+                            ),
+
+                          ],
+                        ),
                       ),
                     )
                   ],
