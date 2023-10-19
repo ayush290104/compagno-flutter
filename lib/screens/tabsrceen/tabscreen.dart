@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
 import '../dashboard/dashboard.dart';
-import '../loadingscreen/loading.dart';
 import '../mapride/mapride.dart';
 import '../settings/setting.dart';
 import '../taining/training.dart';
 
-
-
 class TabScreen extends StatefulWidget {
-  const TabScreen({Key? key}) : super(key: key);
+  final int pageIndex;
+  TabScreen({Key? key, required this.pageIndex}) : super(key: key);
 
   @override
-  State<TabScreen> createState() => _TabScreenState();
+  _TabScreenState createState() => _TabScreenState(pageIndex);
 }
 
 class _TabScreenState extends State<TabScreen> {
-  final PageController _pageController = PageController(
-    initialPage: 0,
-  );
-  int pageIndex = 0;
+  late PageController _pageController;
+  int pageIndex;
+
+  _TabScreenState(this.pageIndex);
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: pageIndex);
+  }
 
   @override
   void dispose() {
@@ -29,7 +32,10 @@ class _TabScreenState extends State<TabScreen> {
     super.dispose();
   }
 
-  int selectedIndex = 0;
+  void _navigateToPage(int page) {
+    _pageController.jumpToPage(page);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,120 +45,53 @@ class _TabScreenState extends State<TabScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            InkWell(
-              onTap: () {
-                selectedIndex = pageIndex = 0;
-                _pageController.jumpToPage(
-                  pageIndex,
-                );
-                pageIndex = 0;
-                setState(() {});
-              },
-              child: Column(children: [
-                SizedBox(height: 19,),
-                Image.asset('assets/images/bicycle.png'),
-                SizedBox(height: 5,),
-                Text("Dashboard",style: k13_400_roboto,),
-                Container(
-                  height: 7,
-                  width: 7,
-                  decoration: BoxDecoration(shape: BoxShape.circle,
-                      color: pageIndex == 0
-                          ? Color(0xffFFFFFF)
-                          : Colors.transparent,
-                  )
-                )
-              ],),
-            ),
-            InkWell(
-              onTap: () {
-                selectedIndex = pageIndex = 1;
-                _pageController.jumpToPage(
-                  pageIndex,
-                );
-                pageIndex = 1;
-                setState(() {});
-              },
-              child: Column(children: [
-                SizedBox(height: 19,),
-                Image.asset('assets/images/play.png'),
-                SizedBox(height: 5,),
-                Text("Map Ride",style: k13_400_roboto,),
-                Container(
-                  height: 7,
-                  width: 7,
-                  decoration: BoxDecoration(shape: BoxShape.circle,color: pageIndex == 1
-                      ? Color(0xffFFFFFF)
-                      : Colors.transparent,),
-                )
-              ],),
-            ),
-            InkWell(
-              onTap: () {
-                selectedIndex = pageIndex = 2;
-                _pageController.jumpToPage(
-                  pageIndex,
-                );
-                pageIndex = 2;
-                setState(() {});
-              },
-              child: Column(children: [
-                SizedBox(height: 19,),
-                Image.asset('assets/images/barbell.png'),
-                SizedBox(height: 5,),
-                Text("Training",style: k13_400_roboto,),
-                Container(
-                  height: 7,
-                  width: 7,
-                  decoration: BoxDecoration(shape: BoxShape.circle,color: pageIndex == 2
-                      ? Color(0xffFFFFFF)
-                      : Colors.transparent,),
-                )
-              ],),
-            ),
-            InkWell(
-              onTap: () {
-                selectedIndex = pageIndex = 3;
-                _pageController.jumpToPage(
-                  pageIndex,
-                );
-                pageIndex = 3;
-                setState(() {});
-              },
-              child: Column(children: [
-                SizedBox(height: 19,),
-                Image.asset('assets/images/slider.png'),
-                SizedBox(height: 5,),
-                Text("Settings",style: k13_400_roboto,),
-                Container(
-                  height: 7,
-                  width: 7,
-                  decoration: BoxDecoration(shape: BoxShape.circle,color: pageIndex == 3
-                      ? Color(0xffFFFFFF)
-                      : Colors.transparent,),
-                )
-              ],),
-            ),
-
-
-          ],),
+            buildTabItem(0, 'Dashboard', 'assets/images/bicycle.png'),
+            buildTabItem(1, 'Map Ride', 'assets/images/play.png'),
+            buildTabItem(2, 'Training', 'assets/images/barbell.png'),
+            buildTabItem(3, 'Settings', 'assets/images/slider.png'),
+          ],
+        ),
       ),
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
         onPageChanged: (page) {
-          setState(
-                () {
-              pageIndex = page;
-            },
-          );
+          setState(() {
+             pageIndex = page;
+          });
+          // You can remove the _navigateToPage method from here
         },
         children: [
-
           Dashboard(),
           MapRide(),
           Training(),
-          Settings()
+          Settings(),
+        ],
+      ),
+    );
+  }
+
+  Widget buildTabItem(int index, String label, String imagePath) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _navigateToPage(index);
+        });
+      },
+      child: Column(
+        children: [
+          SizedBox(height: 19),
+          Image.asset(imagePath),
+          SizedBox(height: 5),
+          Text(label, style: k13_400_roboto),
+          Container(
+            height: 7,
+            width: 7,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: pageIndex == index ? Color(0xffFFFFFF) : Colors.transparent,
+            ),
+          ),
         ],
       ),
     );

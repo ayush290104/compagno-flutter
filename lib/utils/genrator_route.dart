@@ -98,7 +98,7 @@ class RoutesMap {
       login: (_) => const LoginScreen(),
       register: (_) => RegisterScreen(),
       dashBoard: (_) => Dashboard(),
-      tabScreen: (_) => const TabScreen(),
+      tabScreen: (_) =>  TabScreen(pageIndex: 0,),
       dashBordMap: (context) => const DashboardMap(),
       trailChatter: (context) => const TrailChatter(),
       awardGallery: (context) => const AwardGallery(),

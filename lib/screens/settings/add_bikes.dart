@@ -114,7 +114,7 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                       style: k32_400_bebas,
                     ),
                     Container(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           color: AppColors.k000000),
@@ -131,7 +131,7 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => const TabScreen()));
+                                        builder: (context) => TabScreen(pageIndex: 3,)));
                               }
                               else{
                                 Get.snackbar("", "Please select an Image",snackPosition: SnackPosition.BOTTOM,colorText: Colors.white);
@@ -157,7 +157,7 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
               const SizedBox(height: 20),
               ListTile(
                 leading:GestureDetector(
-                  onTap: selectImage,
+
                   child: Stack(
                     children: [
                       image == null
@@ -165,25 +165,35 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                         backgroundImage: AssetImage("assets/images/bikeimg.png"),
                         radius: 30,
                       )
-                          : CircleAvatar(
+                          : ClipOval(
+
+                            child: CircleAvatar(
 
                         backgroundImage: FileImage(
-                          image!,
-
+                            image!,
                         ),
                         radius: 30,
 
                       ),
-                      // Positioned(
-                      //   bottom: -10,
-                      //   left: 80,
-                      //   child: IconButton(
-                      //     onPressed: selectImage,
-                      //     icon: const Icon(
-                      //       Icons.add_a_photo,
-                      //     ),
-                      //   ),
-                      // ),
+                          ),
+                      Positioned(
+                        bottom: -1,
+                        right: -1,
+                        child: InkWell(
+                          onTap: selectImage,
+                          child: Container(
+                            height: 20,
+                            width: 25,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.k000000,
+                            ),
+                            child: Center(
+                              child: Image.asset("assets/images/edit.png"),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -569,16 +579,16 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                                 style: k20_400_bebas,
                               ),
                               Spacer(),
-                              InkWell(
-                                onTap: () {
-                                  // Handle Rider Level edit action
-                                },
-                                child: SizedBox(
-                                  height: 24,
-                                  width: 24,
-                                  child: Image.asset("assets/images/edit2.png"),
-                                ),
-                              ),
+                              // InkWell(
+                              //   onTap: () {
+                              //     // Handle Rider Level edit action
+                              //   },
+                              //   child: SizedBox(
+                              //     height: 24,
+                              //     width: 24,
+                              //     child: Image.asset("assets/images/edit2.png"),
+                              //   ),
+                              // ),
                             ],
                           ),
                           SizedBox(
@@ -815,16 +825,16 @@ class _AddBikesScreenState extends State<AddBikesScreen> {
                           children: [
                             Text("Tire Pressure", style: k20_400_bebas),
                             Spacer(),
-                            InkWell(
-                              onTap: () {
-                                // Handle Tire Pressure edit action
-                              },
-                              child: SizedBox(
-                                height: 24,
-                                width: 24,
-                                child: Image.asset("assets/images/edit2.png"),
-                              ),
-                            ),
+                            // InkWell(
+                            //   onTap: () {
+                            //     // Handle Tire Pressure edit action
+                            //   },
+                            //   child: SizedBox(
+                            //     height: 24,
+                            //     width: 24,
+                            //     child: Image.asset("assets/images/edit2.png"),
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(height: 10),

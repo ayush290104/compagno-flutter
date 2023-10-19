@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_toastr/flutter_toastr.dart';
 import 'package:provider/provider.dart';
 
+import '../tabsrceen/tabscreen.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
@@ -76,8 +78,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             FlutterToastr.show(msg, context);
                           }, onSuccess: (_) {
                             Navigator.pop(context);
-                            Navigator.pushNamed(context, tabScreen);
-                          });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TabScreen(pageIndex: 0))); });
                         }
                       },
                       padding: const EdgeInsets.symmetric(vertical: 8.5),

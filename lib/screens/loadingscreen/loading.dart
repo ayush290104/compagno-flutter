@@ -1,5 +1,8 @@
 import 'dart:async';
 
+import 'package:compagno4/save_user/constants/constants.dart';
+import 'package:compagno4/save_user/network/local_save.dart';
+import 'package:compagno4/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -26,8 +29,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
   }
 
   route() {
+
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => SplashScreen()));
+        context, MaterialPageRoute(builder: (context) => (SaveId.getSaveData(key: token).isEmpty)?LoginScreen() :SplashScreen()));
   }
 
   @override

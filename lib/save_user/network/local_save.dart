@@ -13,7 +13,6 @@ class SaveId {
 
     return await sharedPref.setString(key, value);
 
-
   }
 
   static String getSaveData({required String key}) {

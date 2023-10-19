@@ -10,9 +10,9 @@ import '../core/network/app_api.dart';
 class DashboardController extends GetxController {
   RxString address = "Please Wait".obs;
 
-
+  //'AIzaSyD6zLsfMk3jv6bydjtXy5hXxk7nD-y-rzg'
   Future getAddressFromLatLng(LatLng location) async {
-    const apiKey = 'AIzaSyD6zLsfMk3jv6bydjtXy5hXxk7nD-y-rzg'; // Replace with your Google Maps API key
+    const apiKey = AppApi.googleMapAPIKey; // Replace with your Google Maps API key
     final response = await http.get(Uri.parse(
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=$apiKey'));
 

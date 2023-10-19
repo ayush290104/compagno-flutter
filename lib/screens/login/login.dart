@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (emailController.text.isNotEmpty) {
                             return null;
                           } else {
-                            return "Email must ot be empty";
+                            return "Email must not be empty";
                           }
                         },
                         decoration: InputDecoration(
@@ -173,8 +173,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               context.read<LoginVM>().login(onError: (msg) {
                                 FlutterToastr.show(msg, context);
                               }, onSuccess: (response) {
-                                Navigator.pop(context);
-                                Navigator.pushNamed(context, tabScreen);
+
+                                 Navigator.pop(context);
+                                 Navigator.push(
+                                     context,
+                                     MaterialPageRoute(
+                                         builder: (context) => TabScreen(pageIndex: 0)));
+                                // Navigator.pushNamed(context, tabScreen);
                               });
                             }
                           },

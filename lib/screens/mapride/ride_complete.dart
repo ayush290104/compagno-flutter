@@ -51,7 +51,7 @@ class _RideCompleteState extends State<RideComplete> {
 
                           Navigator.pop(context);
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => TabScreen()));
+                              MaterialPageRoute(builder: (context) => TabScreen(pageIndex: 0,)));
                         },
                         child: Image.asset("assets/images/back.png")),
                   ),
@@ -74,7 +74,7 @@ class _RideCompleteState extends State<RideComplete> {
 
                   Navigator.pop(context);
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TabScreen()));
+                      MaterialPageRoute(builder: (context) => TabScreen(pageIndex: 0)));
                 },
                 child: Stack(
                   children: [

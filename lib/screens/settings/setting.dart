@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:compagno4/save_user/constants/constants.dart';
+import 'package:compagno4/save_user/network/local_save.dart';
 import 'package:compagno4/screens/login/login.dart';
 import 'package:compagno4/screens/settings/modify_profile.dart';
 import 'package:compagno4/screens/settings/setting_tuning.dart';
@@ -420,6 +422,7 @@ class _SettingsState extends State<Settings> {
                                 ),
                                 InkWell(
                                   onTap: () {
+                                    SaveId.insertToSave(key: token, value: '');
                                     Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -501,10 +504,19 @@ class _SettingsState extends State<Settings> {
                               builder: (context) => const SettingTuning()));
                     },
                     leading: CircleAvatar(
-                      radius: 20,
+                      radius: 40,
                       backgroundColor: Colors.transparent,
-                      child: Image.network(
-                        "https://compagno.app${bikeController.listofbike[index].image.toString().replaceFirst("/api/", "")}",
+                      child: ClipOval(
+
+                        child: Image.network(
+
+                          "https://compagno.app${bikeController.listofbike[index].image.toString().replaceFirst("/api/", "")}",
+                          fit: BoxFit.fill,
+                          // This ensures the image fills the circle
+                          width: 40,
+                          // Set the width and height to match the diameter of the CircleAvatar
+                          height: 40,
+                        ),
                       ),
                     ),
                     title: Text(

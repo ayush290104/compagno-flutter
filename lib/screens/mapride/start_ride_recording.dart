@@ -6,6 +6,8 @@ import 'package:draw_graph/draw_graph.dart';
 import 'package:draw_graph/models/feature.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:pretty_gauge/pretty_gauge.dart';
 import 'package:provider/provider.dart';
 
@@ -121,44 +123,51 @@ class _StartRidingState extends State<StartRiding> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 19, left: 11),
-                    child: Row(
-                      children: [
-                        Text(
-                          "INCLINE",
-                          style: k11_700_roboto,
-                        ),
-                        SizedBox(
-                          width: 80,
-                        ),
-                        Selector<PostValueProvider, double>(
-                          selector: (p0, p1) => p1.inclinationList,
-
-                          builder: (context, value, child) {
-                            debugPrint("final debug print dj $value");
-                            return PrettyGauge(
-
-                              gaugeSize: 100,
-                              maxValue: 90,
-                              minValue: -90,
-                              segments: [
-                                GaugeSegment('Low', 45, Colors.red),
-                                GaugeSegment('Medium', 90, Colors.orange),
-                                GaugeSegment('High', 45, Colors.green),
-                              ],
-                              needleColor: Colors.white,
-                              currentValue: -1*value,
-                              displayWidget: const Text('Fuel in tank',
-                                  style: TextStyle(fontSize: 12)),
-                              startMarkerStyle:
-                              TextStyle(fontSize: 10, color: Colors.grey),
-                              endMarkerStyle:
-                              TextStyle(fontSize: 10, color: Colors.grey),
-                            );
-                          } ,
-                        ),
-                      ],
+                    child: SizedBox(
+                      child: Stack(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "INCLINE",
+                                style: k11_700_roboto,
+                              ),
+                              SizedBox(
+                                width: 80,
+                              ),
+                              Selector<PostValueProvider, double>(
+                                selector: (p0, p1) => p1.inclinationList,
+                                builder: (context, value, child) {
+                                  debugPrint("final debug print dj $value");
+                                  return PrettyGauge(
+                                    gaugeSize: 100,
+                                    maxValue: 90,
+                                    minValue: -90,
+                                    segments: [
+                                      GaugeSegment('Low', 45, Colors.red),
+                                      GaugeSegment('Medium', 90, Colors.orange),
+                                      GaugeSegment('High', 45, Colors.green),
+                                    ],
+                                    needleColor: Colors.white,
+                                    currentValue: -1 * value,
+                                    displayWidget: const Text('Fuel in tank', style: TextStyle(fontSize: 12)),
+                                    startMarkerStyle: TextStyle(fontSize: 10, color: Colors.grey),
+                                    endMarkerStyle: TextStyle(fontSize: 10, color: Colors.grey),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                          Container(
+                            color: Colors.black, // Black color for the container
+                            width: Get.width, // Match the width of the parent
+                            height: 100, // Match the height of the parent
+                          ),
+                        ],
+                      ),
                     ),
                   )
+
                 ],
               ),
             ),

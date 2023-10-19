@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,42 +14,40 @@ class BikeWeb {
 
 
 
-Future<void> updatebikemodel(int index,Map<String,dynamic> bike) async{
-  Map<String,dynamic> mapp = {
-  "front_shock_psi": "23",
-  "front_shock_sag": "32",
-  "front_shock_hsc": "45",
-  "front_shock_lsc": "42",
-  "front_shock_hsr": "44",
-  "front_shock_lsr": "67",
-  "rear_shock_psi": "54",
-  "rear_shock_sag": "34",
-  "rear_shock_hsc": "22",
-  "rear_shock_lsc": "30",
-  "rear_shock_hsr": "20",
-  "rear_shock_lsr": "20",
-  "front_tire_psi": "10",
-   "rear_tire_psi": "5",
-  "_method":"PUT"
+Future<void> updatebikemodel(int index,Map<String,dynamic> bike,File? image) async{
+  final Uri url = Uri.parse("https://compagno.app/api/bikes/$index");
 
-  };
-  final response = await http.put(
-    Uri.parse("https://compagno.app/api/bikes/$index"),
-    headers: {
-      "Accept": "application/json",
-      'Authorization': 'Bearer ${SaveId.getSaveData(key: token)}',
-    },
+  // Create a multipart request
+  final request = http.MultipartRequest('POST', url);
+debugPrint("hello bike data is ${bike}");
+  // Set authorization header
+  request.headers['Authorization'] = 'Bearer ${SaveId.getSaveData(key: token)}';
 
-    body: bike
-  );
-  debugPrint("${response.body}");
+  // Add fields from the map
+  bike.forEach((key, value) {
+    request.fields[key] = value.toString();
+  });
+  debugPrint(request.toString());
+  if (image != null) {
+    final imageStream = http.ByteStream(image.openRead());
+    final length = await image.length();
+
+    final imageUpload = http.MultipartFile('image', imageStream, length,
+        filename: image.path.split("/").last);
+
+    request.files.add(imageUpload);
+  }
+
+  final response = await request.send();
+  final responseStream = await response.stream.bytesToString();
+  debugPrint("${responseStream}");
 
   if (response.statusCode == 200) {
     debugPrint("updated bike");
     }
    else {
     print('Failed to fetch bikes. Status code: ${response.statusCode}');
-    print('Response: ${response.body}');
+  //  print('Response: ${response.body}');
     throw Exception('Failed to fetch bikes');
   }
 

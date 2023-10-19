@@ -160,7 +160,7 @@ class _ModifyProfileState extends State<ModifyProfile> {
                                                               MaterialPageRoute(
                                                                   builder:
                                                                       (context) =>
-                                                                          const TabScreen()));
+                                                                           TabScreen(pageIndex: 3,)));
                                                         }
                                                       } else {
                                                         showSnackBar(
