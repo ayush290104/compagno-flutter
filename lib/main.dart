@@ -17,6 +17,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'Controller/dashboardController.dart';
+
 DashboardCubit dashboardCubit = DashboardCubit();
 TrainCubit trainCubit = TrainCubit();
 AwardsCubit awardsCubit = AwardsCubit();
@@ -39,9 +41,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return ScreenUtilInit(
         designSize: const Size(410, 690),
         minTextAdapt: true,

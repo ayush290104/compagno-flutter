@@ -24,7 +24,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final dashboardController = Get.put(DashboardController());
+  final DashboardController dashboardController = Get.find();
 
   @override
   void initState() {

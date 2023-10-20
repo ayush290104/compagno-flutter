@@ -5,7 +5,9 @@ import 'package:compagno4/save_user/network/local_save.dart';
 import 'package:compagno4/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
+import '../../Controller/dashboardController.dart';
 import '../../constant/fonts.dart';
 import '../splashScreen/splashscreen.dart';
 
@@ -17,6 +19,7 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
+
   @override
   void initState() {
     super.initState();
@@ -33,7 +36,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => (SaveId.getSaveData(key: token).isEmpty)?LoginScreen() :SplashScreen()));
   }
-
+  final dashboardController = Get.put(DashboardController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

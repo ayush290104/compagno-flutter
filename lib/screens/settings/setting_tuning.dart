@@ -18,7 +18,7 @@ class SettingTuning extends StatefulWidget {
 }
 
 class _SettingTuningScreenState extends State<SettingTuning> {
-  final _formKey = GlobalKey<FormState>();
+
   TextEditingController brandController = TextEditingController();
   TextEditingController modelController = TextEditingController();
   TextEditingController front_shock_psi_Controller = TextEditingController();
