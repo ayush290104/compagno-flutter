@@ -1,33 +1,31 @@
-
-
+import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:compagno4/post_value_provider.dart';
 import 'package:compagno4/screens/mapride/ride_complete.dart';
-import 'package:draw_graph/draw_graph.dart';
-import 'package:draw_graph/models/feature.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pretty_gauge/pretty_gauge.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
-import 'package:chart_sparkline/chart_sparkline.dart';
+// Import Sparkline
 
 class StartRiding extends StatefulWidget {
-  const StartRiding({Key? key}) : super(key: key);
+   StartRiding({Key? key}) : super(key: key);
+
 
   @override
-  State<StartRiding> createState() => _StartRidingState();
+  _StartRidingState createState() => _StartRidingState();
 }
 
 class _StartRidingState extends State<StartRiding> {
+  PostValueProvider postValueProvider = Get.find();
+  List<double> ab = [];
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        context.read<PostValueProvider>().cancel();
+       postValueProvider.cancel();
         return true;
       },
       child: Scaffold(
@@ -47,7 +45,7 @@ class _StartRidingState extends State<StartRiding> {
                   Image.asset('assets/images/METALLO.png'),
                   SizedBox(
                     width: 20,
-                  )
+                  ),
                 ],
               ),
             ),
@@ -62,111 +60,58 @@ class _StartRidingState extends State<StartRiding> {
               height: 78,
             ),
             Container(
-              height: 200,
-              width: 325,
+
+              width: Get.width*0.9,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: AppColors.k000000),
+                borderRadius: BorderRadius.circular(10),
+                color: AppColors.k000000,
+              ),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 17, left: 11),
-                    child: Row(
-                      children: [
-                        Text(
-                          "TRAIL CHATTER",
-                          style: k11_700_roboto,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          width: 200.0,
-                          height: 20.0,
-                          child: Selector<PostValueProvider, List<double>>(
-                            selector: (p0, p1) => p1.trailChatterList,
-                            shouldRebuild: (previous, next) => true,
-                            builder: (context, value, child) => Sparkline(
-                              data: value,
-                              useCubicSmoothing: true,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 22, left: 11),
-                    child: Row(
-                      children: [
-                        Text(
-                          "ACCELERATION",
-                          style: k11_700_roboto,
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          width: 200.0,
-                          height: 20.0,
-                          child: Selector<PostValueProvider, List<double>>(
-                            selector: (p0, p1) => p1.accelerationList,
-                            shouldRebuild: (previous, next) => true,
-                            builder: (context, value, child) => Sparkline(
-                              data: value,
-                              useCubicSmoothing: true,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 19, left: 11),
-                    child: SizedBox(
-                      child: Stack(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "INCLINE",
-                                style: k11_700_roboto,
-                              ),
-                              SizedBox(
-                                width: 80,
-                              ),
-                              Selector<PostValueProvider, double>(
-                                selector: (p0, p1) => p1.inclinationList,
-                                builder: (context, value, child) {
-                                  debugPrint("final debug print dj $value");
-                                  return PrettyGauge(
-                                    gaugeSize: 100,
-                                    maxValue: 90,
-                                    minValue: -90,
-                                    segments: [
-                                      GaugeSegment('Low', 45, Colors.red),
-                                      GaugeSegment('Medium', 90, Colors.orange),
-                                      GaugeSegment('High', 45, Colors.green),
-                                    ],
-                                    needleColor: Colors.white,
-                                    currentValue: -1 * value,
-                                    displayWidget: const Text('Fuel in tank', style: TextStyle(fontSize: 12)),
-                                    startMarkerStyle: TextStyle(fontSize: 10, color: Colors.grey),
-                                    endMarkerStyle: TextStyle(fontSize: 10, color: Colors.grey),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                          Container(
-                            color: Colors.black, // Black color for the container
-                            width: Get.width, // Match the width of the parent
-                            height: 100, // Match the height of the parent
-                          ),
-                        ],
+
+                      SizedBox(
+                        height: 10,
                       ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 38.0),
+                          child: Text("Trail Chatter",style: TextStyle(color: Colors.white),),
+                        ),
+
+                        Obx(() =>Spark()),
+                      ],
                     ),
-                  )
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 38.0),
+                        child: Text("Acceleration",style: TextStyle(color: Colors.white),),
+                      ),
+
+                      Obx(() =>Spark2()),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 38.0),
+                        child: Text("Incline Angle",style: TextStyle(
+                          color: Colors.white
+                        ),),
+                      ),
+
+                      Obx(() =>Spark3()),
+                    ],
+                  ),
+
+
 
                 ],
               ),
@@ -176,11 +121,12 @@ class _StartRidingState extends State<StartRiding> {
             ),
             InkWell(
               onTap: () {
-                context.read<PostValueProvider>().completeRide();
-                  Navigator.pop(context);
-                Navigator.push(context,
+                postValueProvider.completeRide();
+                postValueProvider.cancel();
 
-                    MaterialPageRoute(builder: (context) => RideComplete()));
+                Navigator.pop(context);
+                
+                Get.to(RideComplete());
               },
               child: Stack(
                 children: [
@@ -202,22 +148,157 @@ class _StartRidingState extends State<StartRiding> {
                       height: 45,
                       color: Colors.white,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
             Container(
-                height: 64,
-                color: Colors.transparent,
-                child: Center(
-                    child: Text(
-                      "TAP TO STOP",
-                      style: k13_700_roboto,
-                    ))),
+              height: 64,
+              color: Colors.transparent,
+              child: Center(
+                child: Text(
+                  "TAP TO STOP",
+                  style: k13_700_roboto,
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+  Widget Spark(){
+
+
+ if(postValueProvider.trailChatterList.length<500){
+   // List<double> ab = [];
+   // for(int i = postValueProvider.trailChatterList.length -11;i<postValueProvider.trailChatterList.length;i++){
+   //   ab.add(postValueProvider.trailChatterList[i]);
+   // }
+   return Padding(
+     padding: const EdgeInsets.only(right: 10.0),
+     child: Container(
+       width: Get.width*0.5,
+       height: 20,
+       child: Sparkline(
+         data: postValueProvider.trailvalue,
+         lineColor: Colors.blue, // Customize line color
+         fillMode: FillMode.none, // Fill area below the line
+
+       ),
+     ),
+   )
+   ;
+ }
+ else{
+   return Padding(
+     padding: const EdgeInsets.only(right: 10.0),
+     child: Container(
+       width: Get.width*0.5,
+       height: 20,
+       child: Sparkline(
+         data: postValueProvider.trailvalue,
+         lineColor: Colors.blue, // Customize line color
+         fillMode: FillMode.none, // Fill area below the line
+
+       ),
+     ),
+   )
+   ;
+ }
+
+  }
+  Widget Spark2(){
+
+
+    if(postValueProvider.trailChatterList.length<500){
+      // List<double> ab = [];
+      // for(int i = postValueProvider.trailChatterList.length -11;i<postValueProvider.trailChatterList.length;i++){
+      //   ab.add(postValueProvider.trailChatterList[i]);
+      // }
+      return Padding(
+        padding: const EdgeInsets.only(right: 10.0),
+        child: Container(
+          width: Get.width*0.5,
+          height: 30,
+          child: Sparkline(
+            data: postValueProvider.accelerationvalue,
+            lineColor: Colors.blue, // Customize line color
+            fillMode: FillMode.none, // Fill area below the line
+
+          ),
+        ),
+      )
+      ;
+    }
+    else{
+      return Padding(
+        padding: const EdgeInsets.only(right: 10.0),
+        child: Container(
+
+          width: Get.width*0.5,
+          height: 30,
+          child: Sparkline(
+            data: postValueProvider.accelerationvalue,
+            lineColor: Colors.blue, // Customize line color
+            fillMode: FillMode.none, // Fill area below the line
+
+          ),
+        ),
+      )
+      ;
+    }
+
+  }
+  Widget Spark3() {
+    return  Container(
+  width: 120,
+  height: 120,
+  child: SfRadialGauge(
+  axes: <RadialAxis>[
+  RadialAxis(
+  minimum: -90,
+  maximum: 91,
+  startAngle: 180,
+  endAngle: 0,
+  radiusFactor: 1,
+  showLabels: true,
+  interval: 45,
+  onLabelCreated: (args) {
+  // Custom label formatter to display only positive values
+  args.text = '${double.parse(args.text).abs().toInt()}';
+  args.labelStyle = const GaugeTextStyle(
+  color: Colors.white, fontSize: 10);
+  },
+  ranges: <GaugeRange>[
+  GaugeRange(
+  startValue: -90,
+  endValue: -45,
+  color: Colors.red,
+
+  ),
+  GaugeRange(
+  startValue: -45,
+  endValue: 45,
+  color: Colors.green,
+  ),
+  GaugeRange(
+  startValue: 45,
+  endValue: 90,
+  color: Colors.red,
+  ),
+  ],
+  pointers: <GaugePointer>[
+  MarkerPointer(
+  value: postValueProvider.inclinevalue.value*-1,
+  color: Colors.white,
+  enableAnimation: true,
+  ),
+  ],
+  ),
+  ],
+  ),
+  );
 }
 
+}

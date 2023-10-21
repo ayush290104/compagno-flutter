@@ -67,7 +67,7 @@ class AngleInclinationSensor {
     // Convert accelerometer readings to radians
     double leanAngle = atan2(x, sqrt(y * y + z * z));
             leanAngle =  leanAngle * (180 / pi);
-    debugPrint("value is $leanAngle");
+    //debugPrint("value is $leanAngle");
     return leanAngle;
   }
 

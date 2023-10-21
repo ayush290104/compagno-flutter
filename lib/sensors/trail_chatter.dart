@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:developer' as dev;
 
+import 'package:flutter/cupertino.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 
 
@@ -19,6 +20,7 @@ class TrailChatterSensor {
           double y = event.y;
           double z = event.z;
           final trail = calculateTrailChatterValue(x, y, z);
+          debugPrint("did this happen for trail chatter");
           trailChatterValue.add(trail);
           valueSetter.call(trailChatterValue);
           count += 1;
@@ -51,6 +53,7 @@ class TrailChatterSensor {
     dev.log("disposing");
     _accelerometerSubscription?.cancel();
     _accelerometerSubscription = null;
+    trailChatterValue.clear();
     return counter / count;
   }
 
@@ -60,6 +63,8 @@ class TrailChatterSensor {
         0, (previousValue, element) => previousValue + element);
     final value = counter / count;
     dev.log("value $value");
+    trailChatterValue.clear();
+    count = 0;
     counter = 0;
 
     return value;

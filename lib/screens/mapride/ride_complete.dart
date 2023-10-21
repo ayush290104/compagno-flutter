@@ -1,5 +1,6 @@
 import 'package:compagno4/screens/tabsrceen/tabscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../constant/color.dart';
 import '../../constant/fonts.dart';
@@ -50,8 +51,9 @@ class _RideCompleteState extends State<RideComplete> {
                         onTap: () {
 
                           Navigator.pop(context);
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => TabScreen(pageIndex: 0,)));
+                          Get.to(TabScreen(pageIndex: 0));
+                          // Navigator.push(context,
+                          //     MaterialPageRoute(builder: (context) => TabScreen(pageIndex: 0,)));
                         },
                         child: Image.asset("assets/images/back.png")),
                   ),
@@ -71,10 +73,11 @@ class _RideCompleteState extends State<RideComplete> {
               ),
               InkWell(
                 onTap: () {
-
                   Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TabScreen(pageIndex: 0)));
+                  Get.to(TabScreen(pageIndex: 0));
+                  // Navigator.pop(context);
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => TabScreen(pageIndex: 0)));
                 },
                 child: Stack(
                   children: [

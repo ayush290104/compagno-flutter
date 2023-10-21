@@ -1,6 +1,7 @@
 import 'package:compagno4/post_value_provider.dart';
 import 'package:compagno4/screens/mapride/start_ride_recording.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 import '../../constant/color.dart';
@@ -14,6 +15,7 @@ class MapRide extends StatefulWidget {
 }
 
 class _MapRideState extends State<MapRide> {
+  PostValueProvider postValueProvider = Get.put(PostValueProvider());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,12 +90,10 @@ class _MapRideState extends State<MapRide> {
               InkWell(
                 onTap: () {
                   print('function runnig');
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => ChangeNotifierProvider(
-                              create: (context) => PostValueProvider()..startRide(),
-                              builder: (context, child) => StartRiding())));
+                  Get.to(() => StartRiding());
+                  postValueProvider.startRide();
+
+
                 },
                 child: Stack(
                   children: [

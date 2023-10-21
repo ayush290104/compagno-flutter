@@ -111,7 +111,7 @@ class RoutesMap {
       loading: (context) => const LoadingScreen(),
       mapRide: (context) => const MapRide(),
       rideComplete: (context) => const RideComplete(),
-      startRideRecording: (context) => const StartRiding(),
+      startRideRecording: (context) =>  StartRiding(),
       setting: (_) => const Settings(),
       settingTuning: (context) => const SettingTuning(),
       training: (context) => const Training(),

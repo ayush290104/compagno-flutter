@@ -69,6 +69,8 @@ class AccelrationSensor {
           double x = event.x;
           double y = event.y;
           double z = event.z;
+          debugPrint("did this happen for acceleration");
+
           final val = calculateAcceleration(x, y, z);
           // Perform necessary calculations based on the accelerometer readings
           acceleration.add(val);
@@ -98,8 +100,9 @@ class AccelrationSensor {
     counter = acceleration.fold(
         0, (previousValue, element) => previousValue + element);
     final value = counter / count;
-    count = 0;
     counter = 0;
+    acceleration.clear();
+    count = 0;
 
     return value;
   }

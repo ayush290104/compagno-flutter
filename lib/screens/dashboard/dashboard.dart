@@ -437,6 +437,11 @@ class _DashboardState extends State<Dashboard> {
                                 builder: (context, state) {
                               if ((state is DashboardSuccessState)) {
                                 return (dashboardCubit
+                                    .dashboardClass!
+                                    .data!
+                                    .lastRide!
+                                    .trailChatter!
+                                    .data != null &&dashboardCubit
                                             .dashboardClass!
                                             .data!
                                             .lastRide!
@@ -568,6 +573,7 @@ class _DashboardState extends State<Dashboard> {
                                 }
 
                                 if (dashboardCubit.dashboardClass!.data!
+                                    .lastRide!.speed!.speed != null && dashboardCubit.dashboardClass!.data!
                                         .lastRide!.speed!.speed!.length >
                                     1) {
                                   return SizedBox(
@@ -826,6 +832,7 @@ class _DashboardState extends State<Dashboard> {
                                                     const BorderRadius.all(
                                                         Radius.circular(20)),
                                                 child: GoogleMap(
+
                                                   markers: <Marker>{
                                                     Marker(
                                                         markerId: const MarkerId(
@@ -842,6 +849,7 @@ class _DashboardState extends State<Dashboard> {
                                                   },
                                                   polylines: _createPolylines(
                                                       listLocations),
+
                                                   onMapCreated:
                                                       (GoogleMapController
                                                           controller) {
@@ -853,9 +861,11 @@ class _DashboardState extends State<Dashboard> {
                                                           listLocations[0],
                                                           15.0), // Adjust the zoom level as needed
                                                     );
+
                                                   },
                                                   myLocationEnabled: true,
                                                   mapType: MapType.normal,
+
                                                   initialCameraPosition:
                                                       CameraPosition(
                                                           target:

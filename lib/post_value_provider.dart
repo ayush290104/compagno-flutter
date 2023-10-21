@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
-
+import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:compagno4/core/network/dio_client.dart';
 import 'package:compagno4/save_user/constants/constants.dart';
 import 'package:compagno4/save_user/network/local_save.dart';
@@ -11,10 +13,9 @@ import 'package:compagno4/sensors/lean_angle.dart';
 import 'package:compagno4/sensors/speed.dart';
 import 'package:compagno4/sensors/time_duration.dart';
 import 'package:compagno4/sensors/trail_chatter.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:compagno4/screens/mapride/ride_complete.dart';
 
-class PostValueProvider extends ChangeNotifier {
+class PostValueProvider extends GetxController {
   final speedSensor = SpeedSensor();
   final trailSensor = TrailChatterSensor();
   final accelrationSensor = AccelrationSensor();
@@ -22,90 +23,63 @@ class PostValueProvider extends ChangeNotifier {
   final inclineSensor = AngleInclinationSensor();
   final leanAngleSensor = LeanAngleSensor();
   final timerHelper = TimerHelper();
-  double? _trailChatter = 0;
 
-  double? get trailChatter => _trailChatter;
+  var trailChatter = 0.0.obs;
+  // double get trailChatter => _trailChatter.value;
+  // set trailChatter(double value) => _trailChatter.value = value;
+ RxList<double> trailvalue = <double>[].obs;
+ RxList<double> accelerationvalue = <double>[].obs;
+ RxDouble inclinevalue = 0.0.obs;
+  var _inclineAngle = 0.0.obs;
+  double get inclineAngle => _inclineAngle.value;
+  set inclineAngle(double value) => _inclineAngle.value = value;
 
+  var _declineAngle = 0.0.obs;
+  double get declineAngle => _declineAngle.value;
+  set declineAngle(double value) => _declineAngle.value = value;
 
+  var _accelration = 0.0.obs;
+  double get accelration => _accelration.value;
+  set accelration(double value) => _accelration.value = value;
 
-  set trailChatter(double? value) {
-    _trailChatter = value;
-    notifyListeners();
-  }
+  var _speed = 0.0.obs;
+  double get speed => _speed.value;
+  set speed(double value) => _speed.value = value;
 
-  void setValue(List<double> value) {
-    trailChatterList = value;
-  }
-
-  double _inclineAngle = 0;
-
-  double get inclineAngle => _inclineAngle;
-
-  set inclineAngle(double? value) {
-    _inclineAngle = value!;
-    notifyListeners();
-  }
-
-  double? _declineAngle;
-
-  double? get declineAngle => _declineAngle;
-
-  set declineAngle(double? value) {
-    _declineAngle = value;
-    notifyListeners();
-  }
-
-  double _accelration = 0;
-
-  double get accelration => _accelration;
-
-  set accelration(double value) {
-    _accelration = value;
-    debugPrint("acceleration double 12"+accelration.toString());
-    notifyListeners();
-  }
-
-  double? _speed;
-
-  double? get speed => _speed;
-
-  set speed(double? value) {
-    _speed = value;
-    notifyListeners();
-  }
-
-  double? _leanAngle;
-
-  double? get leanAngle => _leanAngle;
-
-  set leanAngle(double? value) {
-    _leanAngle = value;
-    notifyListeners();
-  }
+  var _leanAngle = 0.0.obs;
+  double get leanAngle => _leanAngle.value;
+  set leanAngle(double value) => _leanAngle.value = value;
 
   Timer? _timer;
+  String? id;
+  RxList<double> trailChatterList = <double>[].obs;
+
+  List<double> _accelerationList = [];
+  double _inclinationList = 0.0;
+  List<Map> data = [];
 
   void startRide() {
     hitStarRideApi();
     speedSensor.startSpeedSensor();
     leanAngleSensor.startListeningToAccelerometer();
-    debugPrint("did this happen");
-    inclineSensor.startListeningToAccelerometer((value) {
 
-      inclinationList = value;
-      notifyListeners();
+    inclineSensor.startListeningToAccelerometer((value) {
+      inclinevalue.value = value;
+      _inclinationList = value;
     });
     declineSensor.startListeningToMagnetometer();
     trailSensor.startListeningToAccelerometer((value){
-      debugPrint("trail angle is this $value");
-      trailChatterList = value;
-      notifyListeners();
+      trailvalue.value.add(value.last);
+      trailChatterList.value = value;
+      trailChatterList.refresh();
+
+      update(); // Notify listeners
     });
     accelrationSensor.startListeningToMagnetometer((value) {
-      accelerationList = value;
-      notifyListeners();
+      accelerationvalue.add(value.last);
+      _accelerationList = value;
+      update(); // Notify listeners
     });
-
   }
 
   Future<void> hitStarRideApi() async {
@@ -125,22 +99,19 @@ class PostValueProvider extends ChangeNotifier {
   }
 
   Future<void> onValue() async {
-
-    // debugPrint("data is ${data.length}");
-    speed = speedSensor.handleValue();
+    _speed.value = speedSensor.handleValue();
     final time = DateFormat('HH:mm:ss').format(DateTime.now());
     debugPrint("speed is $speed");
-    accelration = accelrationSensor.handleValue();
-    leanAngle = leanAngleSensor.handleValue();
-    declineAngle = declineSensor.handleValue();
-    inclineAngle = inclineSensor.handleValue();
-    trailChatter = trailSensor.handleValue();
+    _accelration.value = accelrationSensor.handleValue();
+    _leanAngle.value = leanAngleSensor.handleValue();
+    _declineAngle.value = declineSensor.handleValue();
+    _inclineAngle.value = inclineSensor.handleValue();
+    trailChatter.value = trailSensor.handleValue();
     final lat = speedSensor.getLat();
     final lng = speedSensor.getLng();
     final distance = speedSensor.getDistance().round();
     data.add({
-    "speed": (speed != null && !speed!.isNaN) ? speed!.round().toString() : "0",
-      // "time": "${time.hour}:${time.minute}:${time.second}",
+      "speed": (speed != null && !speed.isNaN) ? speed.round().toString() : "0",
       "time": time,
       "ride_id": id.toString(),
       "lat": lat.toString(),
@@ -152,12 +123,8 @@ class PostValueProvider extends ChangeNotifier {
     });
 
     final x = {
-      "speed": (speed != null && !speed!.isNaN) ? speed!.round().toString() : "0",
-      //
-
-      // "time": "${time.hour}:${time.minute}:${time.second}",
+      "speed": (speed != null && !speed.isNaN) ? speed.round().toString() : "0",
       "time": time,
-
       "ride_id": id.toString(),
       "lat": lat.toString(),
       "lng": lng.toString(),
@@ -166,19 +133,22 @@ class PostValueProvider extends ChangeNotifier {
       "elevation": inclineAngle?.toStringAsFixed(1).replaceAll("-", ""),
       "trail_chatter": trailChatter?.toStringAsFixed(1).replaceAll("-", "")
     };
-    if(lat!=0.00){
+    if (lat != 0.00) {
       debugPrint("hello ${x}");
       final response = await DioClient.instance.post("recording-ride", body: x);
     }
-
-
   }
 
   Future<void> cancel() async {
-    _timer?.cancel();
+    trailvalue.clear();
+    accelerationvalue.clear();
+    trailChatterList.clear();
+    debugPrint("I cancelled everything");
+    if (_timer != null && _timer!.isActive) {
+      _timer!.cancel();
+    }
     _timer = null;
     final time = DateFormat('HH:mm:ss').format(DateTime.now());
-    // final formattedTime = DateFormat('HH:mm:ss').format(time);
     final lat = speedSensor.getLat();
     final lng = speedSensor.getLng();
     final distance = speedSensor.getDistance();
@@ -187,11 +157,9 @@ class PostValueProvider extends ChangeNotifier {
     leanAngle = leanAngleSensor.disposeSensor();
     declineAngle = declineSensor.disposeSensor();
     inclineAngle = inclineSensor.disposeSensor();
-    trailChatter = trailSensor.disposeSensor();
-
+    trailChatter.value = trailSensor.disposeSensor();
     data.add({
-      "speed": (speed != null && !speed!.isNaN) ? speed!.round().toString() : "0",
-      //(speed != null && !speed!.isNaN) ? speed!.round().toString() :
+      "speed": (speed != null && !speed.isNaN) ? speed.round().toString() : "0",
       "time": time,
       "ride_id": id.toString(),
       "lat": lat.toString(),
@@ -203,8 +171,7 @@ class PostValueProvider extends ChangeNotifier {
     });
 
     final x = {
-      "speed": (speed != null && !speed!.isNaN) ? speed!.round().toString() : "0",
-      //(speed != null && !speed!.isNaN) ? speed!.round().toString() :
+      "speed": (speed != null && !speed.isNaN) ? speed.round().toString() : "0",
       "time": time,
       "ride_id": id.toString(),
       "lat": lat.toString(),
@@ -222,40 +189,9 @@ class PostValueProvider extends ChangeNotifier {
     cancel();
     await Future.delayed(const Duration(seconds: 2), () {
       hitCompleteRide();
+      // Get.to(() => RideComplete());
     });
   }
-
-  List<double> _trailChatterList = [];
-
-  List<double> get trailChatterList => _trailChatterList;
-
-  set trailChatterList(List<double> value) {
-    _trailChatterList = value;
-    notifyListeners();
-  }
-
-  List<double> _accelerationList = [];
-
-  List<double> get accelerationList => _accelerationList;
-
-  set accelerationList(List<double> value) {
-    _accelerationList = value;
-    debugPrint("acceleration list is $accelerationList");
-
-    notifyListeners();
-  }
-
-  double _inclinationList = 0.0;
-
-  double get inclinationList => _inclinationList;
-
-  set inclinationList(double value) {
-    _inclinationList = value;
-    notifyListeners();
-  }
-
-  List<Map> data = [];
-
   Future<void> hitCompleteRide() async {
     try {
       debugPrint("data is ${data}");
@@ -271,6 +207,4 @@ class PostValueProvider extends ChangeNotifier {
       print(e.toString());
     }
   }
-
-  String? id;
 }

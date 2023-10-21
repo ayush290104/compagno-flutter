@@ -87,6 +87,7 @@ class AngleDelinationSensor {
     counter = angleOfDeclination.fold(
         0, (previousValue, element) => previousValue + element);
     final value = counter / count;
+    angleOfDeclination.clear();
     count = 0;
     counter = 0;
     return value;
