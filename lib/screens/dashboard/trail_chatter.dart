@@ -120,9 +120,11 @@ class _TrailChatterState extends State<TrailChatter> {
                         }
 
 
-                        return Obx(() => Text(
-                            dashboardController.address.value,
-                            style: k13_400_roboto));
+                        return Expanded(
+                          child: Obx(() => Text(
+                              dashboardController.address.value,
+                              style: k13_400_roboto)),
+                        );
                       } else {
                         return const SizedBox(
                           child: Align(
@@ -196,7 +198,7 @@ class _TrailChatterState extends State<TrailChatter> {
 
                               ],
                               labelY: [
-                                  (maxElement/3).round().toStringAsFixed(3),((maxElement/3)*2).toStringAsFixed(3).toString(),maxElement.toString()
+                                 "0.33","0.667","1"
                               ],
 
 
@@ -292,21 +294,21 @@ class _TrailChatterState extends State<TrailChatter> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      "${percent[0] * 100}%\nSmall",
+                                      "${(percent[0] * 100).toStringAsFixed(2)}%\nSmall",
                                       style: k13_400_roboto,
                                     ),
                                     SizedBox(
                                       width: 140,
                                     ),
                                     Text(
-                                      "${(percent[1]) * 100}%\nMedium",
+                                      "${((percent[1]) * 100).toStringAsFixed(2)}%\nMedium",
                                       style: k13_400_roboto,
                                     ),
                                     SizedBox(
                                       width: 30,
                                     ),
                                     Text(
-                                      "${(percent[2]) * 100}%\nLarge",
+                                      "${(percent[2] * 100).toStringAsFixed(2)}%\nLarge",
                                       style: k13_400_roboto,
                                     ),
                                   ],
@@ -361,10 +363,10 @@ class _TrailChatterState extends State<TrailChatter> {
      return rate;
    }
     for(var i in ab){
-      if(i<0.5){
+      if(i<0.3){
         rate[0]++;
       }
-      else if(i<1){
+      else if(i<0.6){
         rate[1]++;
       }
       else{
