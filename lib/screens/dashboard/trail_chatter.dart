@@ -358,44 +358,42 @@ class _TrailChatterState extends State<TrailChatter> {
   }
 
   List<double> fnToDouble3(List<double> ab) {
-    List<double> rate = [0.0,0.0,0.0];
-   if(ab.length==0){
-     return rate;
-   }
-    for(var i in ab){
-      if(i<0.3){
+    List<double> rate = [0.0, 0.0, 0.0];
+    if (ab.isEmpty) {
+      return rate;
+    }
+    for (var i in ab) {
+      if (i < 0.3) {
         rate[0]++;
-      }
-      else if(i<0.6){
+      } else if (i < 0.6) {
         rate[1]++;
-      }
-      else{
+      } else {
         rate[2]++;
       }
     }
 
-    rate[0] = (rate[0]/ab.length);
-    rate[1] = (rate[1]/ab.length);
-    rate[2] = (rate[2]/ab.length);
+    rate[0] = double.parse((rate[0] / ab.length).toStringAsFixed(2));
+    rate[1] = double.parse((rate[1] / ab.length).toStringAsFixed(2));
+    rate[2] = double.parse((rate[2] / ab.length).toStringAsFixed(2));
 
     debugPrint("rate of values = ${rate.toString()}");
     return rate;
-
-
   }
+
 
 
 
   List<double> fnToDouble2(List<double> ab) {
     List<double> hello = [];
-    for(var a in ab){
-        hello.add(a.toDouble());
+    for (var a in ab) {
+      hello.add(double.parse((a.toDouble() / 100).toStringAsFixed(2)));
     }
     double max = hello.reduce((value, element) => value > element ? value : element);
-    for(int i = 0;i<hello.length;i++){
-      hello[i] = hello[i]/max;
+    for (int i = 0; i < hello.length; i++) {
+      hello[i] = double.parse((hello[i] / max).toStringAsFixed(2));
     }
-     debugPrint("hello is :$hello");
+    debugPrint("hello is :$hello");
     return hello;
   }
+
 }

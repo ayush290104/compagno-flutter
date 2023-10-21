@@ -40,27 +40,27 @@ class _StartRidingState extends State<StartRiding> {
                     "COMPAGNO",
                     style: k25_400_noize,
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text("POWERED BY", style: k10_400_bebas),
                   Image.asset('assets/images/METALLO.png'),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 32,
             ),
             Text(
               "Recording RIDE ...",
               style: k32_400_bebas,
             ),
-            SizedBox(
+            const SizedBox(
               height: 78,
             ),
             Container(
-
+padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
               width: Get.width*0.9,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -69,45 +69,61 @@ class _StartRidingState extends State<StartRiding> {
               child: Column(
                 children: [
 
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     Row(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 38.0),
-                          child: Text("Trail Chatter",style: TextStyle(color: Colors.white),),
+                        const Expanded(
+                          flex: 1,
+                          child: Padding(
+                            padding: EdgeInsets.only(right: 38.0),
+                            child: Text("Trail Chatter",style: TextStyle(color: Colors.white),),
+                          ),
                         ),
 
-                        Obx(() =>Spark()),
+                        Expanded(
+                          flex: 2,
+                            child: Obx(() =>Spark())),
                       ],
                     ),
-                  SizedBox(
-                    height: 10,
+                  const SizedBox(
+                    height: 20,
                   ),
                   Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 38.0),
-                        child: Text("Acceleration",style: TextStyle(color: Colors.white),),
+                      const Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: EdgeInsets.only(right: 38.0),
+                          child: Text("Acceleration",style: TextStyle(color: Colors.white),),
+                        ),
                       ),
 
-                      Obx(() =>Spark2()),
+                      Expanded(
+                        flex: 2,
+                          child: Obx(() =>Spark2())),
                     ],
                   ),
-                  SizedBox(
-                    height: 10,
+                  const SizedBox(
+                    height: 20,
                   ),
                   Row(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 38.0),
-                        child: Text("Incline Angle",style: TextStyle(
-                          color: Colors.white
-                        ),),
+                      const Expanded(
+                        flex: 1,
+                        child: Padding(
+
+                          padding: EdgeInsets.only(right: 38.0),
+                          child: Text("Incline Angle",style: TextStyle(
+                            color: Colors.white
+                          ),),
+                        ),
                       ),
 
-                      Obx(() =>Spark3()),
+                      Expanded(
+                        flex: 2,
+                          child: Obx(() =>Spark3())),
                     ],
                   ),
 
@@ -116,7 +132,7 @@ class _StartRidingState extends State<StartRiding> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 98,
             ),
             InkWell(
@@ -126,7 +142,7 @@ class _StartRidingState extends State<StartRiding> {
 
                 Navigator.pop(context);
                 
-                Get.to(RideComplete());
+                Get.to(const RideComplete());
               },
               child: Stack(
                 children: [
