@@ -69,7 +69,7 @@ class PostValueProvider extends GetxController {
     });
     declineSensor.startListeningToMagnetometer();
     trailSensor.startListeningToAccelerometer((value){
-      trailvalue.value.add(value.last);
+      trailvalue.add(value.last);
       trailChatterList.value = value;
       trailChatterList.refresh();
 
@@ -136,6 +136,7 @@ class PostValueProvider extends GetxController {
     if (lat != 0.00) {
       debugPrint("hello ${x}");
       final response = await DioClient.instance.post("recording-ride", body: x);
+
     }
   }
 
@@ -159,7 +160,7 @@ class PostValueProvider extends GetxController {
     inclineAngle = inclineSensor.disposeSensor();
     trailChatter.value = trailSensor.disposeSensor();
     data.add({
-      "speed": (speed != null && !speed.isNaN) ? speed.round().toString() : "0",
+      "speed": (!speed.isNaN) ? speed.round().toString() : "0",
       "time": time,
       "ride_id": id.toString(),
       "lat": lat.toString(),
