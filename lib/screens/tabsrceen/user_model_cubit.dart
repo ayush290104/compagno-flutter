@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 
 import 'package:bloc/bloc.dart';
@@ -12,15 +13,18 @@ import 'package:compagno4/screens/tabsrceen/user_mode_state.datr.dart';
 import 'package:http/http.dart';
 
 import '../../save_user/constants/constants.dart';
-import '../../save_user/constants/constants.dart';
-import '../../save_user/constants/constants.dart';
+import '../settings/controller/BikeController.dart';
 
 class UserModelCubit extends Cubit<UserModelState>{
   UserModelCubit() : super(UserInitialState());
  UserData? userData;
+
+  bool isloading = false;
+  int count = 0;
   void getUserData()async{
+
     emit(GetUserDataLoadingState());
-    Response response = await http.get(Uri.parse("https://compagno.app/api/me"),
+    http.Response response = await http.get(Uri.parse("https://compagno.app/api/me"),
     headers: {
       'Authorization' : 'Bearer ${SaveId.getSaveData(key: token)}',
       "lang": "en"
@@ -38,11 +42,13 @@ class UserModelCubit extends Cubit<UserModelState>{
     }
 
   }
-  void updateUserProfile(Map<String, dynamic> userData,File? image) async {
+  Future<void> updateUserProfile(Map<String, dynamic> userData,File? image) async {
+    isloading = true;
 
-    emit(UpdateUserDataLoadingState());
+     emit(UpdateUserDataLoadingState());
+
     try {
-      final request = http.MultipartRequest(
+      final request =  http.MultipartRequest(
         'POST',
         Uri.parse("https://compagno.app/api/edit-profile"), // Replace {{HOST_URL}} with your actual host URL
       );
@@ -84,16 +90,21 @@ class UserModelCubit extends Cubit<UserModelState>{
         final responseData = jsonDecode(response.body);
         debugPrint("response data is ${response.body}");
         // userData = UserData.fromJson(user: responseData['data']['user']);
-        // emit(UpdateUserDataSuccessState());
+        isloading= false;
+        count = 1;
+        emit(UpdateUserDataSuccessState());
         // Optionally, you can trigger a getUserData() call here to refresh the user's data after the update.
         getUserData();
       } else {
+        isloading= false;
+
         debugPrint("error while updating ${response.body}");
-        //emit(UpdateUserDataFailedState(error: 'Failed to update user data'));
+        emit(UpdateUserDataFailedState(error: 'Failed to update user data'));
       }
     } catch (error) {
+      isloading = false;
       debugPrint("error while updating $error");
-      //emit(UpdateUserDataFailedState(error: 'Failed to update user data: $error'));
+      emit(UpdateUserDataFailedState(error: 'Failed to update user data: $error'));
     }
   }
 

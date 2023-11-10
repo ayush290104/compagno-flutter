@@ -70,4 +70,29 @@ class DioClient {
       }
     }
   }
+
+  Future<Response> post2(String url,
+      {required List<Map<dynamic, dynamic>> body, Map<String, dynamic>? queryParams}) async {
+    try {
+
+      final Response response = await _dio.post(AppApi.baseUrl + url,
+          data: body,
+          queryParameters: queryParams,
+          options: Options(headers: {
+            "Authorization": "Bearer ${SaveId.getSaveData(key: token)}"
+          }));
+
+      log("response is this ${response.statusCode} with body ${response.data}  with url $url");
+
+      return response;
+    } catch (e) {
+      log(e.toString());
+      if (e is SocketException) {
+        throw Exception("Network Error Or Internet Failure.");
+      } else {
+        throw Exception(e.toString());
+      }
+    }
+  }
+
 }

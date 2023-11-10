@@ -24,7 +24,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  BikeController bikeController = Get.put(BikeController());
+  BikeController bikeController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -39,18 +39,21 @@ class _SettingsState extends State<Settings> {
           return Scaffold(
               backgroundColor: AppColors.k47574C,
               // ignore: unnecessary_null_comparison
-              body: cubit.userData != null
+              body: (cubit.userData != null)
                   ? SafeArea(
                       child: SingleChildScrollView(
-                        child: Column(
+                        child:  Column(
                           children: [
+
                             Column(
                               children: [
                                 Padding(
                                   padding:
-                                      const EdgeInsets.only(top: 10, left: 10),
+                                  const EdgeInsets.only(top: 10, left: 10),
                                   child: Row(
-                                    children: [
+                                    children:
+                                    [
+
                                       Text(
                                         "COMPAGNO",
                                         style: k25_400_noize,
@@ -70,10 +73,10 @@ class _SettingsState extends State<Settings> {
                                 const SizedBox(height: 20),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                                  const EdgeInsets.fromLTRB(20, 20, 20, 0),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         "S E T T I N G S",
@@ -85,17 +88,17 @@ class _SettingsState extends State<Settings> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const ModifyProfile()));
+                                                  const ModifyProfile()));
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.all(8.0),
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                                  BorderRadius.circular(10),
+                                              BorderRadius.circular(10),
                                               color: AppColors.k000000),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 'EDIT',
@@ -107,7 +110,7 @@ class _SettingsState extends State<Settings> {
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              const ModifyProfile()));
+                                                          const ModifyProfile()));
                                                 },
                                                 child: Image.asset(
                                                     "assets/images/edit2.png"),
@@ -135,34 +138,34 @@ class _SettingsState extends State<Settings> {
                                       : Image.asset("assets/images/user.png"),
                                 )
 
-                                // Container(
-                                //   height: 150,
-                                //   width: 150,
-                                //   decoration: const BoxDecoration(
-                                //       shape: BoxShape.circle),
-                                //   child: Stack(
-                                //     clipBehavior: Clip.none,
-                                //     children: [
-                                //       ,
-                                //       // Positioned(
-                                //       //   bottom: 10,
-                                //       //   right: 10,
-                                //       //   child: Container(
-                                //       //     height: 35,
-                                //       //     width: 35,
-                                //       //     decoration: const BoxDecoration(
-                                //       //       shape: BoxShape.circle,
-                                //       //       color: AppColors.k000000,
-                                //       //     ),
-                                //       //     child: Center(
-                                //       //       child: Image.asset(
-                                //       //           "assets/images/edit.png"),
-                                //       //     ),
-                                //       //   ),
-                                //       // )
-                                //     ],
-                                //   ),
-                                // ),
+// Container(
+//   height: 150,
+//   width: 150,
+//   decoration: const BoxDecoration(
+//       shape: BoxShape.circle),
+//   child: Stack(
+//     clipBehavior: Clip.none,
+//     children: [
+//       ,
+//       // Positioned(
+//       //   bottom: 10,
+//       //   right: 10,
+//       //   child: Container(
+//       //     height: 35,
+//       //     width: 35,
+//       //     decoration: const BoxDecoration(
+//       //       shape: BoxShape.circle,
+//       //       color: AppColors.k000000,
+//       //     ),
+//       //     child: Center(
+//       //       child: Image.asset(
+//       //           "assets/images/edit.png"),
+//       //     ),
+//       //   ),
+//       // )
+//     ],
+//   ),
+// ),
                                 ,const SizedBox(
                                   height: 17,
                                 ),
@@ -186,7 +189,7 @@ class _SettingsState extends State<Settings> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const SettingTuning()));
+                                            const SettingTuning()));
                                   },
                                   child: Container(
                                     height: 84,
@@ -206,8 +209,8 @@ class _SettingsState extends State<Settings> {
                                                 style: k20_400_bebas,
                                               ),
                                               const Spacer(),
-                                              // Image.asset(
-                                              //     "assets/images/edit2.png")
+// Image.asset(
+//     "assets/images/edit2.png")
                                             ],
                                           ),
                                           const SizedBox(
@@ -223,34 +226,34 @@ class _SettingsState extends State<Settings> {
                                                   style: k13_400_roboto,
                                                 ),
                                               ),
-                                              // SizedBox(width: 20),
+// SizedBox(width: 20),
                                               Expanded(
                                                 flex: 3,
                                                 child: LinearProgressIndicator(
                                                   minHeight: 10,
                                                   borderRadius:
-                                                      BorderRadius.circular(60),
+                                                  BorderRadius.circular(60),
                                                   value: () {
                                                     if (cubit.userData!
-                                                            .rider_level ==
+                                                        .rider_level ==
                                                         'beginner') {
                                                       return 1 / 3;
                                                     } else if (cubit.userData!
-                                                            .rider_level ==
+                                                        .rider_level ==
                                                         'intermediate') {
                                                       return 2 / 3;
                                                     } else if (cubit.userData!
-                                                            .rider_level ==
+                                                        .rider_level ==
                                                         'expert') {
                                                       return 1.0;
                                                     }
-                                                    // Return a default value if rider_level doesn't match any of the options.
+// Return a default value if rider_level doesn't match any of the options.
                                                     return 0.0;
                                                   }(),
                                                   valueColor:
-                                                      const AlwaysStoppedAnimation<
-                                                              Color>(
-                                                          Color(0xffB69F4C)),
+                                                  const AlwaysStoppedAnimation<
+                                                      Color>(
+                                                      Color(0xffB69F4C)),
                                                   backgroundColor: Colors.white,
                                                 ),
                                               ),
@@ -288,9 +291,10 @@ class _SettingsState extends State<Settings> {
                                             ),
                                             Expanded(
                                                 child:
-                                                    Obx(() => getlistView())),
+                                                Obx(() => getlistView())),
                                             GestureDetector(
                                               onTap: () {
+
                                                 Navigator.pushNamed(
                                                     context, addBikes);
                                               },
@@ -322,12 +326,12 @@ class _SettingsState extends State<Settings> {
                                 const SizedBox(
                                   height: 18,
                                 ),
-                                // Container(
-                                //     height: 97,
-                                //     width: 325,
-                                //     decoration: BoxDecoration(
-                                //         borderRadius: BorderRadius.circular(10),
-                                //         color: AppColors.k000000)),
+// Container(
+//     height: 97,
+//     width: 325,
+//     decoration: BoxDecoration(
+//         borderRadius: BorderRadius.circular(10),
+//         color: AppColors.k000000)),
                                 const SizedBox(
                                   height: 18,
                                 ),
@@ -349,10 +353,10 @@ class _SettingsState extends State<Settings> {
                                               style: k20_400_bebas,
                                             ),
                                             const Spacer(),
-                                            // GestureDetector(
-                                            //     onTap: () {},
-                                            //     child: Image.asset(
-                                            //         'assets/images/edit2.png'))
+// GestureDetector(
+//     onTap: () {},
+//     child: Image.asset(
+//         'assets/images/edit2.png'))
                                           ],
                                         ),
                                         const SizedBox(height: 22),
@@ -383,7 +387,7 @@ class _SettingsState extends State<Settings> {
                                             ),
                                             Text(
                                               (cubit.userData!.phone!
-                                                      .isNotEmpty)
+                                                  .isNotEmpty)
                                                   ? cubit.userData!.phone!
                                                   : "Empty",
                                               style: k13_400_roboto,
@@ -404,9 +408,9 @@ class _SettingsState extends State<Settings> {
                                               flex: 3,
                                               child: Text(
                                                 (cubit.userData!.address_line!
-                                                        .isNotEmpty)
+                                                    .isNotEmpty)
                                                     ? cubit
-                                                        .userData!.address_line!
+                                                    .userData!.address_line!
                                                     : "Empty",
                                                 style: k13_400_roboto,
                                               ),
@@ -427,7 +431,7 @@ class _SettingsState extends State<Settings> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (BuildContext context) =>
-                                                const LoginScreen()));
+                                            const LoginScreen()));
                                   },
                                   child: Container(
                                     height: 57,
@@ -458,7 +462,8 @@ class _SettingsState extends State<Settings> {
                               ],
                             ),
                           ],
-                        ),
+                        )
+
                       ),
                     )
                   : const SafeArea(
@@ -497,7 +502,7 @@ class _SettingsState extends State<Settings> {
                     onTap: () {
                       bikeController.bikeselect.value =
                           bikeController.listofbike[index];
-
+                       debugPrint("???? what there");
                       Navigator.push(
                           context,
                           MaterialPageRoute(

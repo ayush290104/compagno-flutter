@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:compagno4/Bikes/bike_web.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../../Bikes/bike_model.dart';
@@ -10,7 +11,7 @@ import '../../../core/user_model.dart';
 
 
 class BikeController extends GetxController {
-
+  RxBool isloading = false.obs;
   Rx<BikeModel> bikemodel =Rx<BikeModel>(BikeModel(brand: "", modelName: "", image: File("")));
   RxList<BikeModel> listofbike = RxList<BikeModel>([]);
   Rx<BikeModel> bikeselect = Rx<BikeModel>(BikeModel(brand: '', modelName: "", image: "",));
@@ -33,7 +34,21 @@ class BikeController extends GetxController {
     "name":"",
     "model_name":""
   });
+  RxInt count = 0.obs;
+Bikeupdate(File? image)async{
+  isloading.value = true;
+  try{
+    await BikeWeb().updatebikemodel(bikeselect.value.id!,bikemodelMap, image);
+    count.value = 1;
+  }
+  catch(error){
+    debugPrint("error is $error");
+    count.value = 2;
+  }
 
+
+  isloading.value = false;
+}
 
   GetListofbike() async {
    listofbike.value = await BikeWeb().getBikeModels();

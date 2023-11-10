@@ -171,6 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               context.read<LoginVM>().login(onError: (msg) {
+                                debugPrint("error is $msg");
                                 FlutterToastr.show(msg, context);
                               }, onSuccess: (response) {
 

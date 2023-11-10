@@ -10,11 +10,12 @@ import 'bike_model.dart';
 
 
 class BikeWeb {
-  final String baseUrl = "https://compagno.app";
+   final String baseUrl = "https://compagno.app";
 
 
 
 Future<void> updatebikemodel(int index,Map<String,dynamic> bike,File? image) async{
+
   final Uri url = Uri.parse("https://compagno.app/api/bikes/$index");
 
   // Create a multipart request

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 
 import '../../Controller/dashboardController.dart';
 import '../../constant/fonts.dart';
+import '../settings/controller/BikeController.dart';
 import '../splashScreen/splashscreen.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -36,6 +37,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => (SaveId.getSaveData(key: token).isEmpty)?LoginScreen() :SplashScreen()));
   }
+  final BikeController bikeController = Get.put(BikeController());
+
   final dashboardController = Get.put(DashboardController());
   @override
   Widget build(BuildContext context) {
