@@ -16,7 +16,7 @@ Compagno is a mobile application built with Flutter that helps cyclists record a
 ## Screenshots
 
 ![Home Screen](https://dummyimage.com/250x500/000/fff&text=Home+Screen)
-![Ride Tracking](https://dummyimage.com/250x500/000/fff&text=Ride+Tracking)
+![Ride Tracking]([https://dummyimage.com/250x500/000/fff&text=Ride+Tracking](https://private-user-images.githubusercontent.com/116818222/337848776-b3840480-b200-4bd6-8483-e9bcffaac9ae.jpeg?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTc4MjYxODcsIm5iZiI6MTcxNzgyNTg4NywicGF0aCI6Ii8xMTY4MTgyMjIvMzM3ODQ4Nzc2LWIzODQwNDgwLWIyMDAtNGJkNi04NDgzLWU5YmNmZmFhYzlhZS5qcGVnP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MDYwOCUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDA2MDhUMDU1MTI3WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9MDU5ZWQzZTcwNWIwODRlZDVhMDY5MThkZDU5YWU3MDc1MmZmNGYwZmZiODM1MmM2ZjRlODFiZGE4OTI0YzBlMiZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmYWN0b3JfaWQ9MCZrZXlfaWQ9MCZyZXBvX2lkPTAifQ.uioGw-fqfW5tJj-axM2qgsnKqjKYeKktXup9vlmu3pU))
 ![Data Visualization](https://dummyimage.com/250x500/000/fff&text=Data+Visualization)
 
 ## Usage
