@@ -1,6 +1,6 @@
-# compagno4
+# compagno
 
-# Bicycle Ride Tracker
+# COMPAGNO
 
 Compagno is a mobile application built with Flutter that helps cyclists record and visualize their ride data. By leveraging the device's sensors, the app collects various metrics such as location, speed, distance, inclination, acceleration, and more. After the ride, cyclists can view this data through detailed graphs and charts.
 
